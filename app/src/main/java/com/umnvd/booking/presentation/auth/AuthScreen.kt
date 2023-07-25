@@ -15,6 +15,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -58,7 +59,7 @@ fun AuthScreen(
             modifier = Modifier.padding(32.dp),
         ) {
             AppTextField(
-                label = "Login",
+                placeholder = "Email",
                 value = state.login.value,
                 onValueChange = viewModel::setLogin,
                 error = state.login.error,
@@ -66,14 +67,14 @@ fun AuthScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             AppTextField(
-                label = "Password",
+                placeholder = "Password",
                 value = state.password.value,
                 onValueChange = viewModel::setPassword,
                 error = state.password.error,
                 visualTransformation = PasswordVisualTransformation(),
                 enabled = state.fieldsEnabled
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Box(
                 Modifier.height(48.dp)
             ) {
@@ -84,7 +85,7 @@ fun AuthScreen(
                         modifier = Modifier.height(36.dp)
                     )
                 } else {
-                    Button(
+                    TextButton(
                         onClick = ::onSignInButtonClick,
                         enabled = state.buttonEnabled,
                         elevation = null,

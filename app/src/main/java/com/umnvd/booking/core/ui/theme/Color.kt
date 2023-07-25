@@ -12,7 +12,9 @@ object MeetingRoomBookingColors {
     val Green400 = Color(0xFF5FA08A)
     val Green800 = Color(0xFF406353)
     val Yellow900 = Color(0xFFA08A5F)
-    val Gray400 = Color(0xFFD0D0D0)
+
+    // TODO: change
+    val Gray400 = Color(0xFF8B8B8B)
     val Gray300 = Color(0xFFEEEEEE)
     val Red600 = Color(0xFFEE2A2A)
 }

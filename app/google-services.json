@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "777016017483",
+    "project_id": "meeting-room-booking-a94a3",
+    "storage_bucket": "meeting-room-booking-a94a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777016017483:android:bc05d1dfbab4a523b503ce",
+        "android_client_info": {
+          "package_name": "com.umnvd.booking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777016017483-5uhpupm604e37pbbletifsit13d733fg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4hvI9jLdrfqW-MbnAxRlmX3auyIVbxok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777016017483-5uhpupm604e37pbbletifsit13d733fg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

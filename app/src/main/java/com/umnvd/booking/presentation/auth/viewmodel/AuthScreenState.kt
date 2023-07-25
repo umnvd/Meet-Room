@@ -3,7 +3,7 @@ package com.umnvd.booking.presentation.auth.viewmodel
 import com.umnvd.booking.core.models.FieldState
 
 data class AuthScreenState(
-    val login: FieldState<String, String> = FieldState("test", null),
+    val login: FieldState<String, String> = FieldState("", null),
     val password: FieldState<String, String> = FieldState("", null),
     val loading: Boolean = false,
     val signedIn: Boolean = false,
