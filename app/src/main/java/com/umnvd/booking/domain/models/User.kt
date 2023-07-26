@@ -28,4 +28,10 @@ val mockUserList = listOf(
         fullName = "Владислав Карасёв",
         photoUrl = "https://i.pravatar.cc/300?img=3",
     ),
+    User(
+        uid = "mock_user_33",
+        nickname = "Test",
+        fullName = "Тестов Тест",
+        photoUrl = "https://i.pravatar.cc/300?img=33",
+    ),
 )

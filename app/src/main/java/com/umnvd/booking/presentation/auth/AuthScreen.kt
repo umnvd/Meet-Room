@@ -6,16 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -50,7 +47,7 @@ fun AuthScreen(
     }
 
     Surface(
-        color = MaterialTheme.colors.background,
+        color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize(),
     ) {
         Column(
@@ -88,12 +85,11 @@ fun AuthScreen(
                     TextButton(
                         onClick = ::onSignInButtonClick,
                         enabled = state.buttonEnabled,
-                        elevation = null,
-                        modifier = Modifier.defaultMinSize(
-                            // TODO: defaults
-                            minHeight = 48.dp,
-                            minWidth = 224.dp,
-                        )
+//                        modifier = Modifier.defaultMinSize(
+//                            // TODO: defaults
+//                            minHeight = 48.dp,
+//                            minWidth = 224.dp,
+//                        )
                     ) {
                         Text(text = "Sign In")
                     }

@@ -34,7 +34,37 @@ val mockMeetingEvent = MeetingEvent(
 
 val mockMeetingEventLongNames = mockMeetingEvent.copy(
     title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-    room = mockMeetingEvent.room.copy(
-        name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-    )
+    room = mockMeetingRoomLongNames,
+)
+
+val mockMeetingEventList = listOf(
+    mockMeetingEvent,
+    mockMeetingEvent.copy(
+        startAt = mockMeetingEvent.startAt.plusMinutes(90L),
+        endAt = mockMeetingEvent.startAt.plusMinutes(120L),
+    ),
+    mockMeetingEvent.copy(
+        startAt = mockMeetingEvent.startAt.plusHours(4),
+        endAt = mockMeetingEvent.startAt.plusHours(6),
+    ),
+    mockMeetingEvent.copy(
+        startAt = LocalDateTime.of(
+            LocalDate.now(),
+            LocalTime.of(0, 0),
+        ),
+        endAt = LocalDateTime.of(
+            LocalDate.now(),
+            LocalTime.of(1, 0),
+        ),
+    ),
+    mockMeetingEvent.copy(
+        startAt = LocalDateTime.of(
+            LocalDate.now(),
+            LocalTime.of(23, 0),
+        ),
+        endAt = LocalDateTime.of(
+            LocalDate.now().plusDays(1),
+            LocalTime.of(0, 0),
+        ),
+    ),
 )

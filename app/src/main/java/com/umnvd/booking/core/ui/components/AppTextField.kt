@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
+import com.umnvd.booking.core.ui.theme.hint
 
 @Composable
 fun AppTextField(
@@ -33,7 +34,7 @@ fun AppTextField(
     enabled: Boolean = true,
     readOnly: Boolean = false,
     placeholder: String? = null,
-    textStyle: TextStyle = LocalTextStyle.current,
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     multiline: Boolean = false,
     maxLines: Int = if (multiline) Int.MAX_VALUE else 1,
     minLines: Int = 1,
@@ -47,6 +48,7 @@ fun AppTextField(
             modifier = fieldModifier.fillMaxWidth(),
             value = value,
             onValueChange = onValueChange,
+            textStyle = textStyle,
             isError = error != null,
             enabled = enabled,
             readOnly = readOnly,
@@ -63,12 +65,12 @@ fun AppTextField(
                         text = it,
                         style = TextStyle(
                             fontSize = textStyle.fontSize,
+                            color = MaterialTheme.colorScheme.hint,
                         )
                     )
                 }
             },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                backgroundColor = Color.Transparent,
+            colors = OutlinedTextFieldDefaults.colors(
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Color.Transparent,
                 errorBorderColor = Color.Transparent,
@@ -78,10 +80,8 @@ fun AppTextField(
         error?.let {
             Text(
                 text = it,
-                style = LocalTextStyle.current.copy(
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colors.error,
-                ),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(
                     horizontal = 16.dp,
                     vertical = 2.dp

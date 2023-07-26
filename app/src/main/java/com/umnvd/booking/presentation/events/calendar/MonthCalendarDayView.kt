@@ -4,20 +4,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.kizitonwose.calendar.core.CalendarDay
-import com.kizitonwose.calendar.core.DayPosition
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
+import com.umnvd.booking.core.ui.theme.divider
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -33,10 +33,11 @@ fun MonthCalendarDayView(
             || day.dayOfWeek == DayOfWeek.SUNDAY
 
     Column(
-        modifier = modifier.height(36.dp),
+        modifier = modifier.height(48.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(modifier = Modifier.height(4.dp))
         CalendarDayView(
             day = day,
             onClick = onClick,
@@ -44,17 +45,21 @@ fun MonthCalendarDayView(
             selected = today,
             holiday = holiday,
         )
-        Box(Modifier.fillMaxHeight()) {
+        Box(Modifier.weight(1f)) {
             if (hasEvents) Box(
                 Modifier
-                    .size(4.dp)
+                    .size(6.dp)
                     .background(
-                        color = MaterialTheme.colors.secondary,
+                        color = MaterialTheme.colorScheme.secondary,
                         shape = RoundedCornerShape(percent = 50),
                     )
                     .align(Alignment.Center)
             )
         }
+        Divider(
+            color = MaterialTheme.colorScheme.divider,
+            thickness = 1.dp,
+        )
     }
 }
 

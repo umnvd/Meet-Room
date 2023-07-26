@@ -13,3 +13,8 @@ val mockMeetingRoom = MeetingRoom(
     address = "ул Димитрова, д. 3",
     photoUrl = "https://www.justcoglobal.com/wp-content/uploads/2022/06/Just-Inspire-1.jpg",
 )
+
+val mockMeetingRoomLongNames = mockMeetingRoom.copy(
+    name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    address = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+)
