@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,8 +27,8 @@ import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.domain.models.MeetingEvent
-import com.umnvd.booking.domain.models.mockMeetingEventList
 import com.umnvd.booking.presentation.events.DayCalendarEventView
+import com.umnvd.booking.util.mockMeetingEventList
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit

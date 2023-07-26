@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Group
-import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.MeetingRoom
 import androidx.compose.material.icons.outlined.Notes
 import androidx.compose.material.icons.outlined.Schedule
@@ -38,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,8 +48,8 @@ import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.theme.hint
-import com.umnvd.booking.domain.models.mockUserList
 import com.umnvd.booking.util.debugPlaceholder
+import com.umnvd.booking.util.mockUserList
 import java.time.LocalDate
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)

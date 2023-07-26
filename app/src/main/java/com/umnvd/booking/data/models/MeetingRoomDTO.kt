@@ -1,10 +1,8 @@
-package com.umnvd.booking.domain.models
+package com.umnvd.booking.data.models
 
-data class MeetingRoom(
+data class MeetingRoomDTO(
     val uid: String,
     val name: String,
     val address: String,
     val photoUrl: String? = null,
 )
-
-

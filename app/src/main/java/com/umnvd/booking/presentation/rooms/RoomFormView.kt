@@ -22,7 +22,7 @@ import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.domain.models.MeetingRoom
-import com.umnvd.booking.domain.models.mockMeetingRoom
+import com.umnvd.booking.util.mockMeetingRoom
 
 @Composable
 fun RoomFormView(

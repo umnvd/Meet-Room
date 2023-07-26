@@ -1,6 +1,6 @@
-package com.umnvd.booking.domain.models
+package com.umnvd.booking.data.models
 
-data class User(
+data class UserDTO(
     val uid: String,
     val nickname: String,
     val fullName: String,

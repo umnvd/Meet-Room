@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
-import com.umnvd.booking.domain.models.mockMeetingEventList
+import com.umnvd.booking.util.mockMeetingEventList
 import java.time.DayOfWeek
 import java.time.LocalDate
 

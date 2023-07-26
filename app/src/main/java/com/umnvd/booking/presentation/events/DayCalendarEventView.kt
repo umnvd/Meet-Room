@@ -36,10 +36,10 @@ import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hintOnSecondary
 import com.umnvd.booking.domain.models.MeetingEvent
 import com.umnvd.booking.domain.models.User
-import com.umnvd.booking.domain.models.mockMeetingEvent
-import com.umnvd.booking.domain.models.mockMeetingEventLongNames
-import com.umnvd.booking.domain.models.mockUserList
 import com.umnvd.booking.util.debugPlaceholder
+import com.umnvd.booking.util.mockMeetingEvent
+import com.umnvd.booking.util.mockMeetingEventLongNames
+import com.umnvd.booking.util.mockUserList
 import java.time.Duration
 
 @OptIn(ExperimentalMaterial3Api::class)

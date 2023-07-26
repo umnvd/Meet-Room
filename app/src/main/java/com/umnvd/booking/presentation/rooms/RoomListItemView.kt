@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.domain.models.MeetingRoom
-import com.umnvd.booking.domain.models.mockMeetingRoom
-import com.umnvd.booking.domain.models.mockMeetingRoomLongNames
+import com.umnvd.booking.util.mockMeetingRoom
+import com.umnvd.booking.util.mockMeetingRoomLongNames
 
 @Composable
 fun RoomListItemView(
