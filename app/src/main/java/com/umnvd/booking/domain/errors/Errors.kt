@@ -4,6 +4,8 @@ sealed class AppException : RuntimeException()
 
 class NetworkException : AppException()
 
+class UnauthorizedException : AppException()
+
 class EmailRequiredException : AppException()
 
 class EmailInvalidException : AppException()

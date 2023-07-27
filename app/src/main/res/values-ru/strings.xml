@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Common  -->
+    <string name="network_error">Нет подключения к интернету</string>
+    <!--  AuthScreen  -->
+    <string name="auth_screen_meeting_room_icon_description">Иконка переговорной комнаты</string>
+    <string name="auth_screen_email_hint">Email</string>
+    <string name="auth_screen_password_hint">Пароль</string>
+    <string name="auth_screen_sign_in_button">Войти</string>
+    <string name="auth_screen_email_required_error">Email обязателен к заполнению</string>
+    <string name="auth_screen_email_invalid_error">Недействительный email</string>
+    <string name="auth_screen_email_not_registered_error">Email не зарегистрирован</string>
+    <string name="auth_screen_password_required_error">Пароль обязателен к заполнению</string>
+    <string name="auth_screen_password_too_short_error">Пароль должен содержать как минимум %d символов</string>
+    <string name="auth_screen_password_invalid_error">Невверный пароль</string>
+</resources>

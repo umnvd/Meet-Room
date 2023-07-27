@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,6 +49,8 @@ fun AuthScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    // Не могу вызвать в эффекте
+    val networkErrorMessage = stringResource(R.string.network_error)
 
     if (state.signedIn) {
         SideEffect {
@@ -59,11 +62,12 @@ fun AuthScreen(
 
     LaunchedEffect(state.networkError) {
         if (state.networkError) {
-            snackbarHostState.showSnackbar("Network error")
+            snackbarHostState.showSnackbar(networkErrorMessage)
             viewModel.networkErrorHandled()
         }
     }
 
+    // Preview не может инициализировать вьюмодель
     AuthScreenView(
         state = state,
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -94,9 +98,10 @@ private fun AuthScreenView(
                 .padding(horizontal = 32.dp),
         ) {
             Icon(
-                // painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 imageVector = Icons.Outlined.MeetingRoom,
-                contentDescription = "",
+                contentDescription = stringResource(
+                    R.string.auth_screen_meeting_room_icon_description
+                ),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(48.dp),
             )
@@ -108,29 +113,37 @@ private fun AuthScreenView(
             )
             Spacer(modifier = Modifier.height(64.dp))
             AppTextField(
-                placeholder = "Email",
+                placeholder = stringResource(R.string.auth_screen_email_hint),
                 value = state.email.value,
                 onValueChange = onEmailChange,
                 error = state.email.error?.let {
                     when (it) {
-                        is EmailFieldError.Required -> "Email is required"
-                        is EmailFieldError.Invalid -> "Email is invalid"
-                        is EmailFieldError.NotRegistered -> "User with this email is not registered"
+                        is EmailFieldError.Required ->
+                            stringResource(R.string.auth_screen_email_required_error)
+                        is EmailFieldError.Invalid ->
+                            stringResource(R.string.auth_screen_email_invalid_error)
+                        is EmailFieldError.NotRegistered ->
+                            stringResource(R.string.auth_screen_email_not_registered_error)
                     }
                 },
                 enabled = state.fieldsEnabled,
             )
             Spacer(modifier = Modifier.height(8.dp))
             AppTextField(
-                placeholder = "Password",
+                placeholder = stringResource(R.string.auth_screen_password_hint),
                 value = state.password.value,
                 onValueChange = onPasswordChange,
                 error = state.password.error?.let {
                     when (it) {
-                        // TODO: String resources
-                        is PasswordFieldError.Required -> "Password is required"
-                        is PasswordFieldError.TooShort -> "Password must have at least ${it.minLength}"
-                        is PasswordFieldError.Invalid -> "Password is invalid"
+                        is PasswordFieldError.Required ->
+                            stringResource(R.string.auth_screen_password_required_error)
+                        is PasswordFieldError.TooShort ->
+                            stringResource(
+                                R.string.auth_screen_password_too_short_error,
+                                it.minLength
+                            )
+                        is PasswordFieldError.Invalid ->
+                            stringResource(R.string.auth_screen_password_invalid_error)
                     }
                 },
                 visualTransformation = PasswordVisualTransformation(),
@@ -151,7 +164,7 @@ private fun AuthScreenView(
                         onClick = onSignInClick,
                         enabled = state.buttonEnabled,
                     ) {
-                        Text(text = "Sign In")
+                        Text(text = stringResource(R.string.auth_screen_sign_in_button))
                     }
                 }
             }
@@ -168,7 +181,7 @@ private fun AuthScreenViewPreview() {
     }
 }
 
-@Preview
+@Preview(locale = "ru")
 @Composable
 private fun AuthScreenViewPreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {

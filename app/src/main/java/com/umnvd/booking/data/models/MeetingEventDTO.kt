@@ -1,8 +1,8 @@
 package com.umnvd.booking.data.models
 
 /**
- * @param startAt dd-MM-yyyy HH:mm:ss
- * @param endAt dd-MM-yyyy HH:mm:ss
+ * @param startAt DD-MM-YYYYTHH:mm:ssZ
+ * @param endAt DD-MM-YYYYTHH:mm:ssZ
  */
 data class MeetingEventDTO(
     val uid: String,

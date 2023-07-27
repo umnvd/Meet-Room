@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 import com.umnvd.booking.presentation.events.MeetingEventsScreen
 
-private const val meetingEventsScreenRoute = "meeting_events"
+const val meetingEventsScreenRoute = "meeting_events"
 
 fun NavGraphBuilder.meetingEventsScreen(onBack: () -> Unit) {
     composable(meetingEventsScreenRoute) {

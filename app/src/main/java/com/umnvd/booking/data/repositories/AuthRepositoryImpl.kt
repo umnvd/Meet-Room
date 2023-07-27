@@ -15,19 +15,22 @@ class AuthRepositoryImpl @Inject constructor(
     private val usersService: UsersService,
     private val dispatchers: AppDispatchers,
 ) : AuthRepository {
+
     override suspend fun signIn(email: String, password: String): User =
         withContext(dispatchers.io) {
             val userUid = authService.signIn(email, password)
             val userDto = usersService.getUser(userUid)
             Log.d(this@AuthRepositoryImpl.javaClass.simpleName, userDto.toString())
             return@withContext UserDtoMapper.dtoToDomain(userDto)
-
         }
-
 
     override suspend fun signOut() = withContext(dispatchers.io) {
         authService.signOut()
         Log.d(this@AuthRepositoryImpl.javaClass.simpleName, "signed out")
         return@withContext
+    }
+
+    override fun isAuthorized(): Boolean {
+        return authService.currentUserUid() != null
     }
 }

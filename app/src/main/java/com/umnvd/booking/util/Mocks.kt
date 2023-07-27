@@ -61,11 +61,11 @@ val mockMeetingEvent = MeetingEvent(
     title = "ScumTech",
     description = "Собрание учредителей ScumTech",
     startAt = LocalDateTime.of(
-        LocalDate.now(),
+        LocalDate.of(2023, 7, 28),
         LocalTime.of(1, 0),
     ),
     endAt = LocalDateTime.of(
-        LocalDate.now(),
+        LocalDate.of(2023, 7, 28),
         LocalTime.of(2, 0),
     ),
     room = mockMeetingRoom,

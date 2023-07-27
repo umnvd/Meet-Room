@@ -2,6 +2,7 @@ package com.umnvd.booking.data.services
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.umnvd.booking.data.models.UserDTO
+import com.umnvd.booking.data.services.utils.FirestoreContract
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

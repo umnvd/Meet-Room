@@ -5,6 +5,7 @@ package com.umnvd.booking.core.navigation
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.umnvd.booking.core.navigation.navigations.authScreen
@@ -16,10 +17,11 @@ import com.umnvd.booking.core.navigation.navigations.navigateToMeetingEvents
 fun AppNavGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    startDestination: String = authScreenRoute,
 ) {
     AnimatedNavHost(
         navController = navController,
-        startDestination = authScreenRoute,
+        startDestination = startDestination,
         enterTransition = NavigationTransitions.enter,
         exitTransition = NavigationTransitions.exit,
         popEnterTransition = NavigationTransitions.popEnter,

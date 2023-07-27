@@ -1,4 +1,4 @@
-package com.umnvd.booking.data.services
+package com.umnvd.booking.data.services.utils
 
 object FirestoreContract {
     object Users {
