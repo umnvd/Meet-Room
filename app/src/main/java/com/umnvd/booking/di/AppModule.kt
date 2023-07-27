@@ -6,9 +6,16 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-@Module
+@Module(
+    includes = [
+        ActivityModule::class,
+        AssistedInjectModule::class,
+        RepositoriesModule::class,
+        FirebaseModule::class,
+    ]
+)
 @InstallIn(SingletonComponent::class)
-interface AppModule {
+class AppModule {
     @Provides
-    fun provideIoDispatcher(): AppDispatchers = AppDispatchers.Default
+    fun provideDispatchers(): AppDispatchers = AppDispatchers.Default
 }

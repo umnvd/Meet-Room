@@ -6,5 +6,4 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AssistedInjectModule {
-}
+interface AssistedInjectModule

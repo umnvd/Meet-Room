@@ -68,4 +68,12 @@ class MeetingRoomsService @Inject constructor(
 
         return getRoom(uid)
     }
+
+    suspend fun deleteRoom(uid: String) {
+        firebaseFirestore
+            .collection(FirestoreContract.Rooms.COLLECTION_KEY)
+            .document(uid)
+            .delete()
+            .await()
+    }
 }

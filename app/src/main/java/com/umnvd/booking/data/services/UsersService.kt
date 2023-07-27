@@ -23,4 +23,21 @@ class UsersService @Inject constructor(
             photoUrl = userSnapshot.getString(FirestoreContract.Users.PHOTO_URL_KEY)!!,
         )
     }
+
+    suspend fun getUsers(): List<UserDTO> {
+        val usersSnapshots = firebaseFirestore
+            .collection(FirestoreContract.Users.COLLECTION_KEY)
+            .get()
+            .await()
+            .documents
+
+        return usersSnapshots.map {
+            UserDTO(
+                uid = it.id,
+                nickname = it.getString(FirestoreContract.Users.NICKNAME_KEY)!!,
+                fullName = it.getString(FirestoreContract.Users.FULL_NAME_KEY)!!,
+                photoUrl = it.getString(FirestoreContract.Users.PHOTO_URL_KEY)!!,
+            )
+        }
+    }
 }

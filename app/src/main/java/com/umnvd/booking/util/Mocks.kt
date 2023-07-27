@@ -43,7 +43,12 @@ val mockMeetingRoom = MeetingRoom(
     uid = "mock_room_1",
     name = "Офис ScumTech",
     address = "ул Димитрова, д. 3",
-    photoUrl = "https://www.justcoglobal.com/wp-content/uploads/2022/06/Just-Inspire-1.jpg",
+)
+
+val mockMeetingRoomList = listOf(
+    mockMeetingRoom,
+    mockMeetingRoom.copy(uid = "mock_room_2"),
+    mockMeetingRoom.copy(uid = "mock_room_3"),
 )
 
 val mockMeetingRoomLongNames = mockMeetingRoom.copy(
