@@ -26,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,7 +48,6 @@ fun AuthScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
-    // Не могу вызвать в эффекте
     val networkErrorMessage = stringResource(R.string.network_error)
 
     if (state.signedIn) {
@@ -68,7 +66,7 @@ fun AuthScreen(
     }
 
     // Preview не может инициализировать вьюмодель
-    AuthScreenView(
+    AuthScreenContent(
         state = state,
         snackbarHost = { SnackbarHost(snackbarHostState) },
         onEmailChange = viewModel::setEmail,
@@ -78,7 +76,7 @@ fun AuthScreen(
 }
 
 @Composable
-private fun AuthScreenView(
+private fun AuthScreenContent(
     state: AuthScreenState,
     modifier: Modifier = Modifier,
     snackbarHost: @Composable () -> Unit = {},
@@ -120,8 +118,10 @@ private fun AuthScreenView(
                     when (it) {
                         is EmailFieldError.Required ->
                             stringResource(R.string.auth_screen_email_required_error)
+
                         is EmailFieldError.Invalid ->
                             stringResource(R.string.auth_screen_email_invalid_error)
+
                         is EmailFieldError.NotRegistered ->
                             stringResource(R.string.auth_screen_email_not_registered_error)
                     }
@@ -137,11 +137,13 @@ private fun AuthScreenView(
                     when (it) {
                         is PasswordFieldError.Required ->
                             stringResource(R.string.auth_screen_password_required_error)
+
                         is PasswordFieldError.TooShort ->
                             stringResource(
                                 R.string.auth_screen_password_too_short_error,
                                 it.minLength
                             )
+
                         is PasswordFieldError.Invalid ->
                             stringResource(R.string.auth_screen_password_invalid_error)
                     }
@@ -177,7 +179,7 @@ private fun AuthScreenView(
 @Composable
 private fun AuthScreenViewPreview() {
     MeetingRoomBookingTheme {
-        AuthScreenView(state = AuthScreenState())
+        AuthScreenContent(state = AuthScreenState())
     }
 }
 
@@ -185,6 +187,6 @@ private fun AuthScreenViewPreview() {
 @Composable
 private fun AuthScreenViewPreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {
-        AuthScreenView(state = AuthScreenState())
+        AuthScreenContent(state = AuthScreenState())
     }
 }

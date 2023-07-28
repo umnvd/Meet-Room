@@ -11,10 +11,11 @@ import com.umnvd.booking.domain.errors.NetworkException
 import com.umnvd.booking.domain.errors.PasswordInvalidException
 import com.umnvd.booking.domain.errors.PasswordMinLengthException
 import com.umnvd.booking.domain.errors.PasswordRequiredException
-import com.umnvd.booking.domain.usecases.SignInUseCase
+import com.umnvd.booking.domain.auth.usecases.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,32 +27,29 @@ class AuthScreenViewModel @Inject constructor(
     val state: StateFlow<AuthScreenState> = _state
 
     fun setEmail(value: String) {
-        viewModelScope.launch {
-            _state.emit(_state.value.copy(email = FieldState(value)))
-        }
+        _state.update { it.copy(email = FieldState(value)) }
     }
 
     fun setPassword(value: String) {
-        viewModelScope.launch {
-            _state.emit(_state.value.copy(password = FieldState(value)))
-        }
+        _state.update { it.copy(password = FieldState(value)) }
     }
 
     fun signIn() {
+        _state.update { it.copy(loading = true) }
         viewModelScope.launch {
-            _state.emit(_state.value.copy(loading = true))
             try {
                 signInUseCase(
-                    email = _state.value.email.value,
-                    password = _state.value.password.value,
-                )
-                _state.emit(_state.value.copy(signedIn = true))
-            } catch (e: EmailRequiredException) {
-                _state.emit(
-                    _state.value.copy(
-                        email = _state.value.email.copy(error = EmailFieldError.Required)
+                    SignInUseCase.Params(
+                        email = _state.value.email.value,
+                        password = _state.value.password.value,
                     )
                 )
+                _state.update { it.copy(signedIn = true) }
+                // TODO: error handling
+            } catch (e: EmailRequiredException) {
+                _state.update {
+                    it.copy(email = it.email.copy(error = EmailFieldError.Required))
+                }
             } catch (e: EmailInvalidException) {
                 _state.emit(
                     _state.value.copy(

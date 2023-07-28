@@ -22,15 +22,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
-import com.umnvd.booking.domain.models.MeetingRoom
-import com.umnvd.booking.util.mockMeetingRoom
-import com.umnvd.booking.util.mockMeetingRoomLongNames
+import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
+import com.umnvd.booking.util.PreviewMocks
 
 @Composable
 fun RoomListItemView(
-    room: MeetingRoom,
+    room: MeetingRoomModel,
     modifier: Modifier = Modifier,
-    onRoomClick: ((MeetingRoom) -> Unit)? = null,
+    onRoomClick: ((MeetingRoomModel) -> Unit)? = null,
 ) {
     Column(
         modifier = modifier
@@ -70,7 +69,7 @@ private fun RoomListItemViewPreview() {
     MeetingRoomBookingTheme {
         Surface(Modifier.fillMaxWidth()) {
             RoomListItemView(
-                room = mockMeetingRoom,
+                room = PreviewMocks.MeetingRooms().room,
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -82,7 +81,7 @@ private fun RoomListItemViewPreview() {
 private fun RoomListItemViewLongNamesPreview() {
     MeetingRoomBookingTheme(darkTheme = true) {
         Surface(Modifier.fillMaxWidth()) {
-            RoomListItemView(room = mockMeetingRoomLongNames)
+            RoomListItemView(room = PreviewMocks.MeetingRooms().roomLongNames)
         }
     }
 }

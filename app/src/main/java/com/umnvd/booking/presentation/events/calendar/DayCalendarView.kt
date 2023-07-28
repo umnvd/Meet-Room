@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.dp
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.theme.hint
-import com.umnvd.booking.domain.models.MeetingEvent
+import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.presentation.events.DayCalendarEventView
-import com.umnvd.booking.util.mockMeetingEventList
+import com.umnvd.booking.util.PreviewMocks
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -36,16 +36,16 @@ import kotlin.math.roundToInt
 
 @Composable
 fun DayCalendarView(
-    events: List<MeetingEvent>,
+    events: List<MeetingEventModel>,
     modifier: Modifier = Modifier,
-    onEventClick: ((MeetingEvent) -> Unit)? = null,
+    onEventClick: ((MeetingEventModel) -> Unit)? = null,
 ) {
     val hourHeight = 64.dp
 
     Row(modifier = modifier.verticalScroll(rememberScrollState())) {
         DayCalendarSidebar(hourHeight = hourHeight)
         DayCalendarLayout(hourHeight = hourHeight) {
-            events.sortedBy(MeetingEvent::startAt).forEach {
+            events.sortedBy(MeetingEventModel::startAt).forEach {
                 DayCalendarEventView(
                     event = it,
                     onEventClick = onEventClick,
@@ -87,7 +87,7 @@ private fun DayCalendarLayout(
             },
     ) { measureables, constraints ->
         val placeablesWithEvents = measureables.map { measurable ->
-            val event = measurable.parentData as MeetingEvent
+            val event = measurable.parentData as MeetingEventModel
             val eventDurationMinutes = ChronoUnit.MINUTES.between(event.startAt, event.endAt)
             val eventHeight = ((eventDurationMinutes / 60f) * hourHeight.toPx()).roundToInt() - 4
             val eventWidth = (constraints.maxWidth.toDp() - 16.dp).toPx().toInt()
@@ -155,7 +155,7 @@ private fun DayCalendarViewPreview() {
     MeetingRoomBookingTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             DayCalendarView(
-                events = mockMeetingEventList,
+                events = PreviewMocks.MeetingEvents().eventsList,
             )
         }
     }
@@ -167,7 +167,7 @@ private fun DayCalendarViewPreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {
         Surface(modifier = Modifier.fillMaxSize()) {
             DayCalendarView(
-                events = mockMeetingEventList,
+                events = PreviewMocks.MeetingEvents().eventsList,
             )
         }
     }

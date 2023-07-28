@@ -45,11 +45,11 @@ import com.marosseleng.compose.material3.datetimepickers.date.ui.dialog.DatePick
 import com.marosseleng.compose.material3.datetimepickers.time.ui.dialog.TimePickerDialog
 import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppTextField
+import com.umnvd.booking.core.ui.components.debugPlaceholder
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.theme.hint
-import com.umnvd.booking.util.debugPlaceholder
-import com.umnvd.booking.util.mockUserList
+import com.umnvd.booking.util.PreviewMocks
 import java.time.LocalDate
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
@@ -201,7 +201,7 @@ fun EventFormView(
             Column(
                 modifier = Modifier.padding(top = 4.dp, end = 8.dp),
             ) {
-                for (user in mockUserList) {
+                for (user in PreviewMocks.Users().usersList) {
                     Row(
                         modifier = Modifier
                             .padding(start = 16.dp)

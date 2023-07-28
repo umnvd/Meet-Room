@@ -1,10 +1,11 @@
 package com.umnvd.booking.di
 
-import com.umnvd.booking.core.data.AppDispatchers
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @Module(
     includes = [
@@ -16,6 +17,16 @@ import dagger.hilt.components.SingletonComponent
 )
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
     @Provides
-    fun provideDispatchers(): AppDispatchers = AppDispatchers.Default
+    @IoDispatcher
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @DefaultDispatcher
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
+    @Provides
+    @UnconfinedDispatcher
+    fun provideUnconfinedDispatcher(): CoroutineDispatcher = Dispatchers.Unconfined
 }

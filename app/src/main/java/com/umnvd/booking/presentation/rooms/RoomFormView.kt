@@ -21,12 +21,12 @@ import androidx.compose.ui.unit.sp
 import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
-import com.umnvd.booking.domain.models.MeetingRoom
-import com.umnvd.booking.util.mockMeetingRoom
+import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
+import com.umnvd.booking.util.PreviewMocks
 
 @Composable
 fun RoomFormView(
-    room: MeetingRoom,
+    room: MeetingRoomModel,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
@@ -65,7 +65,7 @@ fun RoomFormView(
 private fun RoomFormViewPreview() {
     MeetingRoomBookingTheme {
         Surface(Modifier.fillMaxSize()) {
-            RoomFormView(room = mockMeetingRoom)
+            RoomFormView(room = PreviewMocks.MeetingRooms().room)
         }
     }
 }
@@ -75,7 +75,7 @@ private fun RoomFormViewPreview() {
 private fun RoomFormViewPreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {
         Surface(Modifier.fillMaxSize()) {
-            RoomFormView(room = mockMeetingRoom)
+            RoomFormView(room = PreviewMocks.MeetingRooms().roomLongNames)
         }
     }
 }

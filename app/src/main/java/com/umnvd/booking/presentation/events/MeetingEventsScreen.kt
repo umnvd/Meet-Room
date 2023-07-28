@@ -16,7 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.umnvd.booking.data.services.AuthService
+import com.umnvd.booking.data.auth.services.AuthService
 import kotlinx.coroutines.launch
 
 @Composable

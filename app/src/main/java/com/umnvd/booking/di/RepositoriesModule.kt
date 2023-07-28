@@ -1,13 +1,13 @@
 package com.umnvd.booking.di
 
-import com.umnvd.booking.data.repositories.AuthRepositoryImpl
-import com.umnvd.booking.data.repositories.MeetingEventsRepositoryImpl
-import com.umnvd.booking.data.repositories.MeetingRoomsRepositoryImpl
-import com.umnvd.booking.data.repositories.UsersRepositoryImpl
-import com.umnvd.booking.domain.repositories.AuthRepository
-import com.umnvd.booking.domain.repositories.MeetingEventsRepository
-import com.umnvd.booking.domain.repositories.MeetingRoomsRepository
-import com.umnvd.booking.domain.repositories.UsersRepository
+import com.umnvd.booking.data.auth.repositories.AuthRepositoryImpl
+import com.umnvd.booking.data.events.repositories.MeetingEventsRepositoryImpl
+import com.umnvd.booking.data.rooms.repositories.MeetingRoomsRepositoryImpl
+import com.umnvd.booking.data.users.repositories.UsersRepositoryImpl
+import com.umnvd.booking.domain.auth.repositories.AuthRepository
+import com.umnvd.booking.domain.events.repositories.MeetingEventsRepository
+import com.umnvd.booking.domain.rooms.repositories.MeetingRoomsRepository
+import com.umnvd.booking.domain.users.repositories.UsersRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
