@@ -36,10 +36,9 @@ import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
+import com.umnvd.booking.core.ui.utils.text
 import com.umnvd.booking.presentation.auth.viewmodel.AuthScreenState
 import com.umnvd.booking.presentation.auth.viewmodel.AuthScreenViewModel
-import com.umnvd.booking.presentation.auth.viewmodel.EmailFieldError
-import com.umnvd.booking.presentation.auth.viewmodel.PasswordFieldError
 
 @Composable
 fun AuthScreen(
@@ -114,18 +113,7 @@ private fun AuthScreenContent(
                 placeholder = stringResource(R.string.auth_screen_email_hint),
                 value = state.email.value,
                 onValueChange = onEmailChange,
-                error = state.email.error?.let {
-                    when (it) {
-                        is EmailFieldError.Required ->
-                            stringResource(R.string.auth_screen_email_required_error)
-
-                        is EmailFieldError.Invalid ->
-                            stringResource(R.string.auth_screen_email_invalid_error)
-
-                        is EmailFieldError.NotRegistered ->
-                            stringResource(R.string.auth_screen_email_not_registered_error)
-                    }
-                },
+                error = state.email.error?.text,
                 enabled = state.fieldsEnabled,
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -133,21 +121,7 @@ private fun AuthScreenContent(
                 placeholder = stringResource(R.string.auth_screen_password_hint),
                 value = state.password.value,
                 onValueChange = onPasswordChange,
-                error = state.password.error?.let {
-                    when (it) {
-                        is PasswordFieldError.Required ->
-                            stringResource(R.string.auth_screen_password_required_error)
-
-                        is PasswordFieldError.TooShort ->
-                            stringResource(
-                                R.string.auth_screen_password_too_short_error,
-                                it.minLength
-                            )
-
-                        is PasswordFieldError.Invalid ->
-                            stringResource(R.string.auth_screen_password_invalid_error)
-                    }
-                },
+                error = state.password.error?.text,
                 visualTransformation = PasswordVisualTransformation(),
                 enabled = state.fieldsEnabled
             )

@@ -1,9 +1,13 @@
 package com.umnvd.booking.domain.auth.usecases
 
-import com.umnvd.booking.domain.errors.EmailInvalidException
-import com.umnvd.booking.domain.errors.EmailRequiredException
-import com.umnvd.booking.domain.errors.PasswordMinLengthException
-import com.umnvd.booking.domain.errors.PasswordRequiredException
+import com.umnvd.booking.domain.EmailInvalidException
+import com.umnvd.booking.domain.EmailNotRegisteredException
+import com.umnvd.booking.domain.EmailRequiredException
+import com.umnvd.booking.domain.NetworkException
+import com.umnvd.booking.domain.PasswordInvalidException
+import com.umnvd.booking.domain.PasswordMinLengthException
+import com.umnvd.booking.domain.PasswordRequiredException
+import com.umnvd.booking.domain.auth.models.SignInResult
 import com.umnvd.booking.domain.auth.repositories.AuthRepository
 import javax.inject.Inject
 
@@ -13,15 +17,29 @@ class SignInUseCase @Inject constructor(
 
     private val emailRegex = Regex(EMAIL_PATTERN)
 
-    suspend operator fun invoke(params: Params) {
+    suspend operator fun invoke(params: Params): SignInResult {
         val trimmedEmail = params.email.trim()
         val trimmedPassword = params.password.trim()
 
-        if (trimmedEmail.isEmpty()) throw EmailRequiredException()
-        if (!emailRegex.matches(trimmedEmail)) throw EmailInvalidException()
-        if (trimmedPassword.isEmpty()) throw PasswordRequiredException()
-        if (trimmedPassword.length < 6) throw PasswordMinLengthException(6)
-        authRepository.signIn(trimmedEmail, trimmedPassword)
+        if (trimmedEmail.isEmpty())
+            return SignInResult.EmailError(EmailRequiredException())
+        if (!emailRegex.matches(trimmedEmail))
+            return SignInResult.EmailError(EmailInvalidException())
+        if (trimmedPassword.isEmpty())
+            return SignInResult.PasswordError(PasswordRequiredException())
+        if (trimmedPassword.length < 6)
+            return SignInResult.PasswordError(PasswordMinLengthException(6))
+
+        try {
+            authRepository.signIn(trimmedEmail, trimmedPassword)
+        } catch (e: EmailNotRegisteredException) {
+            return SignInResult.EmailError(e)
+        } catch (e: PasswordInvalidException) {
+            return SignInResult.PasswordError(e)
+        } catch (e: NetworkException) {
+            return SignInResult.NetworkError(e)
+        }
+        return SignInResult.Success
     }
 
     private companion object {

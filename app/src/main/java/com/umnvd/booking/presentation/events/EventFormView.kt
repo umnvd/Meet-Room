@@ -45,10 +45,10 @@ import com.marosseleng.compose.material3.datetimepickers.date.ui.dialog.DatePick
 import com.marosseleng.compose.material3.datetimepickers.time.ui.dialog.TimePickerDialog
 import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppTextField
-import com.umnvd.booking.core.ui.components.debugPlaceholder
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.theme.hint
+import com.umnvd.booking.core.ui.utils.debugPlaceholder
 import com.umnvd.booking.util.PreviewMocks
 import java.time.LocalDate
 

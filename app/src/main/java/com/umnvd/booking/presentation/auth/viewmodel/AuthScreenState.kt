@@ -3,8 +3,8 @@ package com.umnvd.booking.presentation.auth.viewmodel
 import com.umnvd.booking.core.models.FieldState
 
 data class AuthScreenState(
-    val email: FieldState<String, EmailFieldError> = FieldState("", null),
-    val password: FieldState<String, PasswordFieldError> = FieldState("", null),
+    val email: FieldState<String> = FieldState(""),
+    val password: FieldState<String> = FieldState(""),
     val loading: Boolean = false,
     val signedIn: Boolean = false,
     val networkError: Boolean = false,
@@ -14,22 +14,4 @@ data class AuthScreenState(
 
     val fieldsEnabled: Boolean
         get() = !loading
-}
-
-sealed class EmailFieldError {
-
-    object Required : EmailFieldError()
-
-    object Invalid : EmailFieldError()
-
-    object NotRegistered : EmailFieldError()
-}
-
-sealed class PasswordFieldError {
-
-    object Required : PasswordFieldError()
-
-    class TooShort(val minLength: Int) : PasswordFieldError()
-
-    object Invalid : PasswordFieldError()
 }

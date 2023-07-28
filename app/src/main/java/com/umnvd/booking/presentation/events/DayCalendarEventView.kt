@@ -32,9 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.umnvd.booking.R
-import com.umnvd.booking.core.ui.components.debugPlaceholder
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hintOnSecondary
+import com.umnvd.booking.core.ui.utils.debugPlaceholder
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.domain.users.models.UserModel
 import com.umnvd.booking.util.PreviewMocks

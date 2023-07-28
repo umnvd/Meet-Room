@@ -1,11 +1,11 @@
 package com.umnvd.booking.data.users.repositories
 
 import android.util.Log
-import com.umnvd.booking.data.users.mappers.UserRemoteModelMapper
 import com.umnvd.booking.data.auth.services.AuthService
+import com.umnvd.booking.data.users.mappers.UserRemoteModelMapper
 import com.umnvd.booking.data.users.services.UsersService
 import com.umnvd.booking.di.IoDispatcher
-import com.umnvd.booking.domain.errors.UnauthorizedException
+import com.umnvd.booking.domain.UnauthorizedException
 import com.umnvd.booking.domain.users.models.UserModel
 import com.umnvd.booking.domain.users.repositories.UsersRepository
 import kotlinx.coroutines.CoroutineDispatcher

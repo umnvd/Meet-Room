@@ -1,8 +1,10 @@
 package com.umnvd.booking.core.models
 
-data class FieldState<V, E>(
+import com.umnvd.booking.domain.AppException
+
+data class FieldState<V>(
     val value: V,
-    val error: E? = null,
+    val error: AppException? = null,
 ) {
     val valid: Boolean
         get() = error == null

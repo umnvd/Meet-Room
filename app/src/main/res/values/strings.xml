@@ -3,15 +3,15 @@
     <string name="app_name" translatable="false">Meet Room</string>
     <!--  Common  -->
     <string name="network_error">No network connection</string>
+    <string name="email_required_error">Email is required</string>
+    <string name="email_invalid_error">Invalid email</string>
+    <string name="email_not_registered_error">Email is not registered</string>
+    <string name="password_required_error">Password is required</string>
+    <string name="password_too_short_error">Password must contain at least %d characters</string>
+    <string name="password_invalid_error">Wrong password</string>
     <!--  AuthScreen  -->
     <string name="auth_screen_meeting_room_icon_description">Meeting room icon</string>
     <string name="auth_screen_email_hint">Email</string>
     <string name="auth_screen_password_hint">Password</string>
     <string name="auth_screen_sign_in_button">Sign In</string>
-    <string name="auth_screen_email_required_error">Email is required</string>
-    <string name="auth_screen_email_invalid_error">Invalid email</string>
-    <string name="auth_screen_email_not_registered_error">Email is not registered</string>
-    <string name="auth_screen_password_required_error">Password is required</string>
-    <string name="auth_screen_password_too_short_error">Password must contain at least %d characters</string>
-    <string name="auth_screen_password_invalid_error">Wrong password</string>
 </resources>

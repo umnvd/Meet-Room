@@ -1,4 +1,4 @@
-package com.umnvd.booking.core.ui.components
+package com.umnvd.booking.core.ui.utils
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable

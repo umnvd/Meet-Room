@@ -1,4 +1,4 @@
-package com.umnvd.booking.domain.errors
+package com.umnvd.booking.domain
 
 sealed class AppException : RuntimeException()
 

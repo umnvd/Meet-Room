@@ -5,9 +5,9 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.umnvd.booking.domain.errors.EmailNotRegisteredException
-import com.umnvd.booking.domain.errors.NetworkException
-import com.umnvd.booking.domain.errors.PasswordInvalidException
+import com.umnvd.booking.domain.EmailNotRegisteredException
+import com.umnvd.booking.domain.NetworkException
+import com.umnvd.booking.domain.PasswordInvalidException
 
 suspend fun <T> withFirebaseExceptionMapper(
     block: suspend () -> T
