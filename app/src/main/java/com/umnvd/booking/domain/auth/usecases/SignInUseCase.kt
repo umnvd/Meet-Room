@@ -37,7 +37,7 @@ class SignInUseCase @Inject constructor(
         } catch (e: PasswordInvalidException) {
             return SignInResult.PasswordError(e)
         } catch (e: NetworkException) {
-            return SignInResult.NetworkError(e)
+            return SignInResult.NetworkError
         }
         return SignInResult.Success
     }

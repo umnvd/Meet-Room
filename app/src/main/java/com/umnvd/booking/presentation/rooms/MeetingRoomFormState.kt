@@ -1,6 +1,6 @@
 package com.umnvd.booking.presentation.rooms
 
-import com.umnvd.booking.core.models.FieldState
+import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.domain.rooms.models.MeetingRoomFormModel
 
 data class MeetingRoomFormState(

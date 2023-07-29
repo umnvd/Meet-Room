@@ -1,6 +1,7 @@
 package com.umnvd.booking.presentation.rooms
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,12 +30,13 @@ import com.umnvd.booking.util.PreviewMocks
 fun RoomListItemView(
     room: MeetingRoomModel,
     modifier: Modifier = Modifier,
-    onRoomClick: ((MeetingRoomModel) -> Unit)? = null,
+    onRoomClick: (MeetingRoomModel) -> Unit = {},
 ) {
     Column(
         modifier = modifier
             .background(color = MaterialTheme.colorScheme.surface)
-            .padding(8.dp)
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .clickable(onClick = { onRoomClick(room) })
     ) {
         Text(
             text = room.name,

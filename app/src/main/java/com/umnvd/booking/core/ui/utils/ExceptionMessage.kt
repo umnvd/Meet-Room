@@ -1,7 +1,9 @@
 package com.umnvd.booking.core.ui.utils
 
+import android.content.Context
+import android.content.res.Resources
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
 import com.umnvd.booking.R
 import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.EmailInvalidException
@@ -15,17 +17,21 @@ import com.umnvd.booking.domain.UnauthorizedException
 
 val AppException.text: String
     @Composable
-    get() = when (this) {
-        is NetworkException -> stringResource(R.string.network_error)
-        is UnauthorizedException -> "Unauthorized"
-        is EmailRequiredException -> stringResource(R.string.email_required_error)
-        is EmailInvalidException -> stringResource(R.string.email_invalid_error)
-        is EmailNotRegisteredException -> stringResource(R.string.email_not_registered_error)
-        is PasswordRequiredException -> stringResource(R.string.password_required_error)
-        is PasswordMinLengthException -> stringResource(
-            R.string.password_too_short_error,
-            minLength
-        )
+    get() = textFromResources(LocalContext.current.resources)
 
-        is PasswordInvalidException -> stringResource(R.string.password_invalid_error)
-    }
+fun AppException.getText(context: Context): String = textFromResources(context.resources)
+
+private fun AppException.textFromResources(resources: Resources): String = when (this) {
+    is NetworkException -> resources.getString(R.string.network_error)
+    is UnauthorizedException -> "Unauthorized" // TODO
+    is EmailRequiredException -> resources.getString(R.string.email_required_error)
+    is EmailInvalidException -> resources.getString(R.string.email_invalid_error)
+    is EmailNotRegisteredException -> resources.getString(R.string.email_not_registered_error)
+    is PasswordRequiredException -> resources.getString(R.string.password_required_error)
+    is PasswordMinLengthException -> resources.getString(
+        R.string.password_too_short_error,
+        minLength
+    )
+
+    is PasswordInvalidException -> resources.getString(R.string.password_invalid_error)
+}

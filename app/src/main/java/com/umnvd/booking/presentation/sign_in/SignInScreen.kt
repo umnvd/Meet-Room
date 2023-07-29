@@ -34,6 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppTextField
+import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.core.ui.utils.text
@@ -64,7 +65,8 @@ fun SignInScreen(
         }
     }
 
-    // Preview не может инициализировать вьюмодель
+    LocalAppProgressIndicatorController.current.state(state.loading)
+
     AuthScreenContent(
         state = state,
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -126,23 +128,11 @@ private fun AuthScreenContent(
                 enabled = state.fieldsEnabled
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Box(
-                Modifier.height(48.dp)
+            TextButton(
+                onClick = onSignInClick,
+                enabled = state.buttonEnabled,
             ) {
-                if (state.loading) {
-                    CircularProgressIndicator(
-                        strokeWidth = 4.dp,
-                        strokeCap = StrokeCap.Round,
-                        modifier = Modifier.height(36.dp)
-                    )
-                } else {
-                    TextButton(
-                        onClick = onSignInClick,
-                        enabled = state.buttonEnabled,
-                    ) {
-                        Text(text = stringResource(R.string.auth_screen_sign_in_button))
-                    }
-                }
+                Text(text = stringResource(R.string.auth_screen_sign_in_button))
             }
         }
     }

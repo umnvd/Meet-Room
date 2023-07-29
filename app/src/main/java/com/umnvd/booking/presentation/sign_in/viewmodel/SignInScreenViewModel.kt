@@ -2,7 +2,7 @@ package com.umnvd.booking.presentation.sign_in.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.umnvd.booking.core.models.FieldState
+import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.domain.auth.models.SignInResult
 import com.umnvd.booking.domain.auth.usecases.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +16,7 @@ import javax.inject.Inject
 class SignInScreenViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
 ) : ViewModel() {
+
     private val _state = MutableStateFlow(SignInScreenState())
     val state: StateFlow<SignInScreenState> = _state
 

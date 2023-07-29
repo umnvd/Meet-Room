@@ -1,6 +1,6 @@
 package com.umnvd.booking.presentation.events.components_old
 
-import com.umnvd.booking.core.models.FieldState
+import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.domain.events.models.MeetingEventFormModel
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
 import com.umnvd.booking.domain.users.models.UserModel

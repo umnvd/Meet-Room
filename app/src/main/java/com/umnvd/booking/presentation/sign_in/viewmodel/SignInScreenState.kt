@@ -1,6 +1,6 @@
 package com.umnvd.booking.presentation.sign_in.viewmodel
 
-import com.umnvd.booking.core.models.FieldState
+import com.umnvd.booking.core.ui.models.FieldState
 
 data class SignInScreenState(
     val email: FieldState<String> = FieldState(""),

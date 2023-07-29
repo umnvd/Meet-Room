@@ -1,4 +1,4 @@
-package com.umnvd.booking.core.models
+package com.umnvd.booking.core.ui.models
 
 import com.umnvd.booking.domain.AppException
 

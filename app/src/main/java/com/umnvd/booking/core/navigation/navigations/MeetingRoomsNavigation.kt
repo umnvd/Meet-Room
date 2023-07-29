@@ -27,7 +27,6 @@ fun NavGraphBuilder.meetingRoomsGraph(
             MeetingRoomListScreen(
                 onRoomClick = { navController.navigate("$ROOM_ROUTE_BASE$it") },
                 onCreateClick = { navController.navigate(CREATE_ROOM_ROUTE) },
-                onBackClick = navController::popBackStack,
             )
         }
         composable(
