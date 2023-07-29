@@ -50,13 +50,12 @@ fun SignInScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val networkErrorMessage = stringResource(R.string.network_error)
 
-    if (state.signedIn) {
-        SideEffect {
+    LaunchedEffect(state.signedIn) {
+        if (state.signedIn) {
             onSignedIn()
             viewModel.signedInHandled()
         }
     }
-
 
     LaunchedEffect(state.networkError) {
         if (state.networkError) {

@@ -29,7 +29,6 @@ import com.umnvd.booking.R
 import com.umnvd.booking.core.navigation.navigations.EVENTS_GRAPH_ROUTE
 import com.umnvd.booking.core.navigation.navigations.PROFILE_ROUTE
 import com.umnvd.booking.core.navigation.navigations.meetingEventsGraph
-import com.umnvd.booking.core.navigation.navigations.navigateToSignIn
 import com.umnvd.booking.core.navigation.navigations.profile
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.presentation.home.models.NavigationItemUiModel
@@ -37,7 +36,9 @@ import meetingRoomsGraph
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onSignedOut: () -> Unit
+) {
     val navController = rememberAnimatedNavController()
     val navigationBarItems = listOf(
         NavigationItemUiModel(
@@ -101,7 +102,7 @@ fun HomeScreen() {
         ) {
             meetingEventsGraph(navController = navController)
             meetingRoomsGraph(navController = navController)
-            profile(onSignedOut = navController::navigateToSignIn)
+            profile(onSignedOut = onSignedOut)
         }
     }
 }
@@ -110,6 +111,6 @@ fun HomeScreen() {
 @Composable
 private fun HomeScreenPreview() {
     MeetingRoomBookingTheme {
-        HomeScreen()
+        HomeScreen(onSignedOut = {})
     }
 }

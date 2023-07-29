@@ -10,6 +10,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.umnvd.booking.core.navigation.navigations.SIGN_IN_ROUTE
 import com.umnvd.booking.core.navigation.navigations.home
 import com.umnvd.booking.core.navigation.navigations.navigateToHome
+import com.umnvd.booking.core.navigation.navigations.navigateToSignIn
 import com.umnvd.booking.core.navigation.navigations.signIn
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -29,6 +30,6 @@ fun AppNavGraph(
         modifier = modifier,
     ) {
         signIn(onSignedIn = navController::navigateToHome)
-        home()
+        home(onSignedOut = navController::navigateToSignIn)
     }
 }

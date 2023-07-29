@@ -1,8 +1,9 @@
 package com.umnvd.booking.data.rooms.services
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.umnvd.booking.data.rooms.models.MeetingRoomRemoteModel
 import com.umnvd.booking.data.rooms.models.MeetingRoomFormRemoteModel
+import com.umnvd.booking.data.rooms.models.MeetingRoomRemoteModel
 import com.umnvd.booking.data.utils.FirestoreContract
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -31,6 +32,8 @@ class MeetingRoomsService @Inject constructor(
             .get()
             .await()
             .documents
+
+        Log.d("ABOBA", snapshots.toString())
 
         return snapshots.map {
             MeetingRoomRemoteModel(

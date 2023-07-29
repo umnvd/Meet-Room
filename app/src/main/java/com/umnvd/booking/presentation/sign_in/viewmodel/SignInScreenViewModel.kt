@@ -1,68 +1,58 @@
 package com.umnvd.booking.presentation.sign_in.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.ui.models.FieldState
+import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
 import com.umnvd.booking.domain.auth.models.SignInResult
 import com.umnvd.booking.domain.auth.usecases.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInScreenViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
-) : ViewModel() {
-
-    private val _state = MutableStateFlow(SignInScreenState())
-    val state: StateFlow<SignInScreenState> = _state
+) : BaseViewModel<SignInScreenState>(SignInScreenState()) {
 
     fun setEmail(value: String) {
-        _state.update { it.copy(email = FieldState(value)) }
+        updateState { it.copy(email = FieldState(value)) }
     }
 
     fun setPassword(value: String) {
-        _state.update { it.copy(password = FieldState(value)) }
+        updateState { it.copy(password = FieldState(value)) }
     }
 
     fun signIn() {
-        _state.update { it.copy(loading = true) }
+        updateState { it.copy(loading = true) }
         viewModelScope.launch {
             val result = signInUseCase(
                 SignInUseCase.Params(
-                    email = _state.value.email.value,
-                    password = _state.value.password.value,
+                    email = currentState.value.email.value,
+                    password = currentState.value.password.value,
                 )
             )
 
             when (result) {
-                is SignInResult.Success -> _state.update { it.copy(signedIn = true) }
-                is SignInResult.EmailError -> _state.update {
+                is SignInResult.Success -> updateState { it.copy(signedIn = true) }
+                is SignInResult.EmailError -> updateState {
                     it.copy(email = it.email.copy(error = result.error))
                 }
 
-                is SignInResult.PasswordError -> _state.update {
+                is SignInResult.PasswordError -> updateState {
                     it.copy(password = it.password.copy(error = result.error))
                 }
 
-                is SignInResult.NetworkError -> _state.update { it.copy(networkError = true) }
+                is SignInResult.NetworkError -> updateState { it.copy(networkError = true) }
             }
-            _state.update { it.copy(loading = false) }
+            updateState { it.copy(loading = false) }
         }
     }
 
     fun signedInHandled() {
-        viewModelScope.launch {
-            _state.emit(SignInScreenState())
-        }
+        updateState { SignInScreenState() }
     }
 
     fun networkErrorHandled() {
-        viewModelScope.launch {
-            _state.emit(_state.value.copy(networkError = false))
-        }
+        updateState { it.copy(networkError = false) }
     }
 }

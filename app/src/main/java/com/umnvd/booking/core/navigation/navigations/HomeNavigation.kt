@@ -9,12 +9,13 @@ import com.umnvd.booking.presentation.home.HomeScreen
 const val HOME_ROUTE = "home"
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.home() {
+fun NavGraphBuilder.home(onSignedOut: () -> Unit) {
     composable(HOME_ROUTE) {
-        HomeScreen()
+        HomeScreen(onSignedOut)
     }
 }
 
 fun NavHostController.navigateToHome() {
+    popBackStack(SIGN_IN_ROUTE, true)
     navigate(HOME_ROUTE)
 }
