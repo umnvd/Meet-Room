@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.calendar
+package com.umnvd.booking.presentation.events.components_old
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -67,7 +67,7 @@ fun WeekCalendarView(
             }
         )
         HorizontalPager(pageCount = dates.size, state = pagerState) { page ->
-            DayCalendarView(events = PreviewMocks.MeetingEvents().eventsList)
+            DayCalendarView(events = PreviewMocks.MeetingEvents().eventList)
         }
     }
 }

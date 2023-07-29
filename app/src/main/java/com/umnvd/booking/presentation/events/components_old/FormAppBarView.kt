@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.calendar
+package com.umnvd.booking.presentation.events.components_old
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
-import com.umnvd.booking.presentation.events.EventFormView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

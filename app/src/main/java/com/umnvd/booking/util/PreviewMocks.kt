@@ -16,7 +16,7 @@ class PreviewMocks() {
             photoUrl = "https://i.pravatar.cc/300?img=11",
         )
 
-        val usersList = listOf(
+        val userList = listOf(
             user,
             UserModel(
                 uid = "mock_user_2",
@@ -51,7 +51,7 @@ class PreviewMocks() {
             address = LOREM,
         )
 
-        val roomsList = listOf(
+        val roomList = listOf(
             room,
             room.copy(uid = "mock_room_2"),
             room.copy(uid = "mock_room_3"),
@@ -72,7 +72,7 @@ class PreviewMocks() {
                 LocalTime.of(2, 0),
             ),
             room = MeetingRooms().room,
-            participants = Users().usersList,
+            participants = Users().userList,
         )
 
         val eventLongNames = event.copy(
@@ -80,7 +80,7 @@ class PreviewMocks() {
             room = MeetingRooms().roomLongNames,
         )
 
-        val eventsList = listOf(
+        val eventList = listOf(
             event,
             event.copy(
                 startAt = event.startAt.plusMinutes(90L),

@@ -5,19 +5,19 @@ package com.umnvd.booking.core.navigation
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.umnvd.booking.core.navigation.navigations.authScreen
-import com.umnvd.booking.core.navigation.navigations.authScreenRoute
-import com.umnvd.booking.core.navigation.navigations.meetingEventsScreen
-import com.umnvd.booking.core.navigation.navigations.navigateToMeetingEvents
+import com.umnvd.booking.core.navigation.navigations.SIGN_IN_ROUTE
+import com.umnvd.booking.core.navigation.navigations.home
+import com.umnvd.booking.core.navigation.navigations.navigateToHome
+import com.umnvd.booking.core.navigation.navigations.signIn
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = authScreenRoute,
+    startDestination: String = SIGN_IN_ROUTE,
 ) {
     AnimatedNavHost(
         navController = navController,
@@ -27,8 +27,8 @@ fun AppNavGraph(
         popEnterTransition = NavigationTransitions.popEnter,
         popExitTransition = NavigationTransitions.popExit,
         modifier = modifier,
-        ) {
-        authScreen(onSignedIn = navController::navigateToMeetingEvents)
-        meetingEventsScreen(onBack = navController::popBackStack)
+    ) {
+        signIn(onSignedIn = navController::navigateToHome)
+        home()
     }
 }

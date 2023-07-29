@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events
+package com.umnvd.booking.presentation.events.components_old
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -257,7 +257,7 @@ private fun DayCalendarEventViewHalfHourPreview() {
 @Composable
 private fun DayCalendarEventViewHourPreview() {
     val event = PreviewMocks.MeetingEvents().event
-    val users = PreviewMocks.Users().usersList
+    val users = PreviewMocks.Users().userList
 
     MeetingRoomBookingTheme(darkTheme = true) {
         Box(Modifier.height(64.dp)) {

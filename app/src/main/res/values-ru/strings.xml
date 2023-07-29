@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--  Common  -->
+    <!--  Errors  -->
     <string name="network_error">Нет подключения к интернету</string>
     <string name="email_required_error">Email обязателен к заполнению</string>
     <string name="email_invalid_error">Недействительный email</string>
@@ -8,6 +8,10 @@
     <string name="password_required_error">Пароль обязателен к заполнению</string>
     <string name="password_too_short_error">Пароль должен содержать как минимум %d символов</string>
     <string name="password_invalid_error">Невверный пароль</string>
+    <!--  Home  -->
+    <string name="events_tab">События</string>
+    <string name="rooms_tab">Комнаты</string>
+    <string name="profile_tab">Профиль</string>
     <!--  AuthScreen  -->
     <string name="auth_screen_meeting_room_icon_description">Иконка переговорной комнаты</string>
     <string name="auth_screen_email_hint">Email</string>

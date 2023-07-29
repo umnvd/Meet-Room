@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events
+package com.umnvd.booking.presentation.events.components_old
 
 import com.umnvd.booking.core.models.FieldState
 import com.umnvd.booking.domain.events.models.MeetingEventFormModel
@@ -9,14 +9,14 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 data class MeetingEventFormState(
-    val title: FieldState<String, String>,
-    val description: FieldState<String, String>,
-    val startDate: FieldState<LocalDate, String>,
-    val startTime: FieldState<LocalTime, String>,
-    val endDate: FieldState<LocalDate, String>,
-    val endTime: FieldState<LocalTime, String>,
-    val room: FieldState<MeetingRoomModel?, String>,
-    val participants: FieldState<List<UserModel>, String>,
+    val title: FieldState<String>,
+    val description: FieldState<String>,
+    val startDate: FieldState<LocalDate>,
+    val startTime: FieldState<LocalTime>,
+    val endDate: FieldState<LocalDate>,
+    val endTime: FieldState<LocalTime>,
+    val room: FieldState<MeetingRoomModel?>,
+    val participants: FieldState<List<UserModel>>,
 ) {
 
     companion object {

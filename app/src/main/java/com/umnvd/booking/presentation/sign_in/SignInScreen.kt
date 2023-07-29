@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.auth
+package com.umnvd.booking.presentation.sign_in
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,12 +37,12 @@ import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.core.ui.utils.text
-import com.umnvd.booking.presentation.auth.viewmodel.AuthScreenState
-import com.umnvd.booking.presentation.auth.viewmodel.AuthScreenViewModel
+import com.umnvd.booking.presentation.sign_in.viewmodel.SignInScreenState
+import com.umnvd.booking.presentation.sign_in.viewmodel.SignInScreenViewModel
 
 @Composable
-fun AuthScreen(
-    viewModel: AuthScreenViewModel = hiltViewModel(),
+fun SignInScreen(
+    viewModel: SignInScreenViewModel = hiltViewModel(),
     onSignedIn: () -> Unit = {},
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -76,7 +76,7 @@ fun AuthScreen(
 
 @Composable
 private fun AuthScreenContent(
-    state: AuthScreenState,
+    state: SignInScreenState,
     modifier: Modifier = Modifier,
     snackbarHost: @Composable () -> Unit = {},
     onEmailChange: (String) -> Unit = {},
@@ -153,7 +153,7 @@ private fun AuthScreenContent(
 @Composable
 private fun AuthScreenViewPreview() {
     MeetingRoomBookingTheme {
-        AuthScreenContent(state = AuthScreenState())
+        AuthScreenContent(state = SignInScreenState())
     }
 }
 
@@ -161,6 +161,6 @@ private fun AuthScreenViewPreview() {
 @Composable
 private fun AuthScreenViewPreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {
-        AuthScreenContent(state = AuthScreenState())
+        AuthScreenContent(state = SignInScreenState())
     }
 }

@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events
+package com.umnvd.booking.presentation.events.components_old
 
 import android.util.Log
 import androidx.compose.foundation.clickable
@@ -201,7 +201,7 @@ fun EventFormView(
             Column(
                 modifier = Modifier.padding(top = 4.dp, end = 8.dp),
             ) {
-                for (user in PreviewMocks.Users().usersList) {
+                for (user in PreviewMocks.Users().userList) {
                     Row(
                         modifier = Modifier
                             .padding(start = 16.dp)

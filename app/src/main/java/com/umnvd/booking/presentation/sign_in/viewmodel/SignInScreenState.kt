@@ -1,8 +1,8 @@
-package com.umnvd.booking.presentation.auth.viewmodel
+package com.umnvd.booking.presentation.sign_in.viewmodel
 
 import com.umnvd.booking.core.models.FieldState
 
-data class AuthScreenState(
+data class SignInScreenState(
     val email: FieldState<String> = FieldState(""),
     val password: FieldState<String> = FieldState(""),
     val loading: Boolean = false,

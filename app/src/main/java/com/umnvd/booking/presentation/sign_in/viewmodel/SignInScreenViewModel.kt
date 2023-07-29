@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.auth.viewmodel
+package com.umnvd.booking.presentation.sign_in.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,11 +13,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthScreenViewModel @Inject constructor(
+class SignInScreenViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
 ) : ViewModel() {
-    private val _state = MutableStateFlow(AuthScreenState())
-    val state: StateFlow<AuthScreenState> = _state
+    private val _state = MutableStateFlow(SignInScreenState())
+    val state: StateFlow<SignInScreenState> = _state
 
     fun setEmail(value: String) {
         _state.update { it.copy(email = FieldState(value)) }
@@ -55,7 +55,7 @@ class AuthScreenViewModel @Inject constructor(
 
     fun signedInHandled() {
         viewModelScope.launch {
-            _state.emit(AuthScreenState())
+            _state.emit(SignInScreenState())
         }
     }
 

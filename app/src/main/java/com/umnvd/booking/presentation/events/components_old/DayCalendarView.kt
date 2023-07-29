@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.calendar
+package com.umnvd.booking.presentation.events.components_old
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +27,6 @@ import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.domain.events.models.MeetingEventModel
-import com.umnvd.booking.presentation.events.DayCalendarEventView
 import com.umnvd.booking.util.PreviewMocks
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -155,7 +154,7 @@ private fun DayCalendarViewPreview() {
     MeetingRoomBookingTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             DayCalendarView(
-                events = PreviewMocks.MeetingEvents().eventsList,
+                events = PreviewMocks.MeetingEvents().eventList,
             )
         }
     }
@@ -167,7 +166,7 @@ private fun DayCalendarViewPreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {
         Surface(modifier = Modifier.fillMaxSize()) {
             DayCalendarView(
-                events = PreviewMocks.MeetingEvents().eventsList,
+                events = PreviewMocks.MeetingEvents().eventList,
             )
         }
     }

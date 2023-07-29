@@ -4,17 +4,17 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
-import com.umnvd.booking.presentation.auth.AuthScreen
+import com.umnvd.booking.presentation.sign_in.SignInScreen
 
-const val authScreenRoute = "auth"
+const val SIGN_IN_ROUTE = "sign_in"
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.authScreen(onSignedIn: () -> Unit) {
-    composable(authScreenRoute) {
-        AuthScreen(onSignedIn = onSignedIn)
+fun NavGraphBuilder.signIn(onSignedIn: () -> Unit) {
+    composable(SIGN_IN_ROUTE) {
+        SignInScreen(onSignedIn = onSignedIn)
     }
 }
 
-fun NavHostController.navigateToAuth() {
-    navigate(authScreenRoute)
+fun NavHostController.navigateToSignIn() {
+    navigate(SIGN_IN_ROUTE)
 }

@@ -12,8 +12,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.umnvd.booking.core.navigation.AppNavGraph
-import com.umnvd.booking.core.navigation.navigations.authScreenRoute
-import com.umnvd.booking.core.navigation.navigations.meetingEventsScreenRoute
+import com.umnvd.booking.core.navigation.navigations.HOME_ROUTE
+import com.umnvd.booking.core.navigation.navigations.SIGN_IN_ROUTE
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,8 +37,8 @@ class MainActivity : ComponentActivity() {
                 AppNavGraph(
                     navController = navController,
                     startDestination =
-                    if (authState.value == AuthState.AUTHORIZED) meetingEventsScreenRoute
-                    else authScreenRoute,
+                    if (authState.value == AuthState.AUTHORIZED) HOME_ROUTE
+                    else SIGN_IN_ROUTE,
                     modifier = Modifier
                         .pointerInput(Unit) {
                             detectTapGestures(onTap = {

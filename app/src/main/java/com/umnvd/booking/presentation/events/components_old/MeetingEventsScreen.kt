@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events
+package com.umnvd.booking.presentation.events.components_old
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

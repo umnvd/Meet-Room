@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.calendar
+package com.umnvd.booking.presentation.events.components_old
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
