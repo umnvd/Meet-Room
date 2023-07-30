@@ -1,5 +1,6 @@
 package com.umnvd.booking.presentation.events.components_old
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -101,7 +102,7 @@ private fun DayCalendarLayout(
             Pair(placeable, event)
         }
 
-        val layoutHeight = hourHeight.roundToPx() * 24 + hourHeight.roundToPx() / 2
+        val layoutHeight = hourHeight.roundToPx() * 24 + (hourHeight.roundToPx() / 2) + 64.dp.roundToPx()
         layout(constraints.maxWidth, layoutHeight) {
             placeablesWithEvents.forEach { (placeable, event) ->
                 val eventOffsetMinutes = ChronoUnit.MINUTES.between(

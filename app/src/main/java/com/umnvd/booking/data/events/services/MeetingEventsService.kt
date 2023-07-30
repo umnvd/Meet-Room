@@ -78,7 +78,7 @@ class MeetingEventsService @Inject constructor(
     }
 
     private suspend fun DocumentSnapshot.toEventRemote(): MeetingEventRemoteModel {
-        val roomSnapshot = getDocumentReference(FirestoreContract.Rooms.COLLECTION_KEY)!!
+        val roomSnapshot = getDocumentReference(FirestoreContract.Events.ROOM_KEY)!!
             .get()
             .await()
 

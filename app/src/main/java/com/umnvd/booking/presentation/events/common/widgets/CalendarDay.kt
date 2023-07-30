@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.components_old
+package com.umnvd.booking.presentation.events.common.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,7 +23,7 @@ import com.umnvd.booking.core.ui.theme.hint
 import java.time.LocalDate
 
 @Composable
-fun CalendarDayView(
+fun CalendarDay(
     day: LocalDate,
     onClick: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
@@ -88,7 +88,7 @@ fun CalendarDayView(
 private fun CalendarDayViewPreview() {
     MeetingRoomBookingTheme {
         Surface {
-            CalendarDayView(
+            CalendarDay(
                 day = LocalDate.now(),
                 onClick = {},
                 today = true,

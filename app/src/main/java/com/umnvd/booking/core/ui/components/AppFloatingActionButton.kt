@@ -3,6 +3,7 @@ package com.umnvd.booking.core.ui.components
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -12,7 +13,7 @@ import androidx.compose.ui.unit.dp
 fun AppFloatingActionButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f),
+    containerColor: Color = MaterialTheme.colorScheme.primary,
     content: @Composable () -> Unit,
 ) {
     FloatingActionButton(

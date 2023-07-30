@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.components_old
+package com.umnvd.booking.presentation.events.schedule.calendar.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,15 +18,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
+import com.umnvd.booking.presentation.events.common.widgets.CalendarDay
 import java.time.DayOfWeek
 import java.time.LocalDate
 
 @Composable
-fun MonthCalendarDayView(
+fun MonthCalendarDay(
     day: LocalDate,
     onClick: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
     today: Boolean = false,
+    selected: Boolean = false,
     hasEvents: Boolean = false,
 ) {
     val holiday = day.dayOfWeek == DayOfWeek.SATURDAY
@@ -38,11 +40,11 @@ fun MonthCalendarDayView(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(4.dp))
-        CalendarDayView(
+        CalendarDay(
             day = day,
             onClick = onClick,
             today = today,
-            selected = today,
+            selected = selected,
             holiday = holiday,
         )
         Box(Modifier.weight(1f)) {
@@ -68,7 +70,7 @@ fun MonthCalendarDayView(
 private fun MonthCalendarDayViewPreview() {
     MeetingRoomBookingTheme {
         Surface {
-            MonthCalendarDayView(
+            MonthCalendarDay(
                 day = LocalDate.now(),
                 today = true,
                 onClick = {},

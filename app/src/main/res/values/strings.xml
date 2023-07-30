@@ -3,6 +3,7 @@
     <string name="app_name" translatable="false">Meet Room</string>
     <!--  Common  -->
     <string name="navigate_back_icon">Navigate back icon</string>
+
     <string name="network_error">No network connection</string>
     <string name="email_required_error">Email is required</string>
     <string name="email_invalid_error">Invalid email</string>
@@ -10,6 +11,19 @@
     <string name="password_required_error">Password is required</string>
     <string name="password_too_short_error">Password must contain at least %d characters</string>
     <string name="password_invalid_error">Wrong password</string>
+
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
     <!--  Home  -->
     <string name="events_tab">Events</string>
     <string name="rooms_tab">Rooms</string>

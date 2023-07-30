@@ -25,7 +25,7 @@ class MeetingRoomScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<MeetingRoomScreenState>(MeetingRoomScreenState()), MeetingRoomFormController {
 
-    private val uid = savedStateHandle.get<String>(ROOM_ROUTE_UID_KEY)
+    private val uidArg = savedStateHandle.get<String>(ROOM_ROUTE_UID_KEY)
         ?: throw IllegalStateException("Meeting room UID not specified")
 
     init {
@@ -41,7 +41,8 @@ class MeetingRoomScreenViewModel @Inject constructor(
     private fun loadRoom() {
         updateState { it.copy(loading = true) }
         viewModelScope.launch {
-            when (val result = getMeetingRoomUseCase(GetMeetingRoomUseCase.Params(uid))) {
+            when (val result =
+                getMeetingRoomUseCase(GetMeetingRoomUseCase.Params(uidArg))) {
                 is Result.Success -> updateState {
                     it.copy(
                         formState = result.value.toFormState(),
@@ -73,7 +74,7 @@ class MeetingRoomScreenViewModel @Inject constructor(
                 is Result.Success -> {
                     val result = editMeetingRoomUseCase(
                         EditMeetingRoomUseCase.Params(
-                            uid = uid,
+                            uid = uidArg,
                             form = state.value.formState.toDomain(),
                         )
                     )

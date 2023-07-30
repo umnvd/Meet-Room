@@ -61,16 +61,18 @@ class PreviewMocks() {
     }
 
     class MeetingEvents {
+        val date = LocalDate.of(2023, 7, 28)
+
         val event = MeetingEventModel(
             uid = "mock_event_1",
             title = "ScumTech",
             description = "Собрание учредителей ScumTech",
             startAt = LocalDateTime.of(
-                LocalDate.of(2023, 7, 28),
+                date,
                 LocalTime.of(1, 0),
             ),
             endAt = LocalDateTime.of(
-                LocalDate.of(2023, 7, 28),
+                date,
                 LocalTime.of(2, 0),
             ),
             room = MeetingRooms().room,

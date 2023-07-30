@@ -5,6 +5,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Event
+import androidx.compose.material.icons.outlined.EventNote
 import androidx.compose.material.icons.outlined.MeetingRoom
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
@@ -43,7 +44,7 @@ fun HomeScreen(
     val navigationBarItems = listOf(
         NavigationItemUiModel(
             titleId = R.string.events_tab,
-            icon = Icons.Outlined.Event,
+            icon = Icons.Outlined.EventNote,
             route = EVENTS_GRAPH_ROUTE,
         ),
         NavigationItemUiModel(

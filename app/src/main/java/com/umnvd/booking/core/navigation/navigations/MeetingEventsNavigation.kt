@@ -7,9 +7,10 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
-import com.umnvd.booking.presentation.events.MeetingEventsHomeScreen
+import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.presentation.events.creation.MeetingEventCreationScreen
 import com.umnvd.booking.presentation.events.event.MeetingEventScreen
+import com.umnvd.booking.presentation.events.home.MeetingEventsHomeScreen
 import com.umnvd.booking.presentation.events.user.UserMeetingEventListScreen
 
 const val EVENTS_GRAPH_ROUTE = "events_graph"
@@ -56,6 +57,6 @@ fun NavGraphBuilder.meetingEventsGraph(
     }
 }
 
-fun NavController.navigateToEvent(uid: String) {
-    navigate("$EVENT_ROUTE_BASE$uid")
+fun NavController.navigateToEvent(event: MeetingEventModel) {
+    navigate("$EVENT_ROUTE_BASE${event.uid}")
 }
