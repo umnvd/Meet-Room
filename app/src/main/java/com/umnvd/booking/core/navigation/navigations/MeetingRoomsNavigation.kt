@@ -1,11 +1,13 @@
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
+import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
 import com.umnvd.booking.presentation.rooms.creation.MeetingRoomCreationScreen
 import com.umnvd.booking.presentation.rooms.list.MeetingRoomListScreen
 import com.umnvd.booking.presentation.rooms.room.MeetingRoomScreen
@@ -33,16 +35,25 @@ fun NavGraphBuilder.meetingRoomsGraph(
             route = ROOM_ROUTE,
             arguments = listOf(navArgument(ROOM_ROUTE_UID_KEY) { type = NavType.StringType })
         ) {
-            val uid = it.arguments?.getString(ROOM_ROUTE_UID_KEY)
-                ?: throw IllegalStateException("Meeting room UID not specified.")
-            Log.d("Navigation", it.destination.toString())
+            val parentEntry = remember(it) {
+                navController.getBackStackEntry(ROOM_LIST_ROUTE)
+            }
+            val syncViewModel = hiltViewModel<MeetingRoomSyncViewModel>(parentEntry)
+
             MeetingRoomScreen(
-                onEdited = navController::popBackStack,
+                syncViewModel = syncViewModel,
+                onSaved = navController::popBackStack,
                 onBackClick = navController::popBackStack,
             )
         }
         composable(route = CREATE_ROOM_ROUTE) {
+            val parentEntry = remember(it) {
+                navController.getBackStackEntry(ROOM_LIST_ROUTE)
+            }
+            val syncViewModel = hiltViewModel<MeetingRoomSyncViewModel>(parentEntry)
+
             MeetingRoomCreationScreen(
+                syncViewModel = syncViewModel,
                 onCreated = navController::popBackStack,
                 onBackClick = navController::popBackStack,
             )

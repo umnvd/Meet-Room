@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun MeetingEventScreen(
-    onEdited: () -> Unit,
     onBackCLick: () -> Unit,
 ) {
     Box(Modifier.fillMaxSize()) {

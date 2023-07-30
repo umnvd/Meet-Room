@@ -1,10 +1,8 @@
 package com.umnvd.booking.core.domain.models
 
-import com.umnvd.booking.domain.AppException
+sealed class Result<V, E> {
 
-sealed class Result<T> {
+    data class Success<V, E>(val value: V) : Result<V, E>()
 
-    class Success<T>(val value: T) : Result<T>()
-
-    class Error<T>(val error: AppException) : Result<T>()
+    data class Error<V, E>(val error: E) : Result<V, E>()
 }

@@ -1,21 +1,117 @@
 package com.umnvd.booking.presentation.rooms.room
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.umnvd.booking.core.ui.components.AppBackNavigationTopBar
+import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
+import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
+import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
+import com.umnvd.booking.presentation.rooms.common.widgets.MeetingRoomForm
+import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
+import com.umnvd.booking.presentation.rooms.room.models.toFormState
+import com.umnvd.booking.presentation.rooms.room.viewmodel.MeetingRoomScreenState
+import com.umnvd.booking.presentation.rooms.room.viewmodel.MeetingRoomScreenViewModel
+import com.umnvd.booking.util.PreviewMocks
 
 @Composable
 fun MeetingRoomScreen(
-    onEdited: () -> Unit,
+    viewModel: MeetingRoomScreenViewModel = hiltViewModel(),
+    syncViewModel: MeetingRoomSyncViewModel,
+    onSaved: () -> Unit,
     onBackClick: () -> Unit,
 ) {
-    Box(Modifier.fillMaxSize()) {
-        Text(
-            text = "MeetingRoomScreen",
-            Modifier.align(Alignment.Center)
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LocalAppProgressIndicatorController.current.state(state.loading)
+
+    LaunchedEffect(state.saved) {
+        if (state.saved) {
+            syncViewModel.triggerSync()
+            onSaved()
+            viewModel.savedHandled()
+        }
+    }
+
+    MeetingRoomScreenContent(
+        state = state,
+        formController = viewModel,
+        onSaveClick = viewModel::editRoom,
+        onBackClick = onBackClick,
+    )
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun MeetingRoomScreenContent(
+    state: MeetingRoomScreenState,
+    formController: MeetingRoomFormController,
+    onSaveClick: () -> Unit = {},
+    onBackClick: () -> Unit = {},
+) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+    val onSaveClickHandler = remember {
+        fun() {
+            onSaveClick()
+            focusManager.clearFocus()
+            keyboardController?.hide()
+        }
+    }
+
+
+    Scaffold(
+        topBar = {
+            AppBackNavigationTopBar(
+                onBackClick = onBackClick,
+                actions = {
+                    AnimatedVisibility(
+                        visible = state.saveButtonVisible,
+                        enter = fadeIn(),
+                        exit = fadeOut(),
+                    ) {
+                        Button(onClick = onSaveClickHandler) {
+                            Text(text = "Save")
+                        }
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        MeetingRoomForm(
+            formState = state.formState,
+            formController = formController,
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
+}
+
+
+@Preview
+@Composable
+private fun MeetingRoomScreenContentPreview() {
+    MeetingRoomBookingTheme {
+        MeetingRoomScreenContent(
+            state = MeetingRoomScreenState(
+                formState = PreviewMocks.MeetingRooms().room.toFormState(),
+                room = PreviewMocks.MeetingRooms().room,
+            ),
+            formController = PreviewMocks.FormController().meetingRoom,
         )
     }
 }

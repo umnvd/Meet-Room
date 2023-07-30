@@ -14,6 +14,7 @@ object FirestoreContract {
 
         const val NAME_KEY = "name"
         const val ADDRESS_KEY = "address"
+        const val CREATED_AT_KEY = "createdAt"
     }
 
     object Events {

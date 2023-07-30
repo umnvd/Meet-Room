@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--  Errors  -->
+    <!--  Common  -->
+    <string name="navigate_back_icon">Иконка навигации назад</string>
     <string name="network_error">Нет подключения к интернету</string>
     <string name="email_required_error">Email обязателен к заполнению</string>
     <string name="email_invalid_error">Недействительный email</string>
@@ -13,7 +14,7 @@
     <string name="rooms_tab">Комнаты</string>
     <string name="profile_tab">Профиль</string>
     <!--  AuthScreen  -->
-    <string name="auth_screen_meeting_room_icon_description">Иконка переговорной комнаты</string>
+    <string name="auth_screen_meeting_room_icon">Иконка переговорной комнаты</string>
     <string name="auth_screen_email_hint">Email</string>
     <string name="auth_screen_password_hint">Пароль</string>
     <string name="auth_screen_sign_in_button">Войти</string>

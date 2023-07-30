@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.rooms
+package com.umnvd.booking.presentation.rooms.common.widgets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,18 +21,22 @@ import androidx.compose.ui.unit.sp
 import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
-import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
+import com.umnvd.booking.core.ui.utils.text
+import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
+import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormState
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable
-fun RoomFormView(
-    room: MeetingRoomModel,
+fun MeetingRoomForm(
+    formState: MeetingRoomFormState,
+    formController: MeetingRoomFormController,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         AppTextField(
-            value = room.name,
-            onValueChange = {},
+            value = formState.name.value,
+            error = formState.name.error?.text,
+            onValueChange = formController::setName,
             textStyle = LocalTextStyle.current.copy(
                 fontSize = 28.sp,
             ),
@@ -49,11 +53,11 @@ fun RoomFormView(
                 modifier = Modifier.padding(start = 16.dp, top = 16.dp),
             )
             AppTextField(
-                value = "",
-                onValueChange = { },
+                value = formState.address.value,
+                error = formState.address.error?.text,
+                onValueChange = formController::setAddress,
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = "Address",
-                error = "Address is required",
             )
         }
     }
@@ -65,7 +69,10 @@ fun RoomFormView(
 private fun RoomFormViewPreview() {
     MeetingRoomBookingTheme {
         Surface(Modifier.fillMaxSize()) {
-            RoomFormView(room = PreviewMocks.MeetingRooms().room)
+            MeetingRoomForm(
+                formState = MeetingRoomFormState(),
+                formController = PreviewMocks.FormController().meetingRoom
+            )
         }
     }
 }
@@ -75,7 +82,10 @@ private fun RoomFormViewPreview() {
 private fun RoomFormViewPreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {
         Surface(Modifier.fillMaxSize()) {
-            RoomFormView(room = PreviewMocks.MeetingRooms().roomLongNames)
+            MeetingRoomForm(
+                formState = MeetingRoomFormState(),
+                formController = PreviewMocks.FormController().meetingRoom
+            )
         }
     }
 }

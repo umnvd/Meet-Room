@@ -1,6 +1,5 @@
 package com.umnvd.booking.core.navigation.navigations
 
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -36,11 +35,7 @@ fun NavGraphBuilder.meetingEventsGraph(
             route = EVENT_ROUTE,
             arguments = listOf(navArgument(EVENT_ROUTE_UID_KEY) { type = NavType.StringType })
         ) {
-            val uid = it.arguments?.getString(EVENT_ROUTE_UID_KEY)
-                ?: throw IllegalStateException("Meeting event UID not specified.")
-            Log.d("Navigation", it.destination.toString())
             MeetingEventScreen(
-                onEdited = navController::popBackStack,
                 onBackCLick = navController::popBackStack,
             )
         }

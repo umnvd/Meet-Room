@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.rooms
+package com.umnvd.booking.presentation.rooms.list.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,16 +27,17 @@ import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable
-fun RoomListItemView(
+fun MeetingRoomListTile(
     room: MeetingRoomModel,
     modifier: Modifier = Modifier,
     onRoomClick: (MeetingRoomModel) -> Unit = {},
 ) {
     Column(
         modifier = modifier
+            .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.surface)
-            .padding(vertical = 8.dp, horizontal = 16.dp)
             .clickable(onClick = { onRoomClick(room) })
+            .padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
         Text(
             text = room.name,
@@ -67,10 +68,10 @@ fun RoomListItemView(
 
 @Preview
 @Composable
-private fun RoomListItemViewPreview() {
+private fun MeetingRoomListTilePreview() {
     MeetingRoomBookingTheme {
         Surface(Modifier.fillMaxWidth()) {
-            RoomListItemView(
+            MeetingRoomListTile(
                 room = PreviewMocks.MeetingRooms().room,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -80,10 +81,10 @@ private fun RoomListItemViewPreview() {
 
 @Preview
 @Composable
-private fun RoomListItemViewLongNamesPreview() {
+private fun MeetingRoomListTileLongNamesPreview() {
     MeetingRoomBookingTheme(darkTheme = true) {
         Surface(Modifier.fillMaxWidth()) {
-            RoomListItemView(room = PreviewMocks.MeetingRooms().roomLongNames)
+            MeetingRoomListTile(room = PreviewMocks.MeetingRooms().roomLongNames)
         }
     }
 }

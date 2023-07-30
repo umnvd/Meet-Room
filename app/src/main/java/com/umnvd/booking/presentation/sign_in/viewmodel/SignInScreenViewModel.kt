@@ -1,9 +1,10 @@
 package com.umnvd.booking.presentation.sign_in.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.umnvd.booking.core.domain.models.Result
 import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
-import com.umnvd.booking.domain.auth.models.SignInResult
+import com.umnvd.booking.domain.auth.models.SignInError
 import com.umnvd.booking.domain.auth.usecases.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,32 +28,30 @@ class SignInScreenViewModel @Inject constructor(
         viewModelScope.launch {
             val result = signInUseCase(
                 SignInUseCase.Params(
-                    email = currentState.value.email.value,
-                    password = currentState.value.password.value,
+                    email = state.value.email.value,
+                    password = state.value.password.value,
                 )
             )
 
             when (result) {
-                is SignInResult.Success -> updateState { it.copy(signedIn = true) }
-                is SignInResult.EmailError -> updateState {
-                    it.copy(email = it.email.copy(error = result.error))
+                is Result.Success -> updateState { it.copy(signedIn = true) }
+                is Result.Error -> when (result.error) {
+                    is SignInError.Validation -> updateState {
+                        it.copy(
+                            email = it.email.copy(error = result.error.email),
+                            password = it.password.copy(error = result.error.password),
+                        )
+                    }
+
+                    is SignInError.Network -> updateState { it.copy(networkError = true) }
                 }
 
-                is SignInResult.PasswordError -> updateState {
-                    it.copy(password = it.password.copy(error = result.error))
-                }
-
-                is SignInResult.NetworkError -> updateState { it.copy(networkError = true) }
             }
             updateState { it.copy(loading = false) }
         }
     }
 
-    fun signedInHandled() {
-        updateState { SignInScreenState() }
-    }
+    fun signedInHandled() = resetState()
 
-    fun networkErrorHandled() {
-        updateState { it.copy(networkError = false) }
-    }
+    fun networkErrorHandled() = updateState { it.copy(networkError = false) }
 }

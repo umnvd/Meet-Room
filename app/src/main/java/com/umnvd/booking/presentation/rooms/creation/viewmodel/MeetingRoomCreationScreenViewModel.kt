@@ -1,36 +1,24 @@
-package com.umnvd.booking.presentation.rooms.room.viewmodel
+package com.umnvd.booking.presentation.rooms.creation.viewmodel
 
-import ROOM_ROUTE_UID_KEY
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
 import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
-import com.umnvd.booking.domain.rooms.usecases.EditMeetingRoomUseCase
-import com.umnvd.booking.domain.rooms.usecases.GetMeetingRoomUseCase
+import com.umnvd.booking.domain.rooms.usecases.CreateMeetingRoomUseCase
 import com.umnvd.booking.domain.rooms.usecases.ValidateMeetingRoomFormUseCase
 import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
 import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormState
 import com.umnvd.booking.presentation.rooms.room.models.toDomain
-import com.umnvd.booking.presentation.rooms.room.models.toFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MeetingRoomScreenViewModel @Inject constructor(
+class MeetingRoomCreationScreenViewModel @Inject constructor(
     private val validateMeetingRoomFormUseCase: ValidateMeetingRoomFormUseCase,
-    private val getMeetingRoomUseCase: GetMeetingRoomUseCase,
-    private val editMeetingRoomUseCase: EditMeetingRoomUseCase,
-    savedStateHandle: SavedStateHandle,
-) : BaseViewModel<MeetingRoomScreenState>(MeetingRoomScreenState()), MeetingRoomFormController {
-
-    private val uid = savedStateHandle.get<String>(ROOM_ROUTE_UID_KEY)
-        ?: throw IllegalStateException("Meeting room UID not specified")
-
-    init {
-        loadRoom()
-    }
+    private val createMeetingRoomUseCase: CreateMeetingRoomUseCase,
+) : BaseViewModel<MeetingRoomCreationScreenState>(MeetingRoomCreationScreenState()),
+    MeetingRoomFormController {
 
     override fun setName(value: String) =
         updateForm { it.copy(name = FieldState(value)) }
@@ -38,24 +26,7 @@ class MeetingRoomScreenViewModel @Inject constructor(
     override fun setAddress(value: String) =
         updateForm { it.copy(address = FieldState(value)) }
 
-    private fun loadRoom() {
-        updateState { it.copy(loading = true) }
-        viewModelScope.launch {
-            when (val result = getMeetingRoomUseCase(GetMeetingRoomUseCase.Params(uid))) {
-                is Result.Success -> updateState {
-                    it.copy(
-                        formState = result.value.toFormState(),
-                        room = result.value,
-                    )
-                }
-
-                is Result.Error -> updateState { it.copy(error = result.error) }
-            }
-            updateState { it.copy(loading = false) }
-        }
-    }
-
-    fun editRoom() {
+    fun createRoom() {
         viewModelScope.launch {
             updateState { it.copy(loading = true) }
             val validationResult = validateMeetingRoomFormUseCase(
@@ -71,14 +42,13 @@ class MeetingRoomScreenViewModel @Inject constructor(
                 }
 
                 is Result.Success -> {
-                    val result = editMeetingRoomUseCase(
-                        EditMeetingRoomUseCase.Params(
-                            uid = uid,
+                    val result = createMeetingRoomUseCase(
+                        CreateMeetingRoomUseCase.Params(
                             form = state.value.formState.toDomain(),
                         )
                     )
                     when (result) {
-                        is Result.Success -> updateState { it.copy(saved = true) }
+                        is Result.Success -> updateState { it.copy(created = true) }
                         is Result.Error -> updateState { it.copy(error = result.error) }
                     }
                 }
@@ -87,7 +57,7 @@ class MeetingRoomScreenViewModel @Inject constructor(
         }
     }
 
-    fun savedHandled() = resetState()
+    fun createdHandled() = resetState()
 
     fun errorHandled() = updateState { it.copy(error = null) }
 

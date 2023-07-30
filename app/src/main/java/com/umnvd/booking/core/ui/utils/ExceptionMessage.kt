@@ -34,4 +34,5 @@ private fun AppException.textFromResources(resources: Resources): String = when 
     )
 
     is PasswordInvalidException -> resources.getString(R.string.password_invalid_error)
+    else -> "Unknown error"
 }

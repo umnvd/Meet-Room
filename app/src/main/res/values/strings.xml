@@ -1,7 +1,8 @@
 <resources>
     <!--  Untranslatable  -->
     <string name="app_name" translatable="false">Meet Room</string>
-    <!--  Errors  -->
+    <!--  Common  -->
+    <string name="navigate_back_icon">Navigate back icon</string>
     <string name="network_error">No network connection</string>
     <string name="email_required_error">Email is required</string>
     <string name="email_invalid_error">Invalid email</string>
@@ -14,7 +15,7 @@
     <string name="rooms_tab">Rooms</string>
     <string name="profile_tab">Profile</string>
     <!--  AuthScreen  -->
-    <string name="auth_screen_meeting_room_icon_description">Meeting room icon</string>
+    <string name="auth_screen_meeting_room_icon">Meeting room icon</string>
     <string name="auth_screen_email_hint">Email</string>
     <string name="auth_screen_password_hint">Password</string>
     <string name="auth_screen_sign_in_button">Sign In</string>

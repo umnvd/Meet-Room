@@ -6,11 +6,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 abstract class BaseViewModel<T>(
-    initialState: T
+    private val initialState: T
 ) : ViewModel() {
 
-    protected val currentState = MutableStateFlow(initialState)
-    val state: StateFlow<T> get() = currentState
+    private val mutableState = MutableStateFlow(initialState)
+    val state: StateFlow<T> get() = mutableState
 
-    protected fun updateState(builder: (T) -> T) = currentState.update(builder)
+    protected fun updateState(builder: (T) -> T) = mutableState.update(builder)
+
+    protected fun resetState() = mutableState.update { initialState }
 }

@@ -3,6 +3,7 @@ package com.umnvd.booking.util
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
 import com.umnvd.booking.domain.users.models.UserModel
+import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -44,6 +45,7 @@ class PreviewMocks() {
             uid = "mock_room_1",
             name = "Офис ScumTech",
             address = "ул Димитрова, д. 3",
+            createdAt = LocalDateTime.now(),
         )
 
         val roomLongNames = room.copy(
@@ -111,6 +113,13 @@ class PreviewMocks() {
                 ),
             ),
         )
+    }
+
+    class FormController {
+        val meetingRoom = object : MeetingRoomFormController {
+            override fun setName(value: String) {}
+            override fun setAddress(value: String) {}
+        }
     }
 
     companion object {

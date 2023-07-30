@@ -9,36 +9,15 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 data class MeetingEventFormState(
-    val title: FieldState<String>,
-    val description: FieldState<String>,
-    val startDate: FieldState<LocalDate>,
-    val startTime: FieldState<LocalTime>,
-    val endDate: FieldState<LocalDate>,
-    val endTime: FieldState<LocalTime>,
-    val room: FieldState<MeetingRoomModel?>,
-    val participants: FieldState<List<UserModel>>,
-) {
-
-    companion object {
-        val Default: MeetingEventFormState
-            get() {
-                val defaultDate = LocalDate.now()
-                val defaultStartTime = LocalTime.of(12, 0)
-                val defaultEndTime = LocalTime.of(13, 0)
-
-                return MeetingEventFormState(
-                    title = FieldState(""),
-                    description = FieldState(""),
-                    startDate = FieldState(defaultDate),
-                    startTime = FieldState(defaultStartTime),
-                    endDate = FieldState(defaultDate),
-                    endTime = FieldState(defaultEndTime),
-                    room = FieldState(null),
-                    participants = FieldState(listOf()),
-                )
-            }
-    }
-}
+    val title: FieldState<String> = FieldState(""),
+    val description: FieldState<String> = FieldState(""),
+    val startDate: FieldState<LocalDate> = FieldState(LocalDate.now()),
+    val startTime: FieldState<LocalTime> = FieldState(LocalTime.of(12, 0)),
+    val endDate: FieldState<LocalDate> = FieldState(LocalDate.now()),
+    val endTime: FieldState<LocalTime> = FieldState(LocalTime.of(12, 0)),
+    val room: FieldState<MeetingRoomModel?> = FieldState(null),
+    val participants: FieldState<List<UserModel>> = FieldState(listOf()),
+)
 
 fun MeetingEventFormState.toDomain() = MeetingEventFormModel(
     title = title.value,

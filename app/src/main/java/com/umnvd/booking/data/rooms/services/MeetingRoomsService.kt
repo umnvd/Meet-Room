@@ -1,11 +1,14 @@
 package com.umnvd.booking.data.rooms.services
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.umnvd.booking.data.common.mappers.DateTimeMapper
 import com.umnvd.booking.data.rooms.models.MeetingRoomFormRemoteModel
 import com.umnvd.booking.data.rooms.models.MeetingRoomRemoteModel
 import com.umnvd.booking.data.utils.FirestoreContract
+import com.umnvd.booking.data.utils.toRoomRemote
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class MeetingRoomsService @Inject constructor(
@@ -19,11 +22,7 @@ class MeetingRoomsService @Inject constructor(
             .get()
             .await()
 
-        return MeetingRoomRemoteModel(
-            uid = roomSnapshot.id,
-            name = roomSnapshot.getString(FirestoreContract.Rooms.NAME_KEY)!!,
-            address = roomSnapshot.getString(FirestoreContract.Rooms.ADDRESS_KEY)!!,
-        )
+        return roomSnapshot.toRoomRemote()
     }
 
     suspend fun getRooms(): List<MeetingRoomRemoteModel> {
@@ -33,41 +32,27 @@ class MeetingRoomsService @Inject constructor(
             .await()
             .documents
 
-        Log.d("ABOBA", snapshots.toString())
-
-        return snapshots.map {
-            MeetingRoomRemoteModel(
-                uid = it.id,
-                name = it.getString(FirestoreContract.Rooms.NAME_KEY)!!,
-                address = it.getString(FirestoreContract.Rooms.ADDRESS_KEY)!!,
-            )
-        }
+        return snapshots.map { it.toRoomRemote() }
     }
 
     suspend fun createRoom(data: MeetingRoomFormRemoteModel): MeetingRoomRemoteModel {
-        val documentData = hashMapOf(
-            FirestoreContract.Rooms.NAME_KEY to data.name,
-            FirestoreContract.Rooms.ADDRESS_KEY to data.address,
-        )
+        val createdAt = DateTimeMapper.ldtToUtcString(LocalDateTime.now())
 
         val roomReference = firebaseFirestore
             .collection(FirestoreContract.Rooms.COLLECTION_KEY)
-            .add(documentData)
+            .add(data.toDocumentData().apply {
+                put(FirestoreContract.Rooms.CREATED_AT_KEY, createdAt)
+            })
             .await()
 
         return getRoom(roomReference.id)
     }
 
     suspend fun editRoom(uid: String, data: MeetingRoomFormRemoteModel): MeetingRoomRemoteModel {
-        val documentData = hashMapOf(
-            FirestoreContract.Rooms.NAME_KEY to data.name,
-            FirestoreContract.Rooms.ADDRESS_KEY to data.address,
-        )
-
         firebaseFirestore
             .collection(FirestoreContract.Rooms.COLLECTION_KEY)
             .document(uid)
-            .set(documentData)
+            .set(data.toDocumentData(), SetOptions.merge())
             .await()
 
         return getRoom(uid)
@@ -80,4 +65,10 @@ class MeetingRoomsService @Inject constructor(
             .delete()
             .await()
     }
+
+    private fun MeetingRoomFormRemoteModel.toDocumentData() =
+        hashMapOf(
+            FirestoreContract.Rooms.NAME_KEY to name,
+            FirestoreContract.Rooms.ADDRESS_KEY to address,
+        )
 }

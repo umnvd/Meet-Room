@@ -1,5 +1,6 @@
 package com.umnvd.booking.presentation.rooms.list
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -22,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,20 +38,31 @@ import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.utils.text
 import com.umnvd.booking.domain.NetworkException
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
-import com.umnvd.booking.presentation.rooms.RoomListItemView
+import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
 import com.umnvd.booking.presentation.rooms.list.viewmodel.MeetingRoomListScreenState
 import com.umnvd.booking.presentation.rooms.list.viewmodel.MeetingRoomListScreenViewModel
+import com.umnvd.booking.presentation.rooms.list.widgets.MeetingRoomListTile
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable
 fun MeetingRoomListScreen(
     viewModel: MeetingRoomListScreenViewModel = hiltViewModel(),
+    syncViewModel: MeetingRoomSyncViewModel = hiltViewModel(),
     onRoomClick: (MeetingRoomModel) -> Unit,
     onCreateClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val sync by syncViewModel.sync.collectAsStateWithLifecycle()
 
     LocalAppProgressIndicatorController.current.state(state.loading)
+
+    LaunchedEffect(sync) {
+        Log.d("ROOM_SYNC", "$syncViewModel - state $sync")
+        if (sync) {
+            viewModel.loadRooms()
+            syncViewModel.syncHandled()
+        }
+    }
 
     MeetingRoomListScreenContent(
         state = state,
@@ -104,7 +117,7 @@ private fun MeetingRoomListScreenContent(
                         items = state.rooms,
                         key = { it.uid },
                     ) {
-                        RoomListItemView(room = it, onRoomClick = onRoomClick)
+                        MeetingRoomListTile(room = it, onRoomClick = onRoomClick)
                         Divider(
                             color = MaterialTheme.colorScheme.divider,
                         )

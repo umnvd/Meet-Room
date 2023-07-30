@@ -18,4 +18,9 @@ class PasswordMinLengthException(val minLength: Int) : AppException()
 
 class PasswordInvalidException : AppException()
 
+// Room form
+class RoomNameRequiredException() : AppException()
+class RoomNameLengthException(val minLength: Int) : AppException()
+class RoomAddressRequiredException() : AppException()
+
 
