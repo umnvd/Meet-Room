@@ -88,7 +88,6 @@ private fun ProfileScreenContent(
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = user.nickname,
-                            style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.hint
                         )
                     }

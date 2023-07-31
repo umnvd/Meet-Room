@@ -2,13 +2,11 @@ package com.umnvd.booking.presentation.rooms.creation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
-import com.umnvd.booking.core.ui.models.FieldState
-import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
 import com.umnvd.booking.domain.rooms.usecases.CreateMeetingRoomUseCase
 import com.umnvd.booking.domain.rooms.usecases.ValidateMeetingRoomFormUseCase
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormState
-import com.umnvd.booking.presentation.rooms.room.models.toDomain
+import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormState
+import com.umnvd.booking.presentation.rooms.common.form.toDomain
+import com.umnvd.booking.presentation.rooms.common.viewmodels.BaseMeetingRoomFormViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,14 +15,10 @@ import javax.inject.Inject
 class MeetingRoomCreationScreenViewModel @Inject constructor(
     private val validateMeetingRoomFormUseCase: ValidateMeetingRoomFormUseCase,
     private val createMeetingRoomUseCase: CreateMeetingRoomUseCase,
-) : BaseViewModel<MeetingRoomCreationScreenState>(MeetingRoomCreationScreenState()),
-    MeetingRoomFormController {
+) : BaseMeetingRoomFormViewModel<MeetingRoomCreationScreenState>(MeetingRoomCreationScreenState()) {
 
-    override fun setName(value: String) =
-        updateForm { it.copy(name = FieldState(value)) }
-
-    override fun setAddress(value: String) =
-        updateForm { it.copy(address = FieldState(value)) }
+    override fun updateForm(builder: (MeetingRoomFormState) -> MeetingRoomFormState) =
+        updateState { it.copy(formState = builder(it.formState)) }
 
     fun createRoom() {
         viewModelScope.launch {
@@ -57,10 +51,5 @@ class MeetingRoomCreationScreenViewModel @Inject constructor(
         }
     }
 
-    fun createdHandled() = resetState()
-
     fun errorHandled() = updateState { it.copy(error = null) }
-
-    private fun updateForm(builder: (MeetingRoomFormState) -> MeetingRoomFormState) =
-        updateState { it.copy(formState = builder(it.formState)) }
 }

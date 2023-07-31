@@ -78,10 +78,8 @@ fun AppTextField(
             ),
         )
         error?.let {
-            Text(
+            AppErrorText(
                 text = it,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(
                     horizontal = 16.dp,
                     vertical = 2.dp

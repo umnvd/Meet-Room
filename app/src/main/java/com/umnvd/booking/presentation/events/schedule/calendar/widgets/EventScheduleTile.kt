@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.components_old
+package com.umnvd.booking.presentation.events.schedule.calendar.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -42,7 +42,7 @@ import java.time.Duration
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DayCalendarEventView(
+fun EventScheduleTile(
     event: MeetingEventModel,
     modifier: Modifier = Modifier,
     onEventClick: ((MeetingEventModel) -> Unit)? = null,
@@ -60,9 +60,9 @@ fun DayCalendarEventView(
         modifier = modifier,
     ) {
         if (halfHour) {
-            HalfHourEventView(event = event)
+            HalfHourEvent(event = event)
         } else {
-            DefaultEventView(event = event)
+            DefaultEvent(event = event)
         }
 
     }
@@ -70,7 +70,7 @@ fun DayCalendarEventView(
 }
 
 @Composable
-private fun HalfHourEventView(
+private fun HalfHourEvent(
     event: MeetingEventModel,
     modifier: Modifier = Modifier,
 ) {
@@ -100,7 +100,6 @@ private fun HalfHourEventView(
             )
             Text(
                 text = event.room.name,
-                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.hintOnSecondary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -124,7 +123,7 @@ private fun HalfHourEventView(
 }
 
 @Composable
-private fun DefaultEventView(
+private fun DefaultEvent(
     event: MeetingEventModel,
     modifier: Modifier = Modifier,
 ) {
@@ -159,7 +158,6 @@ private fun DefaultEventView(
                 )
                 Text(
                     text = event.room.name,
-                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.hintOnSecondary,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -167,7 +165,7 @@ private fun DefaultEventView(
             }
         }
         Spacer(modifier = Modifier.width(8.dp))
-        UsersAvatarsView(
+        UsersAvatars(
             userModels = event.participants,
             modifier = Modifier.fillMaxHeight(),
         )
@@ -175,7 +173,7 @@ private fun DefaultEventView(
 }
 
 @Composable
-private fun UsersAvatarsView(
+private fun UsersAvatars(
     userModels: List<UserModel>,
     modifier: Modifier = Modifier,
 ) {
@@ -239,12 +237,12 @@ private fun UsersAvatarsView(
 
 @Preview
 @Composable
-private fun DayCalendarEventViewHalfHourPreview() {
+private fun EventScheduleTileHalfHourPreview() {
     val event = PreviewMocks.MeetingEvents().event
 
     MeetingRoomBookingTheme {
         Box(Modifier.height(32.dp)) {
-            DayCalendarEventView(
+            EventScheduleTile(
                 event = event.copy(
                     endAt = event.endAt.minusMinutes(30L),
                 )
@@ -255,13 +253,13 @@ private fun DayCalendarEventViewHalfHourPreview() {
 
 @Preview
 @Composable
-private fun DayCalendarEventViewHourPreview() {
+private fun EventScheduleTileHourPreview() {
     val event = PreviewMocks.MeetingEvents().event
     val users = PreviewMocks.Users().userList
 
     MeetingRoomBookingTheme(darkTheme = true) {
         Box(Modifier.height(64.dp)) {
-            DayCalendarEventView(
+            EventScheduleTile(
                 event = event.copy(
                     participants = users.dropLast(1),
                 ),
@@ -272,12 +270,12 @@ private fun DayCalendarEventViewHourPreview() {
 
 @Preview
 @Composable
-private fun DayCalendarEventViewTwoHoursPreview() {
+private fun EventScheduleTileTwoHoursPreview() {
     val event = PreviewMocks.MeetingEvents().event
 
     MeetingRoomBookingTheme {
         Box(Modifier.height(128.dp)) {
-            DayCalendarEventView(
+            EventScheduleTile(
                 event = event.copy(
                     endAt = event.endAt.plusHours(1),
                 )
@@ -288,12 +286,12 @@ private fun DayCalendarEventViewTwoHoursPreview() {
 
 @Preview
 @Composable
-private fun DayCalendarEventViewHalfHourLongNamesPreview() {
+private fun EventScheduleTileHalfHourLongNamesPreview() {
     val event = PreviewMocks.MeetingEvents().eventLongNames
 
     MeetingRoomBookingTheme {
         Box(Modifier.height(32.dp)) {
-            DayCalendarEventView(
+            EventScheduleTile(
                 event = event.copy(
                     endAt = event.endAt.minusMinutes(30L),
                 )
@@ -304,12 +302,12 @@ private fun DayCalendarEventViewHalfHourLongNamesPreview() {
 
 @Preview
 @Composable
-private fun DayCalendarEventViewHourLongNamesPreview() {
+private fun EventScheduleTileHourLongNamesPreview() {
     val event = PreviewMocks.MeetingEvents().eventLongNames
 
     MeetingRoomBookingTheme {
         Box(Modifier.height(64.dp)) {
-            DayCalendarEventView(
+            EventScheduleTile(
                 event = event,
             )
         }

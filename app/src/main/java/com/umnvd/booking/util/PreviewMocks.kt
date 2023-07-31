@@ -3,7 +3,8 @@ package com.umnvd.booking.util
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
 import com.umnvd.booking.domain.users.models.UserModel
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
+import com.umnvd.booking.presentation.events.common.form.MeetingEventFormController
+import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormController
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -121,6 +122,18 @@ class PreviewMocks() {
         val meetingRoom = object : MeetingRoomFormController {
             override fun setName(value: String) {}
             override fun setAddress(value: String) {}
+        }
+
+        val meetingEvent = object : MeetingEventFormController {
+            override fun setTitle(value: String) {}
+            override fun setDescription(value: String) {}
+            override fun setStartDate(value: LocalDate) {}
+            override fun setStartTime(value: LocalTime) {}
+            override fun setEndDate(value: LocalDate) {}
+            override fun setEndTime(value: LocalTime) {}
+            override fun setRoom(value: MeetingRoomModel) {}
+            override fun addUser(item: UserModel) {}
+            override fun removeUser(item: UserModel) {}
         }
     }
 

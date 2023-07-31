@@ -4,15 +4,13 @@ import ROOM_ROUTE_UID_KEY
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
-import com.umnvd.booking.core.ui.models.FieldState
-import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
 import com.umnvd.booking.domain.rooms.usecases.EditMeetingRoomUseCase
 import com.umnvd.booking.domain.rooms.usecases.GetMeetingRoomUseCase
 import com.umnvd.booking.domain.rooms.usecases.ValidateMeetingRoomFormUseCase
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormState
-import com.umnvd.booking.presentation.rooms.room.models.toDomain
-import com.umnvd.booking.presentation.rooms.room.models.toFormState
+import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormState
+import com.umnvd.booking.presentation.rooms.common.form.toDomain
+import com.umnvd.booking.presentation.rooms.common.form.toFormState
+import com.umnvd.booking.presentation.rooms.common.viewmodels.BaseMeetingRoomFormViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,7 +21,7 @@ class MeetingRoomScreenViewModel @Inject constructor(
     private val getMeetingRoomUseCase: GetMeetingRoomUseCase,
     private val editMeetingRoomUseCase: EditMeetingRoomUseCase,
     savedStateHandle: SavedStateHandle,
-) : BaseViewModel<MeetingRoomScreenState>(MeetingRoomScreenState()), MeetingRoomFormController {
+) : BaseMeetingRoomFormViewModel<MeetingRoomScreenState>(MeetingRoomScreenState()) {
 
     private val uidArg = savedStateHandle.get<String>(ROOM_ROUTE_UID_KEY)
         ?: throw IllegalStateException("Meeting room UID not specified")
@@ -32,11 +30,8 @@ class MeetingRoomScreenViewModel @Inject constructor(
         loadRoom()
     }
 
-    override fun setName(value: String) =
-        updateForm { it.copy(name = FieldState(value)) }
-
-    override fun setAddress(value: String) =
-        updateForm { it.copy(address = FieldState(value)) }
+    override fun updateForm(builder: (MeetingRoomFormState) -> MeetingRoomFormState) =
+        updateState { it.copy(formState = builder(it.formState)) }
 
     private fun loadRoom() {
         updateState { it.copy(loading = true) }
@@ -56,7 +51,7 @@ class MeetingRoomScreenViewModel @Inject constructor(
         }
     }
 
-    fun editRoom() {
+    fun saveRoom() {
         viewModelScope.launch {
             updateState { it.copy(loading = true) }
             val validationResult = validateMeetingRoomFormUseCase(
@@ -88,10 +83,5 @@ class MeetingRoomScreenViewModel @Inject constructor(
         }
     }
 
-    fun savedHandled() = resetState()
-
     fun errorHandled() = updateState { it.copy(error = null) }
-
-    private fun updateForm(builder: (MeetingRoomFormState) -> MeetingRoomFormState) =
-        updateState { it.copy(formState = builder(it.formState)) }
 }

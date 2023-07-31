@@ -37,7 +37,8 @@ fun NavGraphBuilder.meetingEventsGraph(
             arguments = listOf(navArgument(EVENT_ROUTE_UID_KEY) { type = NavType.StringType })
         ) {
             MeetingEventScreen(
-                onBackCLick = navController::popBackStack,
+                onSaved = navController::popBackStack,
+                onBackClick = navController::popBackStack,
             )
         }
         composable(route = CREATE_EVENT_ROUTE) {

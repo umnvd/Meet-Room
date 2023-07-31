@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 data class MeetingEventModel(
     val uid: String,
     val title: String,
-    val description: String?,
+    val description: String,
     val startAt: LocalDateTime,
     val endAt: LocalDateTime,
     val room: MeetingRoomModel,

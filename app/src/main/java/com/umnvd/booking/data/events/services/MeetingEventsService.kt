@@ -93,7 +93,7 @@ class MeetingEventsService @Inject constructor(
         return MeetingEventRemoteModel(
             uid = id,
             title = getString(FirestoreContract.Events.TITLE_KEY)!!,
-            description = getString(FirestoreContract.Events.DESCRIPTION_KEY),
+            description = getString(FirestoreContract.Events.DESCRIPTION_KEY)!!,
             startAt = getString(FirestoreContract.Events.START_AT_KEY)!!,
             endAt = getString(FirestoreContract.Events.END_AT_KEY)!!,
             room = roomSnapshot.toRoomRemote(),

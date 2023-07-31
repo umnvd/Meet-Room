@@ -2,9 +2,9 @@ package com.umnvd.booking.presentation.rooms.room.viewmodel
 
 import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormState
-import com.umnvd.booking.presentation.rooms.room.models.toDomain
-import com.umnvd.booking.presentation.rooms.room.models.toForm
+import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormState
+import com.umnvd.booking.presentation.rooms.common.form.toDomain
+import com.umnvd.booking.presentation.rooms.common.form.toForm
 
 data class MeetingRoomScreenState(
     private val room: MeetingRoomModel? = null,

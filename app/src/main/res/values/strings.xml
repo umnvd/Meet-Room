@@ -3,15 +3,26 @@
     <string name="app_name" translatable="false">Meet Room</string>
     <!--  Common  -->
     <string name="navigate_back_icon">Navigate back icon</string>
-
+    <!--  Errors  -->
+    <string name="unknown_error">Unknown error</string>
     <string name="network_error">No network connection</string>
+    <string name="unauthorized_error">User is unauthorized</string>
     <string name="email_required_error">Email is required</string>
     <string name="email_invalid_error">Invalid email</string>
     <string name="email_not_registered_error">Email is not registered</string>
     <string name="password_required_error">Password is required</string>
     <string name="password_too_short_error">Password must contain at least %d characters</string>
     <string name="password_invalid_error">Wrong password</string>
-
+    <string name="room_name_required_error">Name is required</string>
+    <string name="room_name_length_error">Name must contain at lest %d characters</string>
+    <string name="room_address_required_error">Address is required</string>
+    <string name="event_title_required_error">Title is required</string>
+    <string name="event_title_length_error">Title must contain at lest %d characters</string>
+    <string name="event_room_required_error">Room is required</string>
+    <string name="event_participants_required_error">Event must have at least one participant</string>
+    <string name="event_start_intersection_error">Start overlaps with an existing event, should be later than %s</string>
+    <string name="event_end_intersection_error">End overlaps with an existing event, should be before %s</string>
+    <!--  Months  -->
     <string name="january">January</string>
     <string name="february">February</string>
     <string name="march">March</string>
@@ -28,9 +39,11 @@
     <string name="events_tab">Events</string>
     <string name="rooms_tab">Rooms</string>
     <string name="profile_tab">Profile</string>
-    <!--  AuthScreen  -->
-    <string name="auth_screen_meeting_room_icon">Meeting room icon</string>
-    <string name="auth_screen_email_hint">Email</string>
-    <string name="auth_screen_password_hint">Password</string>
-    <string name="auth_screen_sign_in_button">Sign In</string>
+    <!--  Auth  -->
+    <string name="auth_meeting_room_icon">Meeting room icon</string>
+    <string name="auth_email_hint">Email</string>
+    <string name="auth_password_hint">Password</string>
+    <string name="auth_sign_in_button">Sign In</string>
+    <!--  Profile  -->
+    <string name="auth_sign_out_button">Sign Out</string>
 </resources>

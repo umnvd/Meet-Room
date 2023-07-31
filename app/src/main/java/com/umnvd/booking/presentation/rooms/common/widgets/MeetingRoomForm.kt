@@ -22,8 +22,8 @@ import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.utils.text
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormState
+import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormController
+import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormState
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable

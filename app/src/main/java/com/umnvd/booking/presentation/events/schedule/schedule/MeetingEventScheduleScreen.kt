@@ -24,7 +24,7 @@ import com.umnvd.booking.domain.events.consts.MAX_DATE
 import com.umnvd.booking.domain.events.consts.MIN_DATE
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.presentation.events.common.widgets.CalendarDay
-import com.umnvd.booking.presentation.events.components_old.DayCalendarView
+import com.umnvd.booking.presentation.events.schedule.calendar.widgets.EventSchedulePage
 import com.umnvd.booking.presentation.events.schedule.schedule.viewmodel.MeetingEventScheduleScreenState
 import com.umnvd.booking.presentation.events.schedule.schedule.viewmodel.MeetingEventScheduleScreenViewModel
 import com.umnvd.booking.util.PreviewMocks
@@ -99,7 +99,7 @@ private fun MeetingEventScheduleScreenContent(
             }
         )
         HorizontalPager(pageCount = calendarDates.size, state = pagerState) { _ ->
-            DayCalendarView(
+            EventSchedulePage(
                 events = state.events,
                 onEventClick = onEventCLick,
             )

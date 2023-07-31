@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.rooms.room.models
+package com.umnvd.booking.presentation.rooms.common.form
 
 import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.domain.rooms.models.MeetingRoomFormModel

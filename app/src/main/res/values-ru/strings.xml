@@ -2,15 +2,26 @@
 <resources>
     <!--  Common  -->
     <string name="navigate_back_icon">Иконка навигации назад</string>
-
+    <!--  Errors  -->
+    <string name="unknown_error">Неизвестная ошибка</string>
     <string name="network_error">Нет подключения к интернету</string>
-    <string name="email_required_error">Email обязателен к заполнению</string>
+    <string name="unauthorized_error">Пользователь неавторизован</string>
+    <string name="email_required_error">Email обязателен</string>
     <string name="email_invalid_error">Недействительный email</string>
     <string name="email_not_registered_error">Email не зарегистрирован</string>
-    <string name="password_required_error">Пароль обязателен к заполнению</string>
+    <string name="password_required_error">Пароль обязателен</string>
     <string name="password_too_short_error">Пароль должен содержать как минимум %d символов</string>
     <string name="password_invalid_error">Невверный пароль</string>
-
+    <string name="room_name_required_error">Название обязательно</string>
+    <string name="room_name_length_error">Название должно содержать как минимум %d символов</string>
+    <string name="room_address_required_error">Адрес обязателен</string>
+    <string name="event_title_required_error">Название обязательно</string>
+    <string name="event_title_length_error">Название должно содержать как минимум %d символов</string>
+    <string name="event_room_required_error">Комната обязательна</string>
+    <string name="event_participants_required_error">Событие должно содержать как минимум одного участника</string>
+    <string name="event_start_intersection_error">Начало пересекается с существующим событием, должно быть позже %s</string>
+    <string name="event_end_intersection_error">Конец пересекается с существующим событием, должен быть раньше %s</string>
+    <!--  Months  -->
     <string name="january">Январь</string>
     <string name="february">Февраль</string>
     <string name="march">Март</string>
@@ -27,9 +38,11 @@
     <string name="events_tab">События</string>
     <string name="rooms_tab">Комнаты</string>
     <string name="profile_tab">Профиль</string>
-    <!--  AuthScreen  -->
-    <string name="auth_screen_meeting_room_icon">Иконка переговорной комнаты</string>
-    <string name="auth_screen_email_hint">Email</string>
-    <string name="auth_screen_password_hint">Пароль</string>
-    <string name="auth_screen_sign_in_button">Войти</string>
+    <!--  Auth  -->
+    <string name="auth_meeting_room_icon">Иконка переговорной комнаты</string>
+    <string name="auth_email_hint">Email</string>
+    <string name="auth_password_hint">Пароль</string>
+    <string name="auth_sign_in_button">Войти</string>
+    <!--  Profile  -->
+    <string name="auth_sign_out_button">Выйти</string>
 </resources>

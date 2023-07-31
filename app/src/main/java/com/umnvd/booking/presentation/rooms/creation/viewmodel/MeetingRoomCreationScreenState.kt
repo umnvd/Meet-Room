@@ -1,7 +1,7 @@
 package com.umnvd.booking.presentation.rooms.creation.viewmodel
 
 import com.umnvd.booking.domain.AppException
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormState
+import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormState
 
 data class MeetingRoomCreationScreenState(
     val formState: MeetingRoomFormState = MeetingRoomFormState(),

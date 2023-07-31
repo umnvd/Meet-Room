@@ -1,6 +1,5 @@
-package com.umnvd.booking.presentation.events.components_old
+package com.umnvd.booking.presentation.events.schedule.calendar.widgets
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,7 +34,7 @@ import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt
 
 @Composable
-fun DayCalendarView(
+fun EventSchedulePage(
     events: List<MeetingEventModel>,
     modifier: Modifier = Modifier,
     onEventClick: ((MeetingEventModel) -> Unit)? = null,
@@ -43,10 +42,10 @@ fun DayCalendarView(
     val hourHeight = 64.dp
 
     Row(modifier = modifier.verticalScroll(rememberScrollState())) {
-        DayCalendarSidebar(hourHeight = hourHeight)
-        DayCalendarLayout(hourHeight = hourHeight) {
+        ScheduleSidebar(hourHeight = hourHeight)
+        ScheduleLayout(hourHeight = hourHeight) {
             events.sortedBy(MeetingEventModel::startAt).forEach {
-                DayCalendarEventView(
+                EventScheduleTile(
                     event = it,
                     onEventClick = onEventClick,
                     modifier = Modifier.parentData(it),
@@ -58,7 +57,7 @@ fun DayCalendarView(
 }
 
 @Composable
-private fun DayCalendarLayout(
+private fun ScheduleLayout(
     hourHeight: Dp,
     modifier: Modifier = Modifier,
     content: @Composable @UiComposable () -> Unit,
@@ -118,7 +117,7 @@ private fun DayCalendarLayout(
 }
 
 @Composable
-fun DayCalendarSidebar(
+private fun ScheduleSidebar(
     hourHeight: Dp,
     modifier: Modifier = Modifier,
 ) {
@@ -151,10 +150,10 @@ private fun Modifier.parentData(data: Any?) =
 
 @Preview
 @Composable
-private fun DayCalendarViewPreview() {
+private fun EventSchedulePagePreview() {
     MeetingRoomBookingTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            DayCalendarView(
+            EventSchedulePage(
                 events = PreviewMocks.MeetingEvents().eventList,
             )
         }
@@ -163,10 +162,10 @@ private fun DayCalendarViewPreview() {
 
 @Preview
 @Composable
-private fun DayCalendarViewPreviewDark() {
+private fun EventSchedulePagePreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {
         Surface(modifier = Modifier.fillMaxSize()) {
-            DayCalendarView(
+            EventSchedulePage(
                 events = PreviewMocks.MeetingEvents().eventList,
             )
         }

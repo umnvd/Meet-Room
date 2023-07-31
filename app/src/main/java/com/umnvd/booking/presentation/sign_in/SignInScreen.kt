@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +34,7 @@ import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
+import com.umnvd.booking.core.ui.utils.getText
 import com.umnvd.booking.core.ui.utils.text
 import com.umnvd.booking.presentation.sign_in.viewmodel.SignInScreenState
 import com.umnvd.booking.presentation.sign_in.viewmodel.SignInScreenViewModel
@@ -44,7 +46,7 @@ fun SignInScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
-    val networkErrorMessage = stringResource(R.string.network_error)
+    val context = LocalContext.current
 
     LaunchedEffect(state.signedIn) {
         if (state.signedIn) {
@@ -53,9 +55,10 @@ fun SignInScreen(
         }
     }
 
-    LaunchedEffect(state.networkError) {
-        if (state.networkError) {
-            snackbarHostState.showSnackbar(networkErrorMessage)
+    LaunchedEffect(state.error) {
+        val error = state.error
+        if (error != null) {
+            snackbarHostState.showSnackbar(error.getText(context))
             viewModel.networkErrorHandled()
         }
     }
@@ -94,7 +97,7 @@ private fun AuthScreenContent(
             Icon(
                 imageVector = Icons.Outlined.MeetingRoom,
                 contentDescription = stringResource(
-                    R.string.auth_screen_meeting_room_icon
+                    R.string.auth_meeting_room_icon
                 ),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(48.dp),
@@ -107,7 +110,7 @@ private fun AuthScreenContent(
             )
             Spacer(modifier = Modifier.height(64.dp))
             AppTextField(
-                placeholder = stringResource(R.string.auth_screen_email_hint),
+                placeholder = stringResource(R.string.auth_email_hint),
                 value = state.email.value,
                 onValueChange = onEmailChange,
                 error = state.email.error?.text,
@@ -115,7 +118,7 @@ private fun AuthScreenContent(
             )
             Spacer(modifier = Modifier.height(8.dp))
             AppTextField(
-                placeholder = stringResource(R.string.auth_screen_password_hint),
+                placeholder = stringResource(R.string.auth_password_hint),
                 value = state.password.value,
                 onValueChange = onPasswordChange,
                 error = state.password.error?.text,
@@ -127,7 +130,7 @@ private fun AuthScreenContent(
                 onClick = onSignInClick,
                 enabled = state.buttonEnabled,
             ) {
-                Text(text = stringResource(R.string.auth_screen_sign_in_button))
+                Text(text = stringResource(R.string.auth_sign_in_button))
             }
         }
     }

@@ -115,19 +115,16 @@ private fun MeetingRoomListScreenContent(
                 LazyColumn(modifier = Modifier.weight(1f)) {
                     items(
                         items = state.rooms,
-                        key = { it.uid },
+                        key = MeetingRoomModel::uid,
                     ) {
                         MeetingRoomListTile(room = it, onRoomClick = onRoomClick)
-                        Divider(
-                            color = MaterialTheme.colorScheme.divider,
-                        )
+                        Divider(color = MaterialTheme.colorScheme.divider)
                     }
                 }
             } else {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(
                         text = "There are no rooms",
-                        style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.align(Alignment.Center),
                     )
                 }

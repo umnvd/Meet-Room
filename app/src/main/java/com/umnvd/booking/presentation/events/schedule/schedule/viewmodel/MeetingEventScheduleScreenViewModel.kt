@@ -40,7 +40,12 @@ class MeetingEventScheduleScreenViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            updateState { it.copy(loading = true) }
+            updateState {
+                it.copy(
+                    loading = true,
+                    events = listOf(),
+                )
+            }
             loadEventsJob = launch {
                 val result = getDayMeetingEventsUseCase(
                     GetDayMeetingEventsUseCase.Params(date = state.value.date)

@@ -8,5 +8,5 @@ sealed class SignInError {
         val password: AppException? = null,
     ) : SignInError()
 
-    object Network : SignInError()
+    class Common(val error: AppException) : SignInError()
 }

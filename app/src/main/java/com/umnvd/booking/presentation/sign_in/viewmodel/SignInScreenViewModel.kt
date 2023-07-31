@@ -43,7 +43,8 @@ class SignInScreenViewModel @Inject constructor(
                         )
                     }
 
-                    is SignInError.Network -> updateState { it.copy(networkError = true) }
+                    is SignInError.Common ->
+                        updateState { it.copy(error = result.error.error) }
                 }
 
             }
@@ -53,5 +54,5 @@ class SignInScreenViewModel @Inject constructor(
 
     fun signedInHandled() = resetState()
 
-    fun networkErrorHandled() = updateState { it.copy(networkError = false) }
+    fun networkErrorHandled() = updateState { it.copy(error = null) }
 }

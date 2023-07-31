@@ -7,23 +7,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.umnvd.booking.core.ui.components.AppBackNavigationTopBar
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
+import com.umnvd.booking.core.ui.utils.rememberWithKeyboardHiding
+import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormController
+import com.umnvd.booking.presentation.rooms.common.form.toFormState
 import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
 import com.umnvd.booking.presentation.rooms.common.widgets.MeetingRoomForm
 import com.umnvd.booking.presentation.rooms.creation.viewmodel.MeetingRoomCreationScreenState
 import com.umnvd.booking.presentation.rooms.creation.viewmodel.MeetingRoomCreationScreenViewModel
-import com.umnvd.booking.presentation.rooms.room.models.MeetingRoomFormController
-import com.umnvd.booking.presentation.rooms.room.models.toFormState
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable
@@ -41,7 +38,6 @@ fun MeetingRoomCreationScreen(
         if (state.created) {
             syncViewModel.triggerSync()
             onCreated()
-            viewModel.createdHandled()
         }
     }
 
@@ -53,7 +49,6 @@ fun MeetingRoomCreationScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun MeetingRoomCreationScreenContent(
     state: MeetingRoomCreationScreenState,
@@ -61,15 +56,7 @@ private fun MeetingRoomCreationScreenContent(
     onCreateClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val focusManager = LocalFocusManager.current
-    val onSaveClickHandler = remember {
-        fun() {
-            onCreateClick()
-            focusManager.clearFocus()
-            keyboardController?.hide()
-        }
-    }
+    val onSaveClickHandler = rememberWithKeyboardHiding(onCreateClick)
 
     Scaffold(
         topBar = {

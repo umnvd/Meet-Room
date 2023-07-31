@@ -10,7 +10,7 @@ import com.umnvd.booking.data.users.models.UserRemoteModel
 data class MeetingEventRemoteModel(
     val uid: String,
     val title: String,
-    val description: String?,
+    val description: String,
     val startAt: String,
     val endAt: String,
     val room: MeetingRoomRemoteModel,

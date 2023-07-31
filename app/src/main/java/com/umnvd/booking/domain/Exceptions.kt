@@ -1,7 +1,9 @@
 package com.umnvd.booking.domain
 
-sealed class AppException : RuntimeException()
+import java.time.LocalDateTime
 
+sealed class AppException : RuntimeException()
+class UnknownException : AppException()
 class NetworkException : AppException()
 
 class UnauthorizedException : AppException()
@@ -19,8 +21,17 @@ class PasswordMinLengthException(val minLength: Int) : AppException()
 class PasswordInvalidException : AppException()
 
 // Room form
-class RoomNameRequiredException() : AppException()
+class RoomNameRequiredException : AppException()
 class RoomNameLengthException(val minLength: Int) : AppException()
-class RoomAddressRequiredException() : AppException()
+class RoomAddressRequiredException : AppException()
+
+// Event form
+class EventTitleRequiredException : AppException()
+class EventTitleLengthException(val minLength: Int) : AppException()
+class EventRoomRequiredException : AppException()
+class EventParticipantsRequiredException : AppException()
+class EventStartIntersectionException(val dateTime: LocalDateTime) : AppException()
+class EventEndIntersectionException(val dateTime: LocalDateTime) : AppException()
+
 
 

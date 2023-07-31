@@ -14,15 +14,16 @@ class ValidateMeetingRoomFormUseCase @Inject constructor() {
         val trimmedName = params.form.name.trim()
         val trimmedAddress = params.form.address.trim()
 
-        val nameError = if (trimmedName.isEmpty())
-            RoomNameRequiredException()
-        else if (trimmedName.length < 3)
-            RoomNameLengthException(3)
-        else null
+        val nameError = when {
+            trimmedName.isEmpty() -> RoomNameRequiredException()
+            trimmedName.length < 3 -> RoomNameLengthException(3)
+            else -> null
+        }
 
-        val addressError = if (trimmedAddress.isEmpty())
-            RoomAddressRequiredException()
-        else null
+        val addressError = when {
+            trimmedAddress.isEmpty() -> RoomAddressRequiredException()
+            else -> null
+        }
 
         return if (nameError != null || addressError != null) {
             Result.Error(

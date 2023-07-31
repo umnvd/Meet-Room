@@ -28,10 +28,6 @@ val LocalAppProgressIndicatorController =
 class AppProgressIndicatorController(
     private val setState: (Boolean) -> Unit,
 ) {
-    fun show() = setState(true)
-
-    fun hide() = setState(true)
-
     fun state(value: Boolean) = setState(value)
 }
 
