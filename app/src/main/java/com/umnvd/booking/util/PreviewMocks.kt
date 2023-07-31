@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class PreviewMocks() {
+class PreviewMocks {
     class Users {
         val user = UserModel(
             uid = "mock_user_1",
@@ -62,7 +62,7 @@ class PreviewMocks() {
     }
 
     class MeetingEvents {
-        val date = LocalDate.of(2023, 7, 28)
+        val date: LocalDate = LocalDate.of(2023, 7, 28)
 
         val event = MeetingEventModel(
             uid = "mock_event_1",

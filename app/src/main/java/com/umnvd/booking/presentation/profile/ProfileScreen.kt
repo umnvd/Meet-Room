@@ -70,7 +70,7 @@ private fun ProfileScreenContent(
                 Row(modifier = Modifier.fillMaxWidth()) {
                     AsyncImage(
                         model = user.photoUrl,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.profile_avatar_description),
                         placeholder = debugPlaceholder(R.drawable.mock_user_avatar),
                         modifier = Modifier
                             .size(96.dp)

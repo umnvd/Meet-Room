@@ -4,15 +4,18 @@ import com.umnvd.booking.core.domain.models.Result
 import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.domain.events.repositories.MeetingEventsRepository
+import com.umnvd.booking.domain.users.repositories.UsersRepository
 import javax.inject.Inject
 
-class GetMeetingEventsUseCase @Inject constructor(
+class GetUserMeetingEventListUseCase @Inject constructor(
+    private val usersRepository: UsersRepository,
     private val meetingEventsRepository: MeetingEventsRepository,
 ) {
 
     suspend operator fun invoke(): Result<List<MeetingEventModel>, AppException> {
         return try {
-            val events = meetingEventsRepository.allEvents()
+            val user = usersRepository.currentUser()
+            val events = meetingEventsRepository.userEvents(user)
             Result.Success(events)
         } catch (e: AppException) {
             Result.Error(e)

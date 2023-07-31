@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
-import com.umnvd.booking.presentation.events.common.components.CalendarDay
+import com.umnvd.booking.presentation.events.home.components.CalendarDay
 import java.time.DayOfWeek
 import java.time.LocalDate
 

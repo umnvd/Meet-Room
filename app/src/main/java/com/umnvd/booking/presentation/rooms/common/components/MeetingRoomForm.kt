@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Divider
@@ -15,9 +17,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppTextField
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
@@ -32,6 +39,8 @@ fun MeetingRoomForm(
     formController: MeetingRoomFormController,
     modifier: Modifier = Modifier,
 ) {
+    val focusManager = LocalFocusManager.current
+
     Column(modifier = modifier.fillMaxSize()) {
         AppTextField(
             value = formState.name.value,
@@ -41,7 +50,11 @@ fun MeetingRoomForm(
                 fontSize = 28.sp,
             ),
             modifier = Modifier.padding(start = 40.dp),
-            placeholder = "Name",
+            placeholder = stringResource(R.string.room_name_hint),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(
+                onNext = {focusManager.moveFocus(FocusDirection.Down) }
+            ),
         )
         Divider(color = MaterialTheme.colorScheme.divider)
         Row(
@@ -49,7 +62,7 @@ fun MeetingRoomForm(
         ) {
             Icon(
                 imageVector = Icons.Outlined.LocationOn,
-                contentDescription = "",
+                contentDescription = stringResource(R.string.address_icon_description),
                 modifier = Modifier.padding(start = 16.dp, top = 16.dp),
             )
             AppTextField(
@@ -57,7 +70,11 @@ fun MeetingRoomForm(
                 error = formState.address.error?.text,
                 onValueChange = formController::setAddress,
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = "Address",
+                placeholder = stringResource(R.string.room_address_hint),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(
+                    onNext = {focusManager.clearFocus() }
+                ),
             )
         }
     }

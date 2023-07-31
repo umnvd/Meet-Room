@@ -36,7 +36,7 @@
     <string name="july">Июль</string>
     <string name="august">Август</string>
     <string name="september">Сентябрь</string>
-    <string name="october">Октябрьr</string>
+    <string name="october">Октябрь</string>
     <string name="november">Ноябрь</string>
     <string name="december">Декабрь</string>
     <!--  Home  -->
@@ -44,10 +44,38 @@
     <string name="rooms_tab">Комнаты</string>
     <string name="profile_tab">Профиль</string>
     <!--  Auth  -->
-    <string name="auth_meeting_room_icon">Иконка переговорной комнаты</string>
+    <string name="room_icon_description">Иконка переговорной комнаты</string>
     <string name="auth_email_hint">Email</string>
     <string name="auth_password_hint">Пароль</string>
     <string name="auth_sign_in_button">Войти</string>
     <!--  Profile  -->
     <string name="profile_sign_out_button">Выйти</string>
+    <string name="profile_avatar_description">Аватар профиля</string>
+    <!--  Rooms  -->
+    <string name="room_delete_dialog_title">Вы уверены, что хотите удалить комнату?</string>
+    <string name="room_delete_dialog_message">Эту операцию невозможно будет отменить</string>
+    <string name="room_delete_button">Удалить</string>
+    <string name="room_cancel_button">Отмена</string>
+    <string name="room_save_button">Сохранить</string>
+    <string name="room_name_hint">Название</string>
+    <string name="room_address_hint">Адрес</string>
+    <string name="room_create_buttom">Создать</string>
+    <!--  Events  -->
+    <string name="event_delete_button">Удалить</string>
+    <string name="event_save_button">Сохранить</string>
+    <string name="event_cancel_button">Отмена</string>
+    <string name="event_delete_dialog_title">Вы уверены, что хотите удалить событие?</string>
+    <string name="event_delete_dialog_message">Эту операцию невозможно будет отменить</string>
+    <string name="events_today_button">Сегодня</string>
+    <string name="events_my_events_button">Мои события</string>
+    <string name="event_create_button">Создать</string>
+    <string name="event_room_selected_icon_description">Иконка выбранной комнаты</string>
+    <string name="event_select_room_hint">Выберите комнату</string>
+    <string name="event_select_participants_hint">Выберите участников</string>
+    <string name="event_title_hint">Название</string>
+    <string name="event_additional_info_hint">Дополнительная информация</string>
+    <string name="event_select_start_date_hint">Выберите дату начала</string>
+    <string name="event_select_start_time_hint">Выберите время начала</string>
+    <string name="event_select_end_date_hint">Выберите дату завершения</string>
+    <string name="event_select_end_time_hint">Выберите время завершения</string>
 </resources>

@@ -18,9 +18,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
@@ -51,7 +53,7 @@ fun MeetingRoomListTile(
         ) {
             Icon(
                 imageVector = Icons.Outlined.LocationOn,
-                contentDescription = "",
+                contentDescription = stringResource(R.string.address_icon_description),
                 tint = MaterialTheme.colorScheme.hint,
             )
             Spacer(modifier = Modifier.width(4.dp))

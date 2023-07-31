@@ -1,6 +1,5 @@
 package com.umnvd.booking.domain.events.usecases
 
-import android.util.Log
 import com.umnvd.booking.core.domain.models.Result
 import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.EventDifferentDatesException
@@ -49,7 +48,6 @@ class ValidateMeetingEventUseCase @Inject constructor(
         val endAt = params.form.endAt
 
         val duration = ChronoUnit.MINUTES.between(startAt, endAt)
-        Log.d("EVENT_DATE_TIME", "$duration")
         val durationError = when {
             duration < 0 -> EventNegativeDurationException()
             duration < 30 -> EventMinDurationException(duration)

@@ -3,6 +3,10 @@
     <string name="app_name" translatable="false">Meet Room</string>
     <!--  Common  -->
     <string name="navigate_back_icon">Navigate back icon</string>
+    <string name="address_icon_description">Address icon</string>
+    <string name="clear_icon_description">Clear icon</string>
+    <string name="additional_info_icon_description">Additional info icon</string>
+    <string name="schedule_icon_description">Schedule icon</string>
     <!--  Errors  -->
     <string name="unknown_error">Unknown error</string>
     <string name="network_error">No network connection</string>
@@ -45,10 +49,38 @@
     <string name="rooms_tab">Rooms</string>
     <string name="profile_tab">Profile</string>
     <!--  Auth  -->
-    <string name="auth_meeting_room_icon">Meeting room icon</string>
+    <string name="room_icon_description">Meeting room icon</string>
     <string name="auth_email_hint">Email</string>
     <string name="auth_password_hint">Password</string>
     <string name="auth_sign_in_button">Sign In</string>
     <!--  Profile  -->
     <string name="profile_sign_out_button">Sign Out</string>
+    <string name="profile_avatar_description">Profile avatar</string>
+    <!--  Rooms  -->
+    <string name="room_delete_dialog_title">Are you sure you want to delete the room?</string>
+    <string name="room_delete_dialog_message">This action cannot be undone</string>
+    <string name="room_delete_button">Delete</string>
+    <string name="room_cancel_button">Cancel</string>
+    <string name="room_save_button">Save</string>
+    <string name="room_name_hint">Name</string>
+    <string name="room_address_hint">Address</string>
+    <string name="room_create_buttom">Create</string>
+    <!--  Events  -->
+    <string name="event_delete_button">Delete</string>
+    <string name="event_save_button">Save</string>
+    <string name="event_cancel_button">Cancel</string>
+    <string name="event_delete_dialog_title">Are you sure you want to delete event?</string>
+    <string name="event_delete_dialog_message">This action cannot be undone</string>
+    <string name="events_today_button">Today</string>
+    <string name="events_my_events_button">My Events</string>
+    <string name="event_create_button">Create</string>
+    <string name="event_room_selected_icon_description">Selected room icon</string>
+    <string name="event_select_room_hint">Select room</string>
+    <string name="event_select_participants_hint">Select participants</string>
+    <string name="event_title_hint">Title</string>
+    <string name="event_additional_info_hint">Additional info</string>
+    <string name="event_select_start_date_hint">Select start date</string>
+    <string name="event_select_start_time_hint">Select start time</string>
+    <string name="event_select_end_date_hint">Select end date</string>
+    <string name="event_select_end_time_hint">Select end time</string>
 </resources>

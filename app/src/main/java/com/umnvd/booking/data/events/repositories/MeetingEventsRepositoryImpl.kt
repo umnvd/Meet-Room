@@ -1,11 +1,11 @@
 package com.umnvd.booking.data.events.repositories
 
-import android.util.Log
 import com.umnvd.booking.data.events.mappers.MeetingEventRemoteModelMapper
 import com.umnvd.booking.data.events.services.MeetingEventsService
 import com.umnvd.booking.di.IoDispatcher
 import com.umnvd.booking.domain.events.models.MeetingEventFormModel
 import com.umnvd.booking.domain.events.repositories.MeetingEventsRepository
+import com.umnvd.booking.domain.users.models.UserModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -26,10 +26,8 @@ class MeetingEventsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createEvent(form: MeetingEventFormModel) = withContext(ioDispatcher) {
-        Log.d("CREATE_MEETING_EVENT", "form: $form")
         val eventDto = meetingEventsService
             .createEvent(MeetingEventRemoteModelMapper.formDomainToDto(form))
-        Log.d("CREATE_MEETING_EVENT", "repo return")
         return@withContext MeetingEventRemoteModelMapper.dtoToDomain(eventDto)
     }
 
@@ -42,5 +40,9 @@ class MeetingEventsRepositoryImpl @Inject constructor(
 
     override suspend fun deleteEvent(uid: String) = withContext(ioDispatcher) {
         meetingEventsService.deleteEvent(uid)
+    }
+
+    override suspend fun userEvents(user: UserModel) = withContext(ioDispatcher) {
+        allEvents().filter { it.participants.contains(user) }
     }
 }

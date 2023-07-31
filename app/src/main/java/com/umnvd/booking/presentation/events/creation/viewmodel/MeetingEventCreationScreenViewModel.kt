@@ -1,6 +1,5 @@
 package com.umnvd.booking.presentation.events.creation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
 import com.umnvd.booking.domain.events.usecases.CreateMeetingEventUseCase
@@ -35,7 +34,6 @@ class MeetingEventCreationScreenViewModel @Inject constructor(
             val validationResult = validateMeetingEventUseCase(
                 ValidateMeetingEventUseCase.Params(state.value.formState.toDomain())
             )
-            Log.d("CREATE_MEETING_EVENT", "validation: $validationResult")
             when (validationResult) {
                 is Result.Error -> {
                     updateForm {

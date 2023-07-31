@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.common.components.form
+package com.umnvd.booking.presentation.events.common.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +15,6 @@ import com.umnvd.booking.domain.users.models.UserModel
 import com.umnvd.booking.presentation.events.common.form.MeetingEventFormController
 import com.umnvd.booking.presentation.events.common.form.MeetingEventFormState
 import com.umnvd.booking.util.PreviewMocks
-
 
 @Composable
 fun MeetingEventForm(
@@ -48,13 +47,13 @@ fun MeetingEventForm(
         Divider(color = MaterialTheme.colorScheme.divider)
         RoomForm(
             room = formState.room,
-            rooms = allRooms, // TODO
+            rooms = allRooms,
             onRoomSelected = formController::setRoom,
         )
         Divider(color = MaterialTheme.colorScheme.divider)
         ParticipantsForm(
             participants = formState.participants,
-            users = allUsers, // TODO
+            users = allUsers,
             onParticipantSelected = formController::addUser,
             onParticipantRemoved = formController::removeUser,
         )

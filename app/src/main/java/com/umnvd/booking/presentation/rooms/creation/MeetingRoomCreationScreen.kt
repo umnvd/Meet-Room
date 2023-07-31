@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppBackNavigationTopBar
 import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
@@ -66,7 +68,7 @@ private fun MeetingRoomCreationScreenContent(
                 onBackClick = onBackClick,
                 actions = {
                     Button(onClick = onSaveClickHandler) {
-                        Text(text = "Create")
+                        Text(text = stringResource(R.string.room_create_buttom))
                     }
                 }
             )

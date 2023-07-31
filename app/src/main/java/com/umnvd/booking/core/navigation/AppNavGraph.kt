@@ -1,7 +1,6 @@
-@file:OptIn(ExperimentalAnimationApi::class)
-
 package com.umnvd.booking.core.navigation
 
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,11 +22,11 @@ fun AppNavGraph(
     AnimatedNavHost(
         navController = navController,
         startDestination = startDestination,
-        enterTransition = NavigationTransitions.enter,
-        exitTransition = NavigationTransitions.exit,
-        popEnterTransition = NavigationTransitions.popEnter,
-        popExitTransition = NavigationTransitions.popExit,
         modifier = modifier,
+        enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
+        exitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Right) },
+        popEnterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
+        popExitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Right) },
     ) {
         signIn(onSignedIn = navController::navigateToHome)
         home(onSignedOut = navController::navigateToSignIn)

@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppBackNavigationTopBar
 import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
@@ -18,7 +20,7 @@ import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.utils.rememberWithKeyboardHiding
 import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
 import com.umnvd.booking.presentation.events.common.form.MeetingEventFormController
-import com.umnvd.booking.presentation.events.common.components.form.MeetingEventForm
+import com.umnvd.booking.presentation.events.common.components.MeetingEventForm
 import com.umnvd.booking.presentation.events.creation.viewmodel.MeetingEventCreationScreenState
 import com.umnvd.booking.presentation.events.creation.viewmodel.MeetingEventCreationScreenViewModel
 import com.umnvd.booking.util.PreviewMocks
@@ -65,7 +67,7 @@ private fun MeetingEventCreationScreenContent(
                 onBackClick = onBackClick,
                 actions = {
                     Button(onClick = onSaveClickHandler) {
-                        Text(text = "Create")
+                        Text(text = stringResource(R.string.event_create_button))
                     }
                 }
             )

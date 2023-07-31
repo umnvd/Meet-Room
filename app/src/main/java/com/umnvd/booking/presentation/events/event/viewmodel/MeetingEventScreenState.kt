@@ -7,7 +7,9 @@ import com.umnvd.booking.domain.users.models.UserModel
 import com.umnvd.booking.presentation.events.common.form.MeetingEventFormState
 import com.umnvd.booking.presentation.events.common.form.toDomain
 import com.umnvd.booking.presentation.events.common.form.toForm
+import javax.annotation.concurrent.Immutable
 
+@Immutable
 data class MeetingEventScreenState(
     val event: MeetingEventModel? = null,
     val formState: MeetingEventFormState = MeetingEventFormState(),

@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.common.components.form
+package com.umnvd.booking.presentation.events.common.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -23,8 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppErrorText
 import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
@@ -79,7 +81,9 @@ fun RoomForm(
                             Icon(
                                 imageVector = Icons.Outlined.Check,
                                 tint = MaterialTheme.colorScheme.secondary,
-                                contentDescription = null,
+                                contentDescription = stringResource(
+                                    R.string.event_room_selected_icon_description
+                                ),
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
@@ -95,12 +99,12 @@ fun RoomForm(
     ) {
         Icon(
             imageVector = Icons.Outlined.MeetingRoom,
-            contentDescription = "",
+            contentDescription = stringResource(R.string.room_icon_description),
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
         )
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = room.value?.name ?: "Select room",
+                text = room.value?.name ?: stringResource(R.string.event_select_room_hint),
                 color = if (room.value == null)
                     MaterialTheme.colorScheme.hint
                 else
@@ -127,7 +131,7 @@ fun RoomForm(
 @Composable
 private fun RoomFormPreview() {
     MeetingRoomBookingTheme {
-        Surface() {
+        Surface {
             RoomForm(
                 room = FieldState(PreviewMocks.MeetingRooms().room),
                 rooms = PreviewMocks.MeetingRooms().roomList,
@@ -141,7 +145,7 @@ private fun RoomFormPreview() {
 @Composable
 private fun RoomFormEmptyWithErrorPreview() {
     MeetingRoomBookingTheme {
-        Surface() {
+        Surface {
             RoomForm(
                 room = FieldState(value = null, error = RoomNameRequiredException()),
                 rooms = PreviewMocks.MeetingRooms().roomList,

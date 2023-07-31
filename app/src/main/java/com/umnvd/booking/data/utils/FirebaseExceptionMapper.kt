@@ -10,7 +10,7 @@ import com.umnvd.booking.domain.PasswordInvalidException
 import com.umnvd.booking.domain.UnauthorizedException
 import com.umnvd.booking.domain.UnknownException
 
-suspend fun <T> withFirebaseExceptionMapper(
+suspend fun <T> withFBExceptionMapper(
     block: suspend () -> T
 ): T {
     try {
@@ -24,7 +24,7 @@ suspend fun <T> withFirebaseExceptionMapper(
     } catch (e: FirebaseAuthInvalidUserException) {
         throw UnauthorizedException()
     } catch (e: Exception) {
-        Log.e("FirebaseExceptionMapper", e.message ?: e.toString())
+        Log.e("MeetingAppExceptionMapper", e.message ?: e.toString())
         throw UnknownException()
     }
 }

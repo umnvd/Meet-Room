@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.common.components.form
+package com.umnvd.booking.presentation.events.common.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +31,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -108,7 +109,7 @@ fun ParticipantsForm(
                         IconButton(onClick = { onParticipantRemoved(participant) }) {
                             Icon(
                                 imageVector = Icons.Outlined.Clear,
-                                contentDescription = null,
+                                contentDescription = stringResource(R.string.clear_icon_description),
                                 tint = MaterialTheme.colorScheme.hint,
                             )
                         }
@@ -117,7 +118,7 @@ fun ParticipantsForm(
             }
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Select participants",
+                    text = stringResource(R.string.event_select_participants_hint),
                     color = MaterialTheme.colorScheme.hint,
                     modifier = Modifier
                         .padding(horizontal = 12.dp, vertical = 16.dp)

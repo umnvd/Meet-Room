@@ -1,6 +1,5 @@
 package com.umnvd.booking.presentation.events.home.calendar
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,45 +12,43 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kizitonwose.calendar.compose.VerticalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.DayPosition
-import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
-import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.core.ui.utils.text
-import com.umnvd.booking.presentation.events.home.calendar.viewmodel.MeetingEventCalendarScreenViewModel
 import com.umnvd.booking.presentation.events.home.calendar.components.MonthCalendarDay
+import com.umnvd.booking.presentation.events.home.viewmodel.MeetingEventsHomeScreenViewModel
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-
-private val format = DateTimeFormatter.ofPattern(("LLLL"))
 
 @Composable
 fun MeetingEventCalendarScreen(
-    viewModel: MeetingEventCalendarScreenViewModel = hiltViewModel(),
-    currentDate: LocalDate,
-    onDayClick: (LocalDate) -> Unit,
+    viewModel: MeetingEventsHomeScreenViewModel,
+    onDayClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LocalAppProgressIndicatorController.current.state(state.loading)
-    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
+    val onDayClickHandler = remember {
+        fun(value: LocalDate) {
+            viewModel.setDate(value)
+            onDayClick()
+        }
+    }
 
     MeetingEventCalendarScreenContent(
         eventDays = state.eventDays,
-        currentDate = currentDate,
-        onDayClick = onDayClick,
+        currentDate = state.date,
+        onDayClick = onDayClickHandler,
     )
 }
 
@@ -77,9 +74,6 @@ fun MeetingEventCalendarScreenContent(
         VerticalCalendar(
             state = calendarState,
             monthHeader = {
-                val test = format.format(it.yearMonth.month)
-                Log.d("Month", test)
-
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -113,7 +107,7 @@ fun MeetingEventCalendarScreenContent(
 @Preview(locale = "ru")
 @Composable
 fun MeetingEventCalendarScreenContentPreview() {
-    MeetingRoomBookingTheme() {
+    MeetingRoomBookingTheme {
         Surface(Modifier.fillMaxSize()) {
             MeetingEventCalendarScreenContent(
                 eventDays = setOf(

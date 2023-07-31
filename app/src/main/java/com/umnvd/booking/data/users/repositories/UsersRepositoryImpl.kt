@@ -1,6 +1,5 @@
 package com.umnvd.booking.data.users.repositories
 
-import android.util.Log
 import com.umnvd.booking.data.auth.services.AuthService
 import com.umnvd.booking.data.users.mappers.UserRemoteModelMapper
 import com.umnvd.booking.data.users.services.UsersService
@@ -25,13 +24,11 @@ class UsersRepositoryImpl @Inject constructor(
 
     override suspend fun user(uid: String): UserModel = withContext(ioDispatcher) {
         val userDto = usersService.getUser(uid)
-        Log.d(this@UsersRepositoryImpl.javaClass.simpleName, userDto.toString())
         return@withContext UserRemoteModelMapper.dtoToDomain(userDto)
     }
 
     override suspend fun allUsers(): List<UserModel> = withContext(ioDispatcher) {
         val userDtos = usersService.getUsers()
-        Log.d(this@UsersRepositoryImpl.javaClass.simpleName, userDtos.toString())
         return@withContext userDtos.map(UserRemoteModelMapper::dtoToDomain)
     }
 }

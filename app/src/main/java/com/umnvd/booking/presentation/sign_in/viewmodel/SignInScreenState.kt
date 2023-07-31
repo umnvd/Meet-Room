@@ -12,7 +12,4 @@ data class SignInScreenState(
 ) {
     val buttonEnabled: Boolean
         get() = email.valid && password.valid && !loading
-
-    val fieldsEnabled: Boolean
-        get() = !loading
 }

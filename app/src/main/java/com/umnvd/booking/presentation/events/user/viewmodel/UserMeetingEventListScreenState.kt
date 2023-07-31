@@ -1,11 +1,11 @@
-package com.umnvd.booking.presentation.events.home.schedule.viewmodel
+package com.umnvd.booking.presentation.events.user.viewmodel
 
 import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.events.models.MeetingEventModel
-import java.time.LocalDate
+import javax.annotation.concurrent.Immutable
 
-data class MeetingEventScheduleScreenState(
-    val date: LocalDate = LocalDate.now(),
+@Immutable
+data class UserMeetingEventListScreenState(
     val events: List<MeetingEventModel> = listOf(),
     val loading: Boolean = false,
     val error: AppException? = null,

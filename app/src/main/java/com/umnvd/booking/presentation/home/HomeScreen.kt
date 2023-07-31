@@ -1,6 +1,5 @@
 package com.umnvd.booking.presentation.home
 
-import com.umnvd.booking.core.navigation.navigations.ROOMS_GRAPH_ROUTE
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -28,11 +27,12 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.umnvd.booking.R
 import com.umnvd.booking.core.navigation.navigations.EVENTS_GRAPH_ROUTE
 import com.umnvd.booking.core.navigation.navigations.PROFILE_ROUTE
+import com.umnvd.booking.core.navigation.navigations.ROOMS_GRAPH_ROUTE
 import com.umnvd.booking.core.navigation.navigations.meetingEventsGraph
+import com.umnvd.booking.core.navigation.navigations.meetingRoomsGraph
 import com.umnvd.booking.core.navigation.navigations.profile
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.presentation.home.models.NavigationItemUiModel
-import com.umnvd.booking.core.navigation.navigations.meetingRoomsGraph
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -98,7 +98,7 @@ fun HomeScreen(
         AnimatedNavHost(
             navController = navController,
             startDestination = EVENTS_GRAPH_ROUTE,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         ) {
             meetingEventsGraph(navController = navController)
             meetingRoomsGraph(navController = navController)

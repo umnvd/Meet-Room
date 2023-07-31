@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.home.calendar.components
+package com.umnvd.booking.presentation.events.home.schedule.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,7 +44,8 @@ fun EventSchedulePage(
     Row(modifier = modifier.verticalScroll(rememberScrollState())) {
         ScheduleSidebar(hourHeight = hourHeight)
         ScheduleLayout(hourHeight = hourHeight) {
-            events.sortedBy(MeetingEventModel::startAt).forEach {
+            events
+                .sortedBy(MeetingEventModel::startAt).forEach {
                 EventScheduleTile(
                     event = it,
                     onEventClick = onEventClick,

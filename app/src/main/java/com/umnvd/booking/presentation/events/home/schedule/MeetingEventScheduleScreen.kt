@@ -1,7 +1,6 @@
 package com.umnvd.booking.presentation.events.home.schedule
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,20 +17,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
-import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
-import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.domain.events.consts.MAX_DATE
 import com.umnvd.booking.domain.events.consts.MIN_DATE
 import com.umnvd.booking.domain.events.models.MeetingEventModel
-import com.umnvd.booking.presentation.events.common.components.CalendarDay
-import com.umnvd.booking.presentation.events.home.calendar.components.EventSchedulePage
-import com.umnvd.booking.presentation.events.home.schedule.viewmodel.MeetingEventScheduleScreenState
-import com.umnvd.booking.presentation.events.home.schedule.viewmodel.MeetingEventScheduleScreenViewModel
+import com.umnvd.booking.presentation.events.home.components.CalendarDay
+import com.umnvd.booking.presentation.events.home.schedule.components.EventSchedulePage
+import com.umnvd.booking.presentation.events.home.viewmodel.MeetingEventsHomeScreenState
+import com.umnvd.booking.presentation.events.home.viewmodel.MeetingEventsHomeScreenViewModel
 import com.umnvd.booking.util.PreviewMocks
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
@@ -39,13 +35,10 @@ import java.time.LocalDate
 
 @Composable
 fun MeetingEventScheduleScreen(
-    viewModel: MeetingEventScheduleScreenViewModel = hiltViewModel(),
+    viewModel: MeetingEventsHomeScreenViewModel,
     onEventCLick: (MeetingEventModel) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-
-    LocalAppProgressIndicatorController.current.state(state.loading)
-    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
     MeetingEventScheduleScreenContent(
         state = state,
@@ -57,7 +50,7 @@ fun MeetingEventScheduleScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MeetingEventScheduleScreenContent(
-    state: MeetingEventScheduleScreenState,
+    state: MeetingEventsHomeScreenState,
     onEventCLick: (MeetingEventModel) -> Unit = {},
     onDateChanged: (LocalDate) -> Unit = {},
 ) {
@@ -107,7 +100,7 @@ private fun MeetingEventScheduleScreenContent(
         Spacer(modifier = Modifier.height(4.dp))
         HorizontalPager(pageCount = calendarDates.size, state = pagerState) { _ ->
             EventSchedulePage(
-                events = state.events,
+                events = state.dayEvents,
                 onEventClick = onEventCLick,
             )
         }
@@ -124,12 +117,13 @@ private val pages = calendarDates
     .toMap()
 
 
+@Preview
 @Composable
 private fun MeetingEventScheduleScreenContentPreview() {
     MeetingRoomBookingTheme {
         Surface(Modifier.fillMaxSize()) {
             MeetingEventScheduleScreenContent(
-                state = MeetingEventScheduleScreenState(
+                state = MeetingEventsHomeScreenState(
                     date = PreviewMocks.MeetingEvents().date,
                     events = PreviewMocks.MeetingEvents().eventList,
                 )
@@ -144,7 +138,7 @@ private fun MeetingEventScheduleScreenContentPreviewDark() {
     MeetingRoomBookingTheme(darkTheme = true) {
         Surface(Modifier.fillMaxSize()) {
             MeetingEventScheduleScreenContent(
-                state = MeetingEventScheduleScreenState(
+                state = MeetingEventsHomeScreenState(
                     date = PreviewMocks.MeetingEvents().date,
                     events = PreviewMocks.MeetingEvents().eventList,
                 )

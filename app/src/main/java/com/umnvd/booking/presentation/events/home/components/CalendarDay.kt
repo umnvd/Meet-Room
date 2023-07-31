@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.common.components
+package com.umnvd.booking.presentation.events.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

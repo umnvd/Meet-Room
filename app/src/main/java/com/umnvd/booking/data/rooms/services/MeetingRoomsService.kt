@@ -6,6 +6,7 @@ import com.umnvd.booking.data.rooms.models.MeetingRoomFormRemoteModel
 import com.umnvd.booking.data.rooms.models.MeetingRoomRemoteModel
 import com.umnvd.booking.data.utils.FirestoreContract
 import com.umnvd.booking.data.utils.toRoomRemote
+import com.umnvd.booking.data.utils.withFBExceptionMapper
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -14,48 +15,48 @@ class MeetingRoomsService @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
 ) {
 
-    suspend fun getRoom(uid: String): MeetingRoomRemoteModel {
-        val roomSnapshot = firebaseFirestore
+    suspend fun getRoom(uid: String): MeetingRoomRemoteModel = withFBExceptionMapper {
+        return@withFBExceptionMapper firebaseFirestore
             .collection(FirestoreContract.Rooms.COLLECTION_KEY)
             .document(uid)
             .get()
             .await()
-
-        return roomSnapshot.toRoomRemote()
+            .toRoomRemote()
     }
 
-    suspend fun getRooms(): List<MeetingRoomRemoteModel> {
-        val snapshots = firebaseFirestore
+    suspend fun getRooms(): List<MeetingRoomRemoteModel> = withFBExceptionMapper {
+        return@withFBExceptionMapper firebaseFirestore
             .collection(FirestoreContract.Rooms.COLLECTION_KEY)
             .get()
             .await()
             .documents
-
-        return snapshots.map { it.toRoomRemote() }
+            .map { it.toRoomRemote() }
     }
 
-    suspend fun createRoom(data: MeetingRoomFormRemoteModel): MeetingRoomRemoteModel {
-        val createdAt = DateTimeMapper.ldtToUtcString(LocalDateTime.now())
+    suspend fun createRoom(data: MeetingRoomFormRemoteModel): MeetingRoomRemoteModel =
+        withFBExceptionMapper {
+            val createdAt = DateTimeMapper.ldtToUtcString(LocalDateTime.now())
 
-        val roomReference = firebaseFirestore
-            .collection(FirestoreContract.Rooms.COLLECTION_KEY)
-            .add(data.toDocumentData() + (FirestoreContract.Rooms.CREATED_AT_KEY to createdAt))
-            .await()
+            val roomReference = firebaseFirestore
+                .collection(FirestoreContract.Rooms.COLLECTION_KEY)
+                .add(data.toDocumentData() + (FirestoreContract.Rooms.CREATED_AT_KEY to createdAt))
+                .await()
 
-        return getRoom(roomReference.id)
-    }
+            return@withFBExceptionMapper getRoom(roomReference.id)
+        }
 
-    suspend fun editRoom(uid: String, data: MeetingRoomFormRemoteModel): MeetingRoomRemoteModel {
-        firebaseFirestore
-            .collection(FirestoreContract.Rooms.COLLECTION_KEY)
-            .document(uid)
-            .update(data.toDocumentData())
-            .await()
+    suspend fun editRoom(uid: String, data: MeetingRoomFormRemoteModel): MeetingRoomRemoteModel =
+        withFBExceptionMapper {
+            firebaseFirestore
+                .collection(FirestoreContract.Rooms.COLLECTION_KEY)
+                .document(uid)
+                .update(data.toDocumentData())
+                .await()
 
-        return getRoom(uid)
-    }
+            return@withFBExceptionMapper getRoom(uid)
+        }
 
-    suspend fun deleteRoom(uid: String) {
+    suspend fun deleteRoom(uid: String): Unit = withFBExceptionMapper {
         firebaseFirestore
             .collection(FirestoreContract.Rooms.COLLECTION_KEY)
             .document(uid)

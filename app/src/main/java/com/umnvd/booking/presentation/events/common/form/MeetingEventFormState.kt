@@ -8,7 +8,9 @@ import com.umnvd.booking.domain.users.models.UserModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import javax.annotation.concurrent.Immutable
 
+@Immutable
 data class MeetingEventFormState(
     val title: FieldState<String> = FieldState(""),
     val description: FieldState<String> = FieldState(""),

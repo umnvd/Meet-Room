@@ -16,7 +16,9 @@ class GetUsersAndMeetingRoomsUseCase @Inject constructor(
     suspend operator fun invoke(): Result<UsersWithRooms, AppException> {
         return try {
             val users = usersRepository.allUsers()
-            val rooms = roomsRepository.allRooms()
+            val rooms = roomsRepository
+                .allRooms()
+                .sortedBy(MeetingRoomModel::createdAt)
             Result.Success(UsersWithRooms(users, rooms))
         } catch (e: AppException) {
             Result.Error(e)

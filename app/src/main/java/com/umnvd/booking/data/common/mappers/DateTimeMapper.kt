@@ -9,12 +9,12 @@ object DateTimeMapper {
 
     private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
-    fun utcStringToLdt(dateTime: String) = OffsetDateTime
+    fun utcStringToLdt(dateTime: String): LocalDateTime = OffsetDateTime
         .parse(dateTime, formatter)
         .atZoneSameInstant(ZoneOffset.systemDefault())
         .toLocalDateTime()
 
-    fun ldtToUtcString(dateTime: LocalDateTime) = formatter.format(
+    fun ldtToUtcString(dateTime: LocalDateTime): String = formatter.format(
         dateTime.atOffset(
             ZoneOffset.systemDefault().rules.getOffset(dateTime)
         ).atZoneSameInstant(ZoneOffset.UTC)

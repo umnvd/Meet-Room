@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.events.common.components.form
+package com.umnvd.booking.presentation.events.common.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,10 +22,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import com.marosseleng.compose.material3.datetimepickers.date.ui.dialog.DatePickerDialog
 import com.marosseleng.compose.material3.datetimepickers.time.ui.dialog.TimePickerDialog
+import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppErrorText
 import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.core.ui.utils.text
@@ -69,7 +71,7 @@ fun DurationForm(
                 onStartDateChanged(it)
                 startDateDialogShowing = false
             },
-            title = { Text(text = "Select start date") },
+            title = { Text(text = stringResource(R.string.event_select_start_date_hint)) },
             initialDate = startDate.value,
         )
     }
@@ -81,7 +83,7 @@ fun DurationForm(
                 onStartTimeChanged(it)
                 startTimeDialogShowing = false
             },
-            title = { Text(text = "Select start time") },
+            title = { Text(text = stringResource(R.string.event_select_start_time_hint)) },
             is24HourFormat = true,
             initialTime = startTime.value
         )
@@ -94,7 +96,7 @@ fun DurationForm(
                 onEndDateChanged(it)
                 endDateDialogShowing = false
             },
-            title = { Text(text = "Select end date") },
+            title = { Text(text = stringResource(R.string.event_select_end_date_hint)) },
             initialDate = endDate.value,
         )
     }
@@ -106,7 +108,7 @@ fun DurationForm(
                 onEndTimeChanged(it)
                 endTimeDialogShowing = false
             },
-            title = { Text(text = "Select end time") },
+            title = { Text(text = stringResource(R.string.event_select_end_time_hint)) },
             is24HourFormat = true,
             initialTime = endTime.value
         )
@@ -117,7 +119,7 @@ fun DurationForm(
     ) {
         Icon(
             imageVector = Icons.Outlined.Schedule,
-            contentDescription = "",
+            contentDescription = stringResource(R.string.schedule_icon_description),
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
         )
         Column(

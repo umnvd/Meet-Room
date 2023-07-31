@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIos
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,11 +21,12 @@ import com.umnvd.booking.R
 fun AppBackNavigationTopBar(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    actions: @Composable (RowScope.() -> Unit),
+    title: @Composable () -> Unit = {},
+    actions: @Composable (RowScope.() -> Unit) = {},
 ) {
     TopAppBar(
         modifier = modifier,
-        title = {},
+        title = title,
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
