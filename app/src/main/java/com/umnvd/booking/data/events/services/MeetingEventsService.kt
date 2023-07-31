@@ -24,12 +24,14 @@ class MeetingEventsService @Inject constructor(
         .await()
         .toEventRemote()
 
-    suspend fun getEvents(): List<MeetingEventRemoteModel> = firebaseFirestore
-        .collection(FirestoreContract.Events.COLLECTION_KEY)
-        .get()
-        .await()
-        .documents
-        .map { it.toEventRemote() }
+    suspend fun getEvents(): List<MeetingEventRemoteModel> {
+        return firebaseFirestore
+            .collection(FirestoreContract.Events.COLLECTION_KEY)
+            .get()
+            .await()
+            .documents
+            .map { it.toEventRemote() }
+    }
 
     suspend fun createEvent(data: MeetingEventFormRemoteModel): MeetingEventRemoteModel {
         val eventReference = firebaseFirestore

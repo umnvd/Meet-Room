@@ -17,7 +17,7 @@ const val EVENTS_GRAPH_ROUTE = "events_graph"
 const val EVENT_ROUTE_UID_KEY = "uid"
 
 private const val EVENTS_HOME_ROUTE = "events"
-private const val EVENT_ROUTE_BASE = "event/"
+private const val EVENT_ROUTE_BASE = "event"
 private const val EVENT_ROUTE = "$EVENT_ROUTE_BASE/{$EVENT_ROUTE_UID_KEY}"
 private const val CREATE_EVENT_ROUTE = "create_event"
 private const val USER_EVENT_LIST_ROUTE = "user_event_list"
@@ -30,6 +30,7 @@ fun NavGraphBuilder.meetingEventsGraph(
         composable(route = EVENTS_HOME_ROUTE) {
             MeetingEventsHomeScreen(
                 onCreateClick = { navController.navigate(CREATE_EVENT_ROUTE) },
+                navigateToEvent = navController::navigateToEvent,
             )
         }
         composable(
@@ -38,6 +39,7 @@ fun NavGraphBuilder.meetingEventsGraph(
         ) {
             MeetingEventScreen(
                 onSaved = navController::popBackStack,
+                onDeleted = navController::popBackStack,
                 onBackClick = navController::popBackStack,
             )
         }
@@ -59,5 +61,5 @@ fun NavGraphBuilder.meetingEventsGraph(
 }
 
 fun NavController.navigateToEvent(event: MeetingEventModel) {
-    navigate("$EVENT_ROUTE_BASE${event.uid}")
+    navigate("$EVENT_ROUTE_BASE/${event.uid}")
 }

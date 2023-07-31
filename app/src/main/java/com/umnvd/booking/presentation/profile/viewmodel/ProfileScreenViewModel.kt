@@ -18,7 +18,7 @@ class ProfileScreenViewModel @Inject constructor(
         loadProfile()
     }
 
-    fun loadProfile() {
+    private fun loadProfile() {
         updateState { it.copy(loading = true) }
         viewModelScope.launch {
             val user = getCurrentUserUseCase()
@@ -36,7 +36,5 @@ class ProfileScreenViewModel @Inject constructor(
         }
     }
 
-    fun signedOutHandled() {
-        updateState { ProfileScreenState() }
-    }
+    fun errorHandled() = updateState { it.copy(error = null) }
 }

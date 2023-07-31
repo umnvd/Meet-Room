@@ -12,13 +12,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.umnvd.booking.core.ui.components.AppBackNavigationTopBar
+import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.utils.rememberWithKeyboardHiding
 import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormController
 import com.umnvd.booking.presentation.rooms.common.form.toFormState
 import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
-import com.umnvd.booking.presentation.rooms.common.widgets.MeetingRoomForm
+import com.umnvd.booking.presentation.rooms.common.components.MeetingRoomForm
 import com.umnvd.booking.presentation.rooms.creation.viewmodel.MeetingRoomCreationScreenState
 import com.umnvd.booking.presentation.rooms.creation.viewmodel.MeetingRoomCreationScreenViewModel
 import com.umnvd.booking.util.PreviewMocks
@@ -33,6 +34,7 @@ fun MeetingRoomCreationScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LocalAppProgressIndicatorController.current.state(state.loading)
+    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
     LaunchedEffect(state.created) {
         if (state.created) {

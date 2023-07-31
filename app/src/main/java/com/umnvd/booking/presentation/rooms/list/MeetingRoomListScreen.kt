@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.umnvd.booking.core.ui.components.AppFloatingActionButton
+import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
@@ -41,7 +42,7 @@ import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
 import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
 import com.umnvd.booking.presentation.rooms.list.viewmodel.MeetingRoomListScreenState
 import com.umnvd.booking.presentation.rooms.list.viewmodel.MeetingRoomListScreenViewModel
-import com.umnvd.booking.presentation.rooms.list.widgets.MeetingRoomListTile
+import com.umnvd.booking.presentation.rooms.list.components.MeetingRoomListTile
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable
@@ -55,6 +56,7 @@ fun MeetingRoomListScreen(
     val sync by syncViewModel.sync.collectAsStateWithLifecycle()
 
     LocalAppProgressIndicatorController.current.state(state.loading)
+    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
     LaunchedEffect(sync) {
         Log.d("ROOM_SYNC", "$syncViewModel - state $sync")

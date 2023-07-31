@@ -4,10 +4,11 @@ import android.util.Log
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.firestore.FirebaseFirestoreException
 import com.umnvd.booking.domain.EmailNotRegisteredException
 import com.umnvd.booking.domain.NetworkException
 import com.umnvd.booking.domain.PasswordInvalidException
+import com.umnvd.booking.domain.UnauthorizedException
+import com.umnvd.booking.domain.UnknownException
 
 suspend fun <T> withFirebaseExceptionMapper(
     block: suspend () -> T
@@ -20,11 +21,10 @@ suspend fun <T> withFirebaseExceptionMapper(
         throw EmailNotRegisteredException()
     } catch (e: FirebaseAuthInvalidCredentialsException) {
         throw PasswordInvalidException()
-    } catch (e: FirebaseFirestoreException) {
-        Log.d("FirebaseExceptionMapper", "${e.code.name} : ${e.message ?: e.toString()}")
-        throw e
+    } catch (e: FirebaseAuthInvalidUserException) {
+        throw UnauthorizedException()
     } catch (e: Exception) {
-        Log.d("FirebaseExceptionMapper", e.message ?: e.toString())
-        throw e
+        Log.e("FirebaseExceptionMapper", e.message ?: e.toString())
+        throw UnknownException()
     }
 }

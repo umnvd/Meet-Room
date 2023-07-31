@@ -16,7 +16,7 @@ import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.utils.rememberWithKeyboardHiding
 import com.umnvd.booking.presentation.events.common.form.MeetingEventFormController
-import com.umnvd.booking.presentation.events.common.widgets.form.MeetingEventForm
+import com.umnvd.booking.presentation.events.common.components.form.MeetingEventForm
 import com.umnvd.booking.presentation.events.creation.viewmodel.MeetingEventCreationScreenState
 import com.umnvd.booking.presentation.events.creation.viewmodel.MeetingEventCreationScreenViewModel
 import com.umnvd.booking.util.PreviewMocks
@@ -69,7 +69,9 @@ private fun MeetingEventCreationScreenContent(
         MeetingEventForm(
             formState = state.formState,
             formController = formController,
-            modifier = Modifier.padding(innerPadding)
+            allRooms = state.allRooms,
+            allUsers = state.allUsers,
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }

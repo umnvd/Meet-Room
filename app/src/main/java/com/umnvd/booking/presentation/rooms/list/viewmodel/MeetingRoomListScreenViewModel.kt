@@ -30,4 +30,6 @@ class MeetingRoomListScreenViewModel @Inject constructor(
             updateState { it.copy(loading = false) }
         }
     }
+
+    fun errorHandled() = updateState { it.copy(error = null) }
 }

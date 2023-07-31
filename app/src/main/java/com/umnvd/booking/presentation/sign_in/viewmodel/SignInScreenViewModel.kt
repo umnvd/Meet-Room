@@ -52,7 +52,5 @@ class SignInScreenViewModel @Inject constructor(
         }
     }
 
-    fun signedInHandled() = resetState()
-
-    fun networkErrorHandled() = updateState { it.copy(error = null) }
+    fun errorHandled() = updateState { it.copy(error = null) }
 }

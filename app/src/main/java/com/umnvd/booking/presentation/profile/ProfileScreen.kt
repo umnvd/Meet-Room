@@ -17,17 +17,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.umnvd.booking.R
+import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
@@ -43,14 +44,11 @@ fun ProfileScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state.signedOut) {
-        if (state.signedOut) {
-            onSignedOut()
-            viewModel.signedOutHandled()
-        }
-    }
-
     LocalAppProgressIndicatorController.current.state(state.loading)
+    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
+
+    LaunchedEffect(state.signedOut) { if (state.signedOut) { onSignedOut() } }
+    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
     ProfileScreenContent(
         user = state.user,
@@ -93,7 +91,7 @@ private fun ProfileScreenContent(
                     }
                 }
                 Button(onClick = onSignOutClick) {
-                    Text("Sign Out")
+                    Text(text = stringResource(R.string.profile_sign_out_button))
                 }
             }
         }

@@ -59,6 +59,8 @@ class ValidateMeetingEventUseCase @Inject constructor(
                     title = titleError,
                     room = roomError,
                     participants = participantsError,
+                    startAt = startError,
+                    endAt = endError,
                 )
             )
         } else Result.Success(Unit)

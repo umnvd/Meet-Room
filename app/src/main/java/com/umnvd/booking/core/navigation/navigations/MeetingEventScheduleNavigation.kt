@@ -8,8 +8,9 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
-import com.umnvd.booking.presentation.events.schedule.calendar.MeetingEventCalendarScreen
-import com.umnvd.booking.presentation.events.schedule.schedule.MeetingEventScheduleScreen
+import com.umnvd.booking.domain.events.models.MeetingEventModel
+import com.umnvd.booking.presentation.events.home.calendar.MeetingEventCalendarScreen
+import com.umnvd.booking.presentation.events.home.schedule.MeetingEventScheduleScreen
 import java.time.LocalDate
 
 const val EVENT_SCHEDULE_GRAPH_DATE_KEY = "date"
@@ -26,6 +27,7 @@ const val EVENT_CALENDAR_ROUTE =
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.meetingEventScheduleGraph(
     navController: NavController,
+    navigateToEvent: (MeetingEventModel) -> Unit,
 ) {
     navigation(
         startDestination = EVENT_SCHEDULE_ROUTE,
@@ -44,9 +46,7 @@ fun NavGraphBuilder.meetingEventScheduleGraph(
             popEnterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Up) },
             popExitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Down) }
         ) {
-            MeetingEventScheduleScreen(
-                onEventCLick = navController::navigateToEvent
-            )
+            MeetingEventScheduleScreen(onEventCLick = navigateToEvent)
         }
         composable(
             route = EVENT_CALENDAR_ROUTE,

@@ -37,3 +37,14 @@ fun MeetingEventModel.toForm() = MeetingEventFormModel(
     room = room,
     participants = participants,
 )
+
+fun MeetingEventModel.toFormState() = MeetingEventFormState(
+    title = FieldState(title),
+    description = FieldState(description),
+    startDate = FieldState(startAt.toLocalDate()),
+    startTime = FieldState(startAt.toLocalTime()),
+    endDate = FieldState(endAt.toLocalDate()),
+    endTime = FieldState(endAt.toLocalTime()),
+    room = FieldState(room),
+    participants = FieldState(participants),
+)

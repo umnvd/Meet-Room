@@ -3,7 +3,9 @@ package com.umnvd.booking.presentation.events.home
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ArrowBackIos
@@ -33,13 +35,15 @@ import com.umnvd.booking.core.navigation.navigations.meetingEventScheduleGraph
 import com.umnvd.booking.core.navigation.navigations.navigateToEventCalendar
 import com.umnvd.booking.core.ui.components.AppFloatingActionButton
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
-import com.umnvd.booking.presentation.events.home.widgets.WeekDaysHeader
+import com.umnvd.booking.domain.events.models.MeetingEventModel
+import com.umnvd.booking.presentation.events.home.components.WeekDaysHeader
 import java.time.LocalDate
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MeetingEventsHomeScreen(
-    onCreateClick: () -> Unit
+    onCreateClick: () -> Unit,
+    navigateToEvent: (MeetingEventModel) -> Unit,
 ) {
     val navController = rememberAnimatedNavController()
     val currentBackStackEntry by navController
@@ -84,6 +88,7 @@ fun MeetingEventsHomeScreen(
                     ) {
                         Text(text = "Today")
                     }
+                    Spacer(modifier = Modifier.width(8.dp))
                     Button(
                         onClick = { /*TODO*/ },
                         modifier = Modifier.padding(end = 8.dp),
@@ -107,7 +112,10 @@ fun MeetingEventsHomeScreen(
                 navController = navController,
                 startDestination = EVENT_SCHEDULE_GRAPH_ROUTE,
             ) {
-                meetingEventScheduleGraph(navController = navController)
+                meetingEventScheduleGraph(
+                    navController = navController,
+                    navigateToEvent = navigateToEvent,
+                )
             }
         }
     }
@@ -117,6 +125,9 @@ fun MeetingEventsHomeScreen(
 @Composable
 private fun MeetingEventsHomeScreenPreview() {
     MeetingRoomBookingTheme {
-        MeetingEventsHomeScreen {}
+        MeetingEventsHomeScreen(
+            onCreateClick = {},
+            navigateToEvent = {},
+        )
     }
 }

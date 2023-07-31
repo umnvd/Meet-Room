@@ -1,10 +1,9 @@
 package com.umnvd.booking.presentation.home
 
-import ROOMS_GRAPH_ROUTE
+import com.umnvd.booking.core.navigation.navigations.ROOMS_GRAPH_ROUTE
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Event
 import androidx.compose.material.icons.outlined.EventNote
 import androidx.compose.material.icons.outlined.MeetingRoom
 import androidx.compose.material.icons.outlined.Person
@@ -33,7 +32,7 @@ import com.umnvd.booking.core.navigation.navigations.meetingEventsGraph
 import com.umnvd.booking.core.navigation.navigations.profile
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.presentation.home.models.NavigationItemUiModel
-import meetingRoomsGraph
+import com.umnvd.booking.core.navigation.navigations.meetingRoomsGraph
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

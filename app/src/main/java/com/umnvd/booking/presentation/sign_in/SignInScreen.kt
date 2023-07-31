@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -31,10 +32,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.umnvd.booking.R
 import com.umnvd.booking.core.ui.components.AppTextField
+import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
-import com.umnvd.booking.core.ui.utils.getText
 import com.umnvd.booking.core.ui.utils.text
 import com.umnvd.booking.presentation.sign_in.viewmodel.SignInScreenState
 import com.umnvd.booking.presentation.sign_in.viewmodel.SignInScreenViewModel
@@ -45,29 +46,14 @@ fun SignInScreen(
     onSignedIn: () -> Unit = {},
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
-
-    LaunchedEffect(state.signedIn) {
-        if (state.signedIn) {
-            onSignedIn()
-            viewModel.signedInHandled()
-        }
-    }
-
-    LaunchedEffect(state.error) {
-        val error = state.error
-        if (error != null) {
-            snackbarHostState.showSnackbar(error.getText(context))
-            viewModel.networkErrorHandled()
-        }
-    }
 
     LocalAppProgressIndicatorController.current.state(state.loading)
+    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
+
+    LaunchedEffect(state.signedIn) { if (state.signedIn) { onSignedIn() } }
 
     AuthScreenContent(
         state = state,
-        snackbarHost = { SnackbarHost(snackbarHostState) },
         onEmailChange = viewModel::setEmail,
         onPasswordChange = viewModel::setPassword,
         onSignInClick = viewModel::signIn,
@@ -78,20 +64,16 @@ fun SignInScreen(
 private fun AuthScreenContent(
     state: SignInScreenState,
     modifier: Modifier = Modifier,
-    snackbarHost: @Composable () -> Unit = {},
     onEmailChange: (String) -> Unit = {},
     onPasswordChange: (String) -> Unit = {},
     onSignInClick: () -> Unit = {},
 ) {
-    Scaffold(
-        snackbarHost = snackbarHost,
-    ) { paddingValues ->
+    Surface{
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .fillMaxSize()
-                .padding(paddingValues)
                 .padding(horizontal = 32.dp),
         ) {
             Icon(

@@ -19,4 +19,6 @@ class MeetingEventCreationScreenViewModel @Inject constructor(
     fun createEvent() {
         TODO("Not yet implemented")
     }
+
+    fun errorHandled() = updateState { it.copy(error = null) }
 }

@@ -1,10 +1,10 @@
 package com.umnvd.booking.domain.auth.usecases
 
 import com.umnvd.booking.core.domain.models.Result
+import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.EmailInvalidException
 import com.umnvd.booking.domain.EmailNotRegisteredException
 import com.umnvd.booking.domain.EmailRequiredException
-import com.umnvd.booking.domain.NetworkException
 import com.umnvd.booking.domain.PasswordInvalidException
 import com.umnvd.booking.domain.PasswordMinLengthException
 import com.umnvd.booking.domain.PasswordRequiredException
@@ -49,8 +49,8 @@ class SignInUseCase @Inject constructor(
             return Result.Error(SignInError.Validation(email = e))
         } catch (e: PasswordInvalidException) {
             return Result.Error(SignInError.Validation(password = e))
-        } catch (e: NetworkException) {
-            return Result.Error(SignInError.Network)
+        } catch (e: AppException) {
+            return Result.Error(SignInError.Common(e))
         }
         return Result.Success(Unit)
     }

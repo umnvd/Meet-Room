@@ -1,3 +1,5 @@
+package com.umnvd.booking.core.navigation.navigations
+
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,8 +18,8 @@ const val ROOMS_GRAPH_ROUTE = "rooms_graph"
 const val ROOM_ROUTE_UID_KEY = "uid"
 
 private const val ROOM_LIST_ROUTE = "rooms"
-private const val ROOM_ROUTE_BASE = "room/"
-private const val ROOM_ROUTE = "$ROOM_ROUTE_BASE{$ROOM_ROUTE_UID_KEY}"
+private const val ROOM_ROUTE_BASE = "room"
+private const val ROOM_ROUTE = "$ROOM_ROUTE_BASE/{$ROOM_ROUTE_UID_KEY}"
 private const val CREATE_ROOM_ROUTE = "create_room"
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -27,7 +29,7 @@ fun NavGraphBuilder.meetingRoomsGraph(
     navigation(startDestination = ROOM_LIST_ROUTE, route = ROOMS_GRAPH_ROUTE) {
         composable(route = ROOM_LIST_ROUTE) {
             MeetingRoomListScreen(
-                onRoomClick = { navController.navigate("$ROOM_ROUTE_BASE${it.uid}") },
+                onRoomClick = { navController.navigate("$ROOM_ROUTE_BASE/${it.uid}") },
                 onCreateClick = { navController.navigate(CREATE_ROOM_ROUTE) },
             )
         }

@@ -1,6 +1,6 @@
 package com.umnvd.booking.presentation.rooms.room.viewmodel
 
-import ROOM_ROUTE_UID_KEY
+import com.umnvd.booking.core.navigation.navigations.ROOM_ROUTE_UID_KEY
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result

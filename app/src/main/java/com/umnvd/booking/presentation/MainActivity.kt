@@ -6,9 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -17,10 +15,10 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.umnvd.booking.core.navigation.AppNavGraph
 import com.umnvd.booking.core.navigation.navigations.HOME_ROUTE
 import com.umnvd.booking.core.navigation.navigations.SIGN_IN_ROUTE
-import com.umnvd.booking.core.ui.components.AppProgressIndicator
-import com.umnvd.booking.core.ui.components.AppProgressIndicatorController
-import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
+import com.umnvd.booking.core.ui.components.AppErrorSnackbarProvider
+import com.umnvd.booking.core.ui.components.AppProgressIndicatorProvider
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
+import com.umnvd.booking.domain.auth.models.AuthState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,27 +31,23 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        splashScreen.setKeepOnScreenCondition { viewModel.authState.value == AuthState.UNKNOWN }
+        splashScreen.setKeepOnScreenCondition { viewModel.state.value == AuthState.UNKNOWN }
 
         setContent {
             val navController = rememberAnimatedNavController()
-            val authState = viewModel.authState.collectAsStateWithLifecycle()
-            val (loading, setLoading) = remember {
-                mutableStateOf(false)
-            }
-            val progressIndicatorController = AppProgressIndicatorController(setLoading)
+            val authState = viewModel.state.collectAsStateWithLifecycle()
 
             MeetingRoomBookingTheme {
-                CompositionLocalProvider(
-                    LocalAppProgressIndicatorController provides progressIndicatorController
-                ) {
-                    AppProgressIndicator(loading = loading) {
+                AppProgressIndicatorProvider {
+                    AppErrorSnackbarProvider {
                         AppNavGraph(
                             navController = navController,
-                            startDestination =
-                            if (authState.value == AuthState.AUTHORIZED) HOME_ROUTE
-                            else SIGN_IN_ROUTE,
+                            startDestination = when (authState.value) {
+                                AuthState.AUTHORIZED -> HOME_ROUTE
+                                else -> SIGN_IN_ROUTE
+                            },
                             modifier = Modifier
+                                .padding(it)
                                 .pointerInput(Unit) {
                                     detectTapGestures(onTap = {
                                         currentFocus?.clearFocus()
