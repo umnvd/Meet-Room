@@ -50,8 +50,8 @@ class ValidateMeetingEventUseCase @Inject constructor(
         val duration = ChronoUnit.MINUTES.between(startAt, endAt)
         val durationError = when {
             duration < 0 -> EventNegativeDurationException()
-            duration < 30 -> EventMinDurationException(duration)
-            duration > 1440 -> EventMaxDurationException(duration)
+            duration < 30 -> EventMinDurationException(30)
+            duration > 1440 -> EventMaxDurationException(1440)
             else -> null
         }
 
@@ -87,7 +87,7 @@ class ValidateMeetingEventUseCase @Inject constructor(
             events.forEach { params.form.checkIntersection(it) }
         } catch (e: EventStartIntersectionException) {
             startError = e
-        } catch (e: EventEndIntersectionException) {
+        } catch (e: AppException) {
             endError = e
         }
 
@@ -108,7 +108,7 @@ class ValidateMeetingEventUseCase @Inject constructor(
             throw EventStartIntersectionException(event.endAt)
         if (endAt > event.endAt && startAt < event.endAt)
             throw EventEndIntersectionException(event.startAt)
-        if (startAt < event.startAt && endAt > event.endAt)
+        if (startAt <= event.startAt && endAt >= event.endAt)
             throw EventOverlappingException(event.startAt, event.endAt)
     }
 
