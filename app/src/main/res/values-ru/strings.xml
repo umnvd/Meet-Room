@@ -2,6 +2,10 @@
 <resources>
     <!--  Common  -->
     <string name="navigate_back_icon">Иконка навигации назад</string>
+    <string name="address_icon_description">Иконка адреса</string>
+    <string name="clear_icon_description">Иконка очистки</string>
+    <string name="additional_info_icon_description">Иконка дополнительной информации</string>
+    <string name="schedule_icon_description">Иконка расписания</string>
     <!--  Errors  -->
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="network_error">Нет подключения к интернету</string>

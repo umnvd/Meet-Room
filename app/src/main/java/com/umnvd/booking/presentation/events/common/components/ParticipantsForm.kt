@@ -31,6 +31,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,18 +69,17 @@ fun ParticipantsForm(
             },
             containerColor = MaterialTheme.colorScheme.surface,
             tonalElevation = 0.dp,
+            modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection()),
         ) {
-            LazyColumn(modifier = Modifier.padding(bottom = 56.dp)) {
+            LazyColumn(modifier = Modifier.padding(bottom = 32.dp)) {
                 items(items = users, key = UserModel::uid) {
-                    val selected = participants.value.contains(it)
-
                     ParticipantTile(
                         participant = it,
                         modifier = Modifier
                             .padding(start = 20.dp, end = 8.dp),
                         action = {
                             AppRadioButton(
-                                checked = selected,
+                                checked = participants.value.contains(it),
                                 onChange = { value ->
                                     if (value) onParticipantSelected(it)
                                     else onParticipantRemoved(it)
@@ -121,10 +122,10 @@ fun ParticipantsForm(
                     text = stringResource(R.string.event_select_participants_hint),
                     color = MaterialTheme.colorScheme.hint,
                     modifier = Modifier
-                        .padding(horizontal = 12.dp, vertical = 16.dp)
                         .clickable {
-                            coroutineScope.launch { bottomSheetState.expand() }
-                        },
+                            coroutineScope.launch { bottomSheetState.show() }
+                        }
+                        .padding(horizontal = 12.dp, vertical = 16.dp),
                 )
                 if (participants.error != null) {
                     AppErrorText(

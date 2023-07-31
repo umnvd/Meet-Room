@@ -3,6 +3,7 @@ package com.umnvd.booking.presentation.events.event
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
@@ -106,6 +107,7 @@ private fun MeetingEventScreenContent(
     }
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         topBar = {
             AppBackNavigationTopBar(
                 onBackClick = onBackClick,
@@ -131,7 +133,7 @@ private fun MeetingEventScreenContent(
                     }
                 }
             )
-        }
+        },
     ) { innerPadding ->
         MeetingEventForm(
             modifier = Modifier.padding(innerPadding),

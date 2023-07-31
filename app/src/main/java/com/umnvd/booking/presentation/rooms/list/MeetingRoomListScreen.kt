@@ -1,6 +1,9 @@
 package com.umnvd.booking.presentation.rooms.list
 
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -58,6 +61,7 @@ fun MeetingRoomListScreen(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun MeetingRoomListScreenContent(
     state: MeetingRoomListScreenState,
@@ -65,6 +69,7 @@ private fun MeetingRoomListScreenContent(
     onCreateClick: () -> Unit = {},
 ) {
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         floatingActionButton = {
             AppFloatingActionButton(
                 onClick = onCreateClick,
@@ -74,7 +79,9 @@ private fun MeetingRoomListScreenContent(
         },
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding)
+                .consumeWindowInsets(innerPadding),
             contentPadding = PaddingValues(vertical = 16.dp)
         ) {
             items(

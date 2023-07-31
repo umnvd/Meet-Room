@@ -1,6 +1,11 @@
 package com.umnvd.booking.core.ui.components
 
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -10,7 +15,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.umnvd.booking.core.ui.utils.getText
 import com.umnvd.booking.domain.AppException
 
@@ -28,6 +35,7 @@ class AppErrorSnackbarController(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AppErrorSnackbarProvider(
     content: @Composable (PaddingValues) -> Unit,
@@ -50,6 +58,7 @@ fun AppErrorSnackbarProvider(
     }
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
         CompositionLocalProvider(

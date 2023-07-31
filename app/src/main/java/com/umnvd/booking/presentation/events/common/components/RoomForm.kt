@@ -2,8 +2,8 @@ package com.umnvd.booking.presentation.events.common.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,6 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,7 +40,7 @@ import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
 import com.umnvd.booking.util.PreviewMocks
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun RoomForm(
     room: FieldState<MeetingRoomModel?>,
@@ -56,14 +58,10 @@ fun RoomForm(
             },
             containerColor = MaterialTheme.colorScheme.surface,
             tonalElevation = 0.dp,
-            modifier = Modifier.fillMaxHeight()
+            modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection()),
         ) {
-            LazyColumn(
-                modifier = Modifier.padding(bottom = 56.dp)
-            ) {
-                items(items = rooms, key = MeetingRoomModel::uid) {
-                    val selected = it == room.value
-
+            LazyColumn(modifier = Modifier.padding(bottom = 32.dp)) {
+                items(items = rooms, key = { it.uid }) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -77,7 +75,7 @@ fun RoomForm(
                             text = it.name,
                             modifier = Modifier.weight(1f),
                         )
-                        if (selected) {
+                        if (it == room.value) {
                             Icon(
                                 imageVector = Icons.Outlined.Check,
                                 tint = MaterialTheme.colorScheme.secondary,
@@ -110,8 +108,8 @@ fun RoomForm(
                 else
                     MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
-                    .padding(horizontal = 12.dp, vertical = 16.dp)
-                    .clickable { coroutineScope.launch { bottomSheetState.show() } },
+                    .clickable { coroutineScope.launch { bottomSheetState.show() } }
+                    .padding(horizontal = 12.dp, vertical = 16.dp),
             )
             if (room.error != null) {
                 AppErrorText(

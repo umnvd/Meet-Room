@@ -98,9 +98,9 @@ private fun MeetingEventScheduleScreenContent(
             }
         )
         Spacer(modifier = Modifier.height(4.dp))
-        HorizontalPager(pageCount = calendarDates.size, state = pagerState) { _ ->
+        HorizontalPager(pageCount = calendarDates.size, state = pagerState) { page ->
             EventSchedulePage(
-                events = state.dayEvents,
+                events = state.dayEventsMap[calendarDates[page]] ?: listOf(),
                 onEventClick = onEventCLick,
             )
         }

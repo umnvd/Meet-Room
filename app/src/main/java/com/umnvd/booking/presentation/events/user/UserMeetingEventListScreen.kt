@@ -1,6 +1,7 @@
 package com.umnvd.booking.presentation.events.user
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -51,19 +52,22 @@ private fun UserMeetingEventListScreenContent(
     onBackCLick: () -> Unit = {},
 ) {
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         topBar = {
             AppBackNavigationTopBar(onBackClick = onBackCLick)
         }
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
-            contentPadding = PaddingValues(16.dp)
+            contentPadding = PaddingValues(vertical = 16.dp)
         ) {
             items(items = state.events, key = { it.uid }) {
                 EventScheduleTile(
                     event = it,
                     onEventClick = onEventClick,
-                    modifier = Modifier.height(64.dp)
+                    modifier = Modifier
+                        .height(64.dp)
+                        .padding(horizontal = 16.dp)
                 )
                 Divider(
                     color = MaterialTheme.colorScheme.divider,

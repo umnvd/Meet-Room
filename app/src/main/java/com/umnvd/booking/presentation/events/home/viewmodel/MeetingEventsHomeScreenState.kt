@@ -17,9 +17,6 @@ data class MeetingEventsHomeScreenState(
             listOf(it.startAt.toLocalDate(), it.endAt.toLocalDate())
         }.flatten().toSet()
 
-    val dayEvents: List<MeetingEventModel>
-        get() = events.filter {
-            it.startAt.toLocalDate() == date
-                    || it.endAt.toLocalDate() == date
-        }
+    val dayEventsMap: Map<LocalDate, List<MeetingEventModel>>
+        get() = events.groupBy { it.startAt.toLocalDate() }
 }
