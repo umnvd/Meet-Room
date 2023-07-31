@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -35,6 +36,7 @@ import com.umnvd.booking.core.navigation.navigations.meetingEventScheduleGraph
 import com.umnvd.booking.core.navigation.navigations.navigateToEventCalendar
 import com.umnvd.booking.core.ui.components.AppFloatingActionButton
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
+import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.presentation.events.home.components.WeekDaysHeader
 import java.time.LocalDate
@@ -42,9 +44,12 @@ import java.time.LocalDate
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MeetingEventsHomeScreen(
+    syncViewModel: SyncViewModel = hiltViewModel(),
     onCreateClick: () -> Unit,
     navigateToEvent: (MeetingEventModel) -> Unit,
 ) {
+    val sync = syncViewModel.sync.collectAsStateWithLifecycle()
+
     val navController = rememberAnimatedNavController()
     val currentBackStackEntry by navController
         .currentBackStackEntryFlow.collectAsStateWithLifecycle(null)

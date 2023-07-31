@@ -18,7 +18,7 @@ import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.utils.rememberWithKeyboardHiding
 import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormController
 import com.umnvd.booking.presentation.rooms.common.form.toFormState
-import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
+import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
 import com.umnvd.booking.presentation.rooms.common.components.MeetingRoomForm
 import com.umnvd.booking.presentation.rooms.creation.viewmodel.MeetingRoomCreationScreenState
 import com.umnvd.booking.presentation.rooms.creation.viewmodel.MeetingRoomCreationScreenViewModel
@@ -27,7 +27,7 @@ import com.umnvd.booking.util.PreviewMocks
 @Composable
 fun MeetingRoomCreationScreen(
     viewModel: MeetingRoomCreationScreenViewModel = hiltViewModel(),
-    syncViewModel: MeetingRoomSyncViewModel,
+    syncViewModel: SyncViewModel,
     onCreated: () -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -38,7 +38,7 @@ fun MeetingRoomCreationScreen(
 
     LaunchedEffect(state.created) {
         if (state.created) {
-            syncViewModel.triggerSync()
+            syncViewModel.trigger()
             onCreated()
         }
     }

@@ -73,7 +73,8 @@ fun ParticipantsForm(
 
                     ParticipantTile(
                         participant = it,
-                        modifier = Modifier.padding(start = 20.dp, end = 8.dp),
+                        modifier = Modifier
+                            .padding(start = 20.dp, end = 8.dp),
                         action = {
                             AppRadioButton(
                                 checked = selected,

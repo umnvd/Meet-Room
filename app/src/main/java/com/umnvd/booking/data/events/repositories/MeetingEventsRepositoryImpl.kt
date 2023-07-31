@@ -17,20 +17,19 @@ class MeetingEventsRepositoryImpl @Inject constructor(
 
     override suspend fun event(uid: String) = withContext(ioDispatcher) {
         val eventDto = meetingEventsService.getEvent(uid)
-        Log.d(this@MeetingEventsRepositoryImpl.javaClass.simpleName, eventDto.toString())
         return@withContext MeetingEventRemoteModelMapper.dtoToDomain(eventDto)
     }
 
     override suspend fun allEvents() = withContext(ioDispatcher) {
         val eventsDtos = meetingEventsService.getEvents()
-        Log.d(this@MeetingEventsRepositoryImpl.javaClass.simpleName, eventsDtos.toString())
         return@withContext eventsDtos.map(MeetingEventRemoteModelMapper::dtoToDomain)
     }
 
     override suspend fun createEvent(form: MeetingEventFormModel) = withContext(ioDispatcher) {
+        Log.d("CREATE_MEETING_EVENT", "form: $form")
         val eventDto = meetingEventsService
             .createEvent(MeetingEventRemoteModelMapper.formDomainToDto(form))
-        Log.d(this@MeetingEventsRepositoryImpl.javaClass.simpleName, eventDto.toString())
+        Log.d("CREATE_MEETING_EVENT", "repo return")
         return@withContext MeetingEventRemoteModelMapper.dtoToDomain(eventDto)
     }
 
@@ -38,7 +37,6 @@ class MeetingEventsRepositoryImpl @Inject constructor(
         withContext(ioDispatcher) {
             val eventDto = meetingEventsService
                 .editEvent(uid, MeetingEventRemoteModelMapper.formDomainToDto(form))
-            Log.d(this@MeetingEventsRepositoryImpl.javaClass.simpleName, eventDto.toString())
             return@withContext MeetingEventRemoteModelMapper.dtoToDomain(eventDto)
         }
 

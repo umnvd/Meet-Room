@@ -1,7 +1,6 @@
 package com.umnvd.booking.data.rooms.services
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.umnvd.booking.data.common.mappers.DateTimeMapper
 import com.umnvd.booking.data.rooms.models.MeetingRoomFormRemoteModel
 import com.umnvd.booking.data.rooms.models.MeetingRoomRemoteModel
@@ -40,9 +39,7 @@ class MeetingRoomsService @Inject constructor(
 
         val roomReference = firebaseFirestore
             .collection(FirestoreContract.Rooms.COLLECTION_KEY)
-            .add(data.toDocumentData().apply {
-                put(FirestoreContract.Rooms.CREATED_AT_KEY, createdAt)
-            })
+            .add(data.toDocumentData() + (FirestoreContract.Rooms.CREATED_AT_KEY to createdAt))
             .await()
 
         return getRoom(roomReference.id)
@@ -52,7 +49,7 @@ class MeetingRoomsService @Inject constructor(
         firebaseFirestore
             .collection(FirestoreContract.Rooms.COLLECTION_KEY)
             .document(uid)
-            .set(data.toDocumentData(), SetOptions.merge())
+            .update(data.toDocumentData())
             .await()
 
         return getRoom(uid)
@@ -66,7 +63,7 @@ class MeetingRoomsService @Inject constructor(
             .await()
     }
 
-    private fun MeetingRoomFormRemoteModel.toDocumentData() =
+    private fun MeetingRoomFormRemoteModel.toDocumentData(): Map<String, Any> =
         hashMapOf(
             FirestoreContract.Rooms.NAME_KEY to name,
             FirestoreContract.Rooms.ADDRESS_KEY to address,

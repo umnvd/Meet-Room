@@ -2,7 +2,7 @@ package com.umnvd.booking.presentation.rooms.list.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
-import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
+import com.umnvd.booking.core.ui.viewmodels.BaseViewModel
 import com.umnvd.booking.domain.rooms.usecases.GetMeetingRoomListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

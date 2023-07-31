@@ -22,6 +22,11 @@
     <string name="event_participants_required_error">Event must have at least one participant</string>
     <string name="event_start_intersection_error">Start overlaps with an existing event, should be later than %s</string>
     <string name="event_end_intersection_error">End overlaps with an existing event, should be before %s</string>
+    <string name="event_negative_duration_error">Event duration can\'t be negative</string>
+    <string name="event_different_dates_error">Event must start and end on the same day</string>
+    <string name="event_min_duration_error">Event min duration is %d min</string>
+    <string name="event_max_duration_error">Event max duration is %d hours</string>
+    <string name="event_overlapping_error">The event overrides the existing one starting on %s and ending on %s</string>
     <!--  Months  -->
     <string name="january">January</string>
     <string name="february">February</string>

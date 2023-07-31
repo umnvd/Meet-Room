@@ -11,8 +11,12 @@ class GetMeetingRoomUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(params: Params): Result<MeetingRoomModel, AppException> {
-        val room = roomsRepository.room(params.uid)
-        return Result.Success(room)
+        return try {
+            val room = roomsRepository.room(params.uid)
+            Result.Success(room)
+        } catch (e: AppException) {
+            Result.Error(e)
+        }
     }
 
     data class Params(val uid: String)

@@ -1,4 +1,4 @@
-package com.umnvd.booking.core.ui.viewmodel
+package com.umnvd.booking.core.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

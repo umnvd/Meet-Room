@@ -4,17 +4,18 @@ import com.umnvd.booking.core.domain.models.Result
 import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.domain.events.repositories.MeetingEventsRepository
-import java.time.LocalDate
 import javax.inject.Inject
 
 class GetMeetingEventsUseCase @Inject constructor(
     private val meetingEventsRepository: MeetingEventsRepository,
 ) {
 
-    suspend operator fun invoke(params: Params): Result<List<MeetingEventModel>, AppException> {
-        val events = meetingEventsRepository.allEvents()
-        return Result.Success(events)
+    suspend operator fun invoke(): Result<List<MeetingEventModel>, AppException> {
+        return try {
+            val events = meetingEventsRepository.allEvents()
+            Result.Success(events)
+        } catch (e: AppException) {
+            Result.Error(e)
+        }
     }
-
-    data class Params(val date: LocalDate)
 }

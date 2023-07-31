@@ -32,7 +32,7 @@ class ValidateMeetingRoomFormUseCase @Inject constructor() {
                     address = addressError,
                 )
             )
-        } else Result.Success(value = Unit)
+        } else Result.Success(Unit)
     }
 
     data class Params(val form: MeetingRoomFormModel)

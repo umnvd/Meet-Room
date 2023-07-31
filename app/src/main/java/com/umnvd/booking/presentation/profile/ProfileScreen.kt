@@ -48,7 +48,6 @@ fun ProfileScreen(
     LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
     LaunchedEffect(state.signedOut) { if (state.signedOut) { onSignedOut() } }
-    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
     ProfileScreenContent(
         user = state.user,

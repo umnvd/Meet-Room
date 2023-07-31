@@ -1,7 +1,7 @@
 package com.umnvd.booking.presentation.rooms.common.viewmodels
 
 import com.umnvd.booking.core.ui.models.FieldState
-import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
+import com.umnvd.booking.core.ui.viewmodels.BaseViewModel
 import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormController
 import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormState
 

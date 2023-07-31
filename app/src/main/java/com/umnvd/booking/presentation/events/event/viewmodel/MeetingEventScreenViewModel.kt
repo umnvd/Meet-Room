@@ -21,11 +21,13 @@ import javax.inject.Inject
 class MeetingEventScreenViewModel @Inject constructor(
     private val getUsersAndMeetingRoomsUseCase: GetUsersAndMeetingRoomsUseCase,
     private val getMeetingEventUseCase: GetMeetingEventUseCase,
-    private val validateMeetingEventUseCase: ValidateMeetingEventUseCase,
     private val editMeetingEventUseCase: EditMeetingEventUseCase,
     private val deleteMeetingEventUseCase: DeleteMeetingEventUseCase,
+    private val validateMeetingEventUseCase: ValidateMeetingEventUseCase,
     savedStateHandle: SavedStateHandle,
-) : BaseMeetingEventFormViewModel<MeetingEventScreenState>(MeetingEventScreenState()) {
+) : BaseMeetingEventFormViewModel<MeetingEventScreenState>(
+    MeetingEventScreenState(),
+) {
 
     private val uidArg = savedStateHandle.get<String>(EVENT_ROUTE_UID_KEY)
         ?: throw IllegalStateException("Meeting room UID not specified")
@@ -43,27 +45,30 @@ class MeetingEventScreenViewModel @Inject constructor(
             val validationResult = validateMeetingEventUseCase(
                 ValidateMeetingEventUseCase.Params(state.value.formState.toDomain())
             )
+
             when (validationResult) {
-                is Result.Error -> updateForm {
-                    it.copy(
-                        title = it.title.copy(error = validationResult.error.title),
-                        startDate = it.startDate.copy(error = validationResult.error.startAt),
-                        endDate = it.endDate.copy(error = validationResult.error.endAt),
-                        room = it.room.copy(error = validationResult.error.room),
-                        participants = it.participants
-                            .copy(error = validationResult.error.participants),
-                    )
+                is Result.Error -> {
+                    updateForm {
+                        it.copy(
+                            title = it.title.copy(error = validationResult.error.title),
+                            startDate = it.startDate.copy(error = validationResult.error.startAt),
+                            endDate = it.endDate.copy(error = validationResult.error.endAt),
+                            room = it.room.copy(error = validationResult.error.room),
+                            participants = it.participants
+                                .copy(error = validationResult.error.participants),
+                        )
+                    }
                 }
 
                 is Result.Success -> {
-                    val editResult = editMeetingEventUseCase(
+                    val result = editMeetingEventUseCase(
                         EditMeetingEventUseCase.Params(
                             uid = uidArg,
                             form = state.value.formState.toDomain(),
                         )
                     )
-                    when (editResult) {
-                        is Result.Error -> updateState { it.copy(error = editResult.error) }
+                    when (result) {
+                        is Result.Error -> updateState { it.copy(error = result.error) }
                         is Result.Success -> updateState { it.copy(saved = true) }
                     }
                 }

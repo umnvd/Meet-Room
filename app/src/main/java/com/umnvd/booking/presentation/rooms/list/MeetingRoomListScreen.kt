@@ -1,6 +1,5 @@
 package com.umnvd.booking.presentation.rooms.list
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -39,7 +38,7 @@ import com.umnvd.booking.core.ui.theme.divider
 import com.umnvd.booking.core.ui.utils.text
 import com.umnvd.booking.domain.NetworkException
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
-import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
+import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
 import com.umnvd.booking.presentation.rooms.list.viewmodel.MeetingRoomListScreenState
 import com.umnvd.booking.presentation.rooms.list.viewmodel.MeetingRoomListScreenViewModel
 import com.umnvd.booking.presentation.rooms.list.components.MeetingRoomListTile
@@ -48,7 +47,7 @@ import com.umnvd.booking.util.PreviewMocks
 @Composable
 fun MeetingRoomListScreen(
     viewModel: MeetingRoomListScreenViewModel = hiltViewModel(),
-    syncViewModel: MeetingRoomSyncViewModel = hiltViewModel(),
+    syncViewModel: SyncViewModel = hiltViewModel(),
     onRoomClick: (MeetingRoomModel) -> Unit,
     onCreateClick: () -> Unit,
 ) {
@@ -59,7 +58,6 @@ fun MeetingRoomListScreen(
     LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
     LaunchedEffect(sync) {
-        Log.d("ROOM_SYNC", "$syncViewModel - state $sync")
         if (sync) {
             viewModel.loadRooms()
             syncViewModel.syncHandled()

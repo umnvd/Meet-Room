@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
 import com.umnvd.booking.core.navigation.navigations.EVENT_SCHEDULE_GRAPH_DATE_KEY
-import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
+import com.umnvd.booking.core.ui.viewmodels.BaseViewModel
 import com.umnvd.booking.domain.events.usecases.GetDayMeetingEventsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job

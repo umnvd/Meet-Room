@@ -1,12 +1,15 @@
 package com.umnvd.booking.core.navigation.navigations
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
+import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.presentation.events.creation.MeetingEventCreationScreen
 import com.umnvd.booking.presentation.events.event.MeetingEventScreen
@@ -37,14 +40,26 @@ fun NavGraphBuilder.meetingEventsGraph(
             route = EVENT_ROUTE,
             arguments = listOf(navArgument(EVENT_ROUTE_UID_KEY) { type = NavType.StringType })
         ) {
+            val parentEntry = remember(it) {
+                navController.getBackStackEntry(EVENTS_HOME_ROUTE)
+            }
+            val syncViewModel = hiltViewModel<SyncViewModel>(parentEntry)
+
             MeetingEventScreen(
+                syncViewModel = syncViewModel,
                 onSaved = navController::popBackStack,
                 onDeleted = navController::popBackStack,
                 onBackClick = navController::popBackStack,
             )
         }
         composable(route = CREATE_EVENT_ROUTE) {
+            val parentEntry = remember(it) {
+                navController.getBackStackEntry(EVENTS_HOME_ROUTE)
+            }
+            val syncViewModel = hiltViewModel<SyncViewModel>(parentEntry)
+
             MeetingEventCreationScreen(
+                syncViewModel = syncViewModel,
                 onCreated = navController::popBackStack,
                 onBackClick = navController::popBackStack,
             )

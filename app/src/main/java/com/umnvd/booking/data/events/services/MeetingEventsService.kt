@@ -2,6 +2,7 @@
 
 package com.umnvd.booking.data.events.services
 
+import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,10 +35,14 @@ class MeetingEventsService @Inject constructor(
     }
 
     suspend fun createEvent(data: MeetingEventFormRemoteModel): MeetingEventRemoteModel {
+        Log.d("CREATE_MEETING_EVENT", "data: $data")
+
         val eventReference = firebaseFirestore
             .collection(FirestoreContract.Events.COLLECTION_KEY)
             .add(data.toDocumentData())
             .await()
+
+        Log.d("CREATE_MEETING_EVENT", "${eventReference}")
 
         return getEvent(eventReference.id)
     }
@@ -46,7 +51,7 @@ class MeetingEventsService @Inject constructor(
         firebaseFirestore
             .collection(FirestoreContract.Events.COLLECTION_KEY)
             .document(uid)
-            .set(data.toDocumentData())
+            .update(data.toDocumentData())
             .await()
 
         return getEvent(uid)
@@ -60,9 +65,10 @@ class MeetingEventsService @Inject constructor(
             .await()
     }
 
-    private fun MeetingEventFormRemoteModel.toDocumentData(): Map<String, Any> {
-        val documentData = hashMapOf(
+    private fun MeetingEventFormRemoteModel.toDocumentData(): HashMap<String, Any?> =
+        hashMapOf(
             FirestoreContract.Events.TITLE_KEY to title,
+            FirestoreContract.Events.DESCRIPTION_KEY to description,
             FirestoreContract.Events.START_AT_KEY to startAt,
             FirestoreContract.Events.END_AT_KEY to endAt,
             FirestoreContract.Events.ROOM_KEY to firebaseFirestore
@@ -73,11 +79,7 @@ class MeetingEventsService @Inject constructor(
                     .collection(FirestoreContract.Users.COLLECTION_KEY)
                     .document(it)
             }
-
         )
-        description?.also { documentData[FirestoreContract.Events.DESCRIPTION_KEY] = it }
-        return documentData
-    }
 
     private suspend fun DocumentSnapshot.toEventRemote(): MeetingEventRemoteModel {
         val roomSnapshot = getDocumentReference(FirestoreContract.Events.ROOM_KEY)!!

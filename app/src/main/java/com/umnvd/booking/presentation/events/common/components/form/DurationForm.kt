@@ -26,7 +26,9 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import com.marosseleng.compose.material3.datetimepickers.date.ui.dialog.DatePickerDialog
 import com.marosseleng.compose.material3.datetimepickers.time.ui.dialog.TimePickerDialog
+import com.umnvd.booking.core.ui.components.AppErrorText
 import com.umnvd.booking.core.ui.models.FieldState
+import com.umnvd.booking.core.ui.utils.text
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -119,7 +121,8 @@ fun DurationForm(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
         )
         Column(
-            modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp)
+            modifier = Modifier.padding(top = 16.dp, end = 16.dp, start = 16.dp),
+            horizontalAlignment = Alignment.Start,
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -136,6 +139,15 @@ fun DurationForm(
                     modifier = Modifier.clickable(onClick = { startTimeDialogShowing = true }),
                 )
             }
+            if (startDate.error != null) {
+                AppErrorText(
+                    text = startDate.error.text,
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp,
+                        vertical = 2.dp
+                    ),
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -150,6 +162,13 @@ fun DurationForm(
                 Text(
                     text = endTime.value.format(timeFormatter),
                     modifier = Modifier.clickable(onClick = { endTimeDialogShowing = true }),
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            if (endDate.error != null) {
+                AppErrorText(
+                    text = endDate.error.text,
+                    modifier = Modifier.padding(bottom = 2.dp),
                 )
             }
         }

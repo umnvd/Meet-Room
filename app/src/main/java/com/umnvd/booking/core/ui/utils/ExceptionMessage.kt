@@ -9,7 +9,12 @@ import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.EmailInvalidException
 import com.umnvd.booking.domain.EmailNotRegisteredException
 import com.umnvd.booking.domain.EmailRequiredException
+import com.umnvd.booking.domain.EventDifferentDatesException
 import com.umnvd.booking.domain.EventEndIntersectionException
+import com.umnvd.booking.domain.EventMaxDurationException
+import com.umnvd.booking.domain.EventMinDurationException
+import com.umnvd.booking.domain.EventNegativeDurationException
+import com.umnvd.booking.domain.EventOverlappingException
 import com.umnvd.booking.domain.EventParticipantsRequiredException
 import com.umnvd.booking.domain.EventRoomRequiredException
 import com.umnvd.booking.domain.EventStartIntersectionException
@@ -60,6 +65,27 @@ private fun AppException.textFromResources(resources: Resources): String = when 
 
     is EventRoomRequiredException -> resources.getString(R.string.event_room_required_error)
     is EventParticipantsRequiredException -> resources.getString(R.string.event_participants_required_error)
+    is EventNegativeDurationException -> resources.getString(R.string.event_negative_duration_error)
+    is EventDifferentDatesException -> resources.getString(R.string.event_different_dates_error)
+    is EventMinDurationException -> resources.getString(R.string.event_min_duration_error, minutes)
+    is EventMaxDurationException -> resources.getString(
+        R.string.event_max_duration_error,
+        minutes / 60
+    )
+
+    is EventOverlappingException -> {
+        val formatter = DateTimeFormatter.ofPattern(
+            "dd.MM.yyyy HH:mm",
+            Locale.forLanguageTag(AndroidLocale.current.toLanguageTag())
+        )
+
+        resources.getString(
+            R.string.event_overlapping_error,
+            startDateTime.format(formatter),
+            endDateTime.format(formatter),
+        )
+    }
+
     is EventStartIntersectionException -> {
         val formattedDateTime = dateTime.format(
             DateTimeFormatter.ofPattern(

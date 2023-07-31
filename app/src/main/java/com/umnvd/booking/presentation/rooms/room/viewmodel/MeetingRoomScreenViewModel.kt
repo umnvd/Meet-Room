@@ -1,9 +1,10 @@
 package com.umnvd.booking.presentation.rooms.room.viewmodel
 
-import com.umnvd.booking.core.navigation.navigations.ROOM_ROUTE_UID_KEY
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
+import com.umnvd.booking.core.navigation.navigations.ROOM_ROUTE_UID_KEY
+import com.umnvd.booking.domain.rooms.usecases.DeleteMeetingRoomUseCase
 import com.umnvd.booking.domain.rooms.usecases.EditMeetingRoomUseCase
 import com.umnvd.booking.domain.rooms.usecases.GetMeetingRoomUseCase
 import com.umnvd.booking.domain.rooms.usecases.ValidateMeetingRoomFormUseCase
@@ -20,6 +21,7 @@ class MeetingRoomScreenViewModel @Inject constructor(
     private val validateMeetingRoomFormUseCase: ValidateMeetingRoomFormUseCase,
     private val getMeetingRoomUseCase: GetMeetingRoomUseCase,
     private val editMeetingRoomUseCase: EditMeetingRoomUseCase,
+    private val deleteMeetingRoomUseCase: DeleteMeetingRoomUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseMeetingRoomFormViewModel<MeetingRoomScreenState>(MeetingRoomScreenState()) {
 
@@ -32,24 +34,6 @@ class MeetingRoomScreenViewModel @Inject constructor(
 
     override fun updateForm(builder: (MeetingRoomFormState) -> MeetingRoomFormState) =
         updateState { it.copy(formState = builder(it.formState)) }
-
-    private fun loadRoom() {
-        updateState { it.copy(loading = true) }
-        viewModelScope.launch {
-            when (val result =
-                getMeetingRoomUseCase(GetMeetingRoomUseCase.Params(uidArg))) {
-                is Result.Success -> updateState {
-                    it.copy(
-                        formState = result.value.toFormState(),
-                        room = result.value,
-                    )
-                }
-
-                is Result.Error -> updateState { it.copy(error = result.error) }
-            }
-            updateState { it.copy(loading = false) }
-        }
-    }
 
     fun saveRoom() {
         viewModelScope.launch {
@@ -83,5 +67,37 @@ class MeetingRoomScreenViewModel @Inject constructor(
         }
     }
 
+    fun deleteRoom() {
+        viewModelScope.launch {
+            updateState { it.copy(loading = true) }
+            val result = deleteMeetingRoomUseCase(
+                DeleteMeetingRoomUseCase.Params(uidArg)
+            )
+            when (result) {
+                is Result.Success -> updateState { it.copy(deleted = true) }
+                is Result.Error -> updateState { it.copy(error = result.error) }
+            }
+            updateState { it.copy(loading = false) }
+        }
+    }
+
     fun errorHandled() = updateState { it.copy(error = null) }
+
+    private fun loadRoom() {
+        updateState { it.copy(loading = true) }
+        viewModelScope.launch {
+            when (val result =
+                getMeetingRoomUseCase(GetMeetingRoomUseCase.Params(uidArg))) {
+                is Result.Success -> updateState {
+                    it.copy(
+                        formState = result.value.toFormState(),
+                        room = result.value,
+                    )
+                }
+
+                is Result.Error -> updateState { it.copy(error = result.error) }
+            }
+            updateState { it.copy(loading = false) }
+        }
+    }
 }

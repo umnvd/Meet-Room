@@ -1,7 +1,7 @@
 package com.umnvd.booking.presentation.events.common.viewmodels
 
 import com.umnvd.booking.core.ui.models.FieldState
-import com.umnvd.booking.core.ui.viewmodel.BaseViewModel
+import com.umnvd.booking.core.ui.viewmodels.BaseViewModel
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
 import com.umnvd.booking.domain.users.models.UserModel
 import com.umnvd.booking.presentation.events.common.form.MeetingEventFormController
@@ -10,7 +10,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 abstract class BaseMeetingEventFormViewModel<T>(
-    initialState: T
+    initialState: T,
 ) : BaseViewModel<T>(initialState), MeetingEventFormController {
 
     abstract fun updateForm(builder: (MeetingEventFormState) -> MeetingEventFormState)
@@ -22,16 +22,52 @@ abstract class BaseMeetingEventFormViewModel<T>(
         updateForm { it.copy(description = FieldState(value)) }
 
     override fun setStartDate(value: LocalDate) =
-        updateForm { it.copy(startDate = FieldState(value)) }
+        updateForm {
+            if (value != it.startDate.value)
+                it.copy(
+                    startDate = FieldState(value),
+                    startTime = FieldState(it.startTime.value),
+                    endDate = FieldState(it.endDate.value),
+                    endTime = FieldState(it.endTime.value),
+                )
+            else it
+        }
 
     override fun setStartTime(value: LocalTime) =
-        updateForm { it.copy(startTime = FieldState(value)) }
+        updateForm {
+            if (value != it.startTime.value)
+                it.copy(
+                    startTime = FieldState(value),
+                    startDate = FieldState(it.startDate.value),
+                    endDate = FieldState(it.endDate.value),
+                    endTime = FieldState(it.endTime.value),
+                )
+            else it
+        }
 
     override fun setEndDate(value: LocalDate) =
-        updateForm { it.copy(endDate = FieldState(value)) }
+        updateForm {
+            if (value != it.endDate.value)
+                it.copy(
+                    endDate = FieldState(value),
+                    startDate = FieldState(it.startDate.value),
+                    startTime = FieldState(it.startTime.value),
+                    endTime = FieldState(it.endTime.value),
+                )
+            else it
+        }
 
     override fun setEndTime(value: LocalTime) =
-        updateForm { it.copy(endTime = FieldState(value)) }
+        updateForm {
+            if (value != it.endTime.value)
+                it.copy(
+                    endTime = FieldState(value),
+                    startDate = FieldState(it.startDate.value),
+                    startTime = FieldState(it.startTime.value),
+                    endDate = FieldState(it.endDate.value),
+                )
+            else it
+        }
 
     override fun setRoom(value: MeetingRoomModel) =
         updateForm { it.copy(room = FieldState(value)) }

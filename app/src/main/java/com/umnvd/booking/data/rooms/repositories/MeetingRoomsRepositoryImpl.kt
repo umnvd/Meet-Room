@@ -1,6 +1,5 @@
 package com.umnvd.booking.data.rooms.repositories
 
-import android.util.Log
 import com.umnvd.booking.data.rooms.mappers.MeetingRoomRemoteModelMapper
 import com.umnvd.booking.data.rooms.services.MeetingRoomsService
 import com.umnvd.booking.di.IoDispatcher
@@ -18,13 +17,11 @@ class MeetingRoomsRepositoryImpl @Inject constructor(
 
     override suspend fun room(uid: String): MeetingRoomModel = withContext(ioDispatcher) {
         val roomDto = meetingRoomsService.getRoom(uid)
-        Log.d(this@MeetingRoomsRepositoryImpl.javaClass.simpleName, roomDto.toString())
         return@withContext MeetingRoomRemoteModelMapper.dtoToDomain(roomDto)
     }
 
     override suspend fun allRooms(): List<MeetingRoomModel> = withContext(ioDispatcher) {
         val roomsDtos = meetingRoomsService.getRooms()
-        Log.d(this@MeetingRoomsRepositoryImpl.javaClass.simpleName, roomsDtos.toString())
         return@withContext roomsDtos.map(MeetingRoomRemoteModelMapper::dtoToDomain)
     }
 
@@ -32,7 +29,6 @@ class MeetingRoomsRepositoryImpl @Inject constructor(
         withContext(ioDispatcher) {
             val roomDto = meetingRoomsService
                 .createRoom(MeetingRoomRemoteModelMapper.formDomainToDto(form))
-            Log.d(this@MeetingRoomsRepositoryImpl.javaClass.simpleName, roomDto.toString())
             return@withContext MeetingRoomRemoteModelMapper.dtoToDomain(roomDto)
         }
 
@@ -40,7 +36,6 @@ class MeetingRoomsRepositoryImpl @Inject constructor(
         withContext(ioDispatcher) {
             val roomDto = meetingRoomsService
                 .editRoom(uid, MeetingRoomRemoteModelMapper.formDomainToDto(form))
-            Log.d(this@MeetingRoomsRepositoryImpl.javaClass.simpleName, roomDto.toString())
             return@withContext MeetingRoomRemoteModelMapper.dtoToDomain(roomDto)
         }
 

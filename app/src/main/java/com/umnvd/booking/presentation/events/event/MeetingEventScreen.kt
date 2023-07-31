@@ -23,6 +23,7 @@ import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.utils.rememberWithKeyboardHiding
+import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
 import com.umnvd.booking.presentation.events.common.form.MeetingEventFormController
 import com.umnvd.booking.presentation.events.common.components.form.MeetingEventForm
 import com.umnvd.booking.presentation.events.event.viewmodel.MeetingEventScreenState
@@ -32,6 +33,7 @@ import com.umnvd.booking.util.PreviewMocks
 @Composable
 fun MeetingEventScreen(
     viewModel: MeetingEventScreenViewModel = hiltViewModel(),
+    syncViewModel: SyncViewModel,
     onSaved: () -> Unit,
     onDeleted: () -> Unit,
     onBackClick: () -> Unit,
@@ -39,10 +41,20 @@ fun MeetingEventScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LocalAppProgressIndicatorController.current.state(state.loading)
-    LocalAppErrorSnackbarController.current.show(state.error, viewmodel::errorHandled)
+    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
-    LaunchedEffect(state.saved) { if (state.saved) onSaved() }
-    LaunchedEffect(state.deleted) { if (state.deleted) onDeleted() }
+    LaunchedEffect(state.saved) {
+        if (state.saved) {
+            syncViewModel.trigger()
+            onSaved()
+        }
+    }
+    LaunchedEffect(state.deleted) {
+        if (state.deleted) {
+            syncViewModel.trigger()
+            onDeleted()
+        }
+    }
 
     MeetingEventScreenContent(
         state = state,
@@ -63,6 +75,9 @@ private fun MeetingEventScreenContent(
 ) {
     val onSaveClickHandler = rememberWithKeyboardHiding(onCreateClick)
     var deleteDialogShowing by remember { mutableStateOf(false) }
+    val onDeleteClickHandler = rememberWithKeyboardHiding {
+        deleteDialogShowing = true
+    }
 
     if (deleteDialogShowing) {
         AlertDialog(
@@ -70,7 +85,10 @@ private fun MeetingEventScreenContent(
             title = { Text("Are you sure you want to delete event?") },
             text = { Text("This action cannot be undone") },
             confirmButton = {
-                TextButton(onClick = onDeleteClick) {
+                TextButton(onClick = {
+                    deleteDialogShowing = false
+                    onDeleteClick()
+                }) {
                     Text("Delete")
                 }
             },
@@ -89,10 +107,10 @@ private fun MeetingEventScreenContent(
                 actions = {
                     Crossfade(
                         targetState = state.saveButtonVisible,
-                        label = "event_actions_anim",
-                        ) {
+                        label = "meeting_event_actions_anim",
+                    ) {
                         Row {
-                            TextButton(onClick = { /*TODO*/ }) {
+                            TextButton(onClick = onDeleteClickHandler) {
                                 Text(text = "Delete")
                             }
 

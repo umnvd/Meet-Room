@@ -11,7 +11,11 @@ class GetUserListUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): Result<List<UserModel>, AppException> {
-        val users = usersRepository.allUsers()
-        return Result.Success(users)
+        return try {
+            val users = usersRepository.allUsers()
+            return Result.Success(users)
+        } catch (e: AppException) {
+            Result.Error(e)
+        }
     }
 }

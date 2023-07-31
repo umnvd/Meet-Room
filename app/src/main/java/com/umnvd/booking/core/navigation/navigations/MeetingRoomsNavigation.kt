@@ -9,7 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
-import com.umnvd.booking.presentation.rooms.common.viewmodels.MeetingRoomSyncViewModel
+import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
 import com.umnvd.booking.presentation.rooms.creation.MeetingRoomCreationScreen
 import com.umnvd.booking.presentation.rooms.list.MeetingRoomListScreen
 import com.umnvd.booking.presentation.rooms.room.MeetingRoomScreen
@@ -40,11 +40,12 @@ fun NavGraphBuilder.meetingRoomsGraph(
             val parentEntry = remember(it) {
                 navController.getBackStackEntry(ROOM_LIST_ROUTE)
             }
-            val syncViewModel = hiltViewModel<MeetingRoomSyncViewModel>(parentEntry)
+            val syncViewModel = hiltViewModel<SyncViewModel>(parentEntry)
 
             MeetingRoomScreen(
                 syncViewModel = syncViewModel,
                 onSaved = navController::popBackStack,
+                onDeleted = navController::popBackStack,
                 onBackClick = navController::popBackStack,
             )
         }
@@ -52,7 +53,7 @@ fun NavGraphBuilder.meetingRoomsGraph(
             val parentEntry = remember(it) {
                 navController.getBackStackEntry(ROOM_LIST_ROUTE)
             }
-            val syncViewModel = hiltViewModel<MeetingRoomSyncViewModel>(parentEntry)
+            val syncViewModel = hiltViewModel<SyncViewModel>(parentEntry)
 
             MeetingRoomCreationScreen(
                 syncViewModel = syncViewModel,

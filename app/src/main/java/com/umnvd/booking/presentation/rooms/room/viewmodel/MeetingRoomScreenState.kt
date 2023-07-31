@@ -11,6 +11,7 @@ data class MeetingRoomScreenState(
     val formState: MeetingRoomFormState = MeetingRoomFormState(),
     val loading: Boolean = false,
     val saved: Boolean = false,
+    val deleted: Boolean = false,
     val error: AppException? = null,
 ) {
     val saveButtonVisible: Boolean

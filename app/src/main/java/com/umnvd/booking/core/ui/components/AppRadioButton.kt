@@ -22,7 +22,7 @@ import com.umnvd.booking.core.ui.theme.hint
 @Composable
 fun AppRadioButton(
     checked: Boolean,
-    onChange: (Boolean) -> Unit,
+    onChange: (Boolean) -> Unit = {},
 ) {
     IconButton(onClick = { onChange(!checked) }) {
         Crossfade(targetState = checked, label = "app_radio_button_anim") {

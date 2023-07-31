@@ -11,8 +11,12 @@ class EditMeetingRoomUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(params: Params): Result<Unit, AppException> {
-        roomsRepository.editRoom(params.uid, params.form)
-        return Result.Success(Unit)
+        return try {
+            roomsRepository.editRoom(params.uid, params.form)
+            Result.Success(Unit)
+        } catch (e: AppException) {
+            Result.Error(e)
+        }
     }
 
     data class Params(
