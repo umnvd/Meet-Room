@@ -21,6 +21,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,9 +52,12 @@ fun MeetingRoomForm(
             ),
             modifier = Modifier.padding(start = 40.dp),
             placeholder = stringResource(R.string.room_name_hint),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                capitalization = KeyboardCapitalization.Sentences,
+            ),
             keyboardActions = KeyboardActions(
-                onNext = {focusManager.moveFocus(FocusDirection.Down) }
+                onNext = { focusManager.moveFocus(FocusDirection.Down) }
             ),
         )
         Divider(color = MaterialTheme.colorScheme.divider)
@@ -71,9 +75,12 @@ fun MeetingRoomForm(
                 onValueChange = formController::setAddress,
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = stringResource(R.string.room_address_hint),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done,
+                    capitalization = KeyboardCapitalization.Sentences,
+                ),
                 keyboardActions = KeyboardActions(
-                    onNext = {focusManager.clearFocus() }
+                    onNext = { focusManager.clearFocus() }
                 ),
             )
         }

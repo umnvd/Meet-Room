@@ -17,6 +17,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.umnvd.booking.R
@@ -43,7 +44,10 @@ fun MainInfoForm(
             fontSize = 28.sp,
         ),
         modifier = Modifier.padding(start = 40.dp),
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.Sentences,
+        ),
         keyboardActions = KeyboardActions(
             onNext = { focusManager.moveFocus(FocusDirection.Down) }
         ),
@@ -62,7 +66,10 @@ fun MainInfoForm(
             onValueChange = setDescription,
             modifier = Modifier.fillMaxWidth(),
             multiline = true,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+                capitalization = KeyboardCapitalization.Sentences,
+            ),
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.clearFocus(true) }
             ),
