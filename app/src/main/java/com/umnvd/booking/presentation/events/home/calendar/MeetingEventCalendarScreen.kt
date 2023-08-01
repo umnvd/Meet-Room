@@ -3,6 +3,7 @@ package com.umnvd.booking.presentation.events.home.calendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,6 +26,8 @@ import com.kizitonwose.calendar.core.DayPosition
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.core.ui.utils.text
+import com.umnvd.booking.domain.events.consts.MAX_DATE
+import com.umnvd.booking.domain.events.consts.MIN_DATE
 import com.umnvd.booking.presentation.events.home.calendar.components.MonthCalendarDay
 import com.umnvd.booking.presentation.events.home.viewmodel.MeetingEventsHomeScreenViewModel
 import java.time.DayOfWeek
@@ -59,8 +62,8 @@ fun MeetingEventCalendarScreenContent(
     onDayClick: (LocalDate) -> Unit = {},
 ) {
     val calendarState = rememberCalendarState(
-        startMonth = YearMonth.of(2023, 1),
-        endMonth = YearMonth.of(2024, 1),
+        startMonth = YearMonth.of(MIN_DATE.year, MIN_DATE.month),
+        endMonth = YearMonth.of(MAX_DATE.year, MAX_DATE.month),
         firstVisibleMonth = YearMonth.of(currentDate.year, currentDate.month),
         firstDayOfWeek = DayOfWeek.MONDAY,
     )
@@ -100,6 +103,7 @@ fun MeetingEventCalendarScreenContent(
                 }
             }
         )
+        Spacer(modifier = Modifier.height(64.dp))
     }
 }
 

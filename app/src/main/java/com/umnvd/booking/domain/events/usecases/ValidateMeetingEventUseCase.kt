@@ -108,19 +108,8 @@ class ValidateMeetingEventUseCase @Inject constructor() {
         event: MeetingEventModel,
         uid: String? = null
     ) {
-        Log.d(
-            "EVENT_VALIDATION",
-            "${uid} - ${event.uid}"
-        )
-
         if (uid == event.uid) return
         if (startAt.toLocalDate() != event.startAt.toLocalDate()) return
-
-        Log.d(
-            "EVENT_VALIDATION",
-            "${this.startAt}-${this.endAt} - ${event.startAt}-$${event.endAt}}"
-        )
-
         if (startAt < event.startAt && endAt > event.startAt)
             throw EventStartIntersectionException(event.endAt)
         if (endAt > event.endAt && startAt < event.endAt)
