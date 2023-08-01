@@ -34,20 +34,29 @@ import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.core.ui.utils.debugPlaceholder
 import com.umnvd.booking.domain.users.models.UserModel
+import com.umnvd.booking.presentation.main.viewmodel.MainViewModel
 import com.umnvd.booking.presentation.profile.viewmodel.ProfileScreenViewModel
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileScreenViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel,
     onSignedOut: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.state.collectAsStateWithLifecycle()
 
     LocalAppProgressIndicatorController.current.state(state.loading)
     LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
 
-    LaunchedEffect(state.signedOut) { if (state.signedOut) { onSignedOut() } }
+    LaunchedEffect(mainState.currentUser) { viewModel.setUser(mainState.currentUser) }
+
+    LaunchedEffect(state.signedOut) {
+        if (state.signedOut) {
+            onSignedOut()
+        }
+    }
 
     ProfileScreenContent(
         user = state.user,

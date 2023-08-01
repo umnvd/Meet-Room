@@ -8,14 +8,14 @@ import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
 
 object MeetingRoomRemoteModelMapper {
 
-    fun dtoToDomain(model: MeetingRoomRemoteModel) = MeetingRoomModel(
+    fun remoteToDomain(model: MeetingRoomRemoteModel) = MeetingRoomModel(
         uid = model.uid,
         name = model.name,
         address = model.address,
         createdAt = DateTimeMapper.utcStringToLdt(model.createdAt),
     )
 
-    fun formDomainToDto(model: MeetingRoomFormModel) = MeetingRoomFormRemoteModel(
+    fun formDomainToRemote(model: MeetingRoomFormModel) = MeetingRoomFormRemoteModel(
         name = model.name,
         address = model.address,
     )

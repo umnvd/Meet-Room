@@ -16,6 +16,6 @@ fun NavGraphBuilder.signIn(onSignedIn: () -> Unit) {
 }
 
 fun NavHostController.navigateToSignIn() {
-    popBackStack(HOME_ROUTE, true)
+    popBackStack(MAIN_ROUTE, true)
     navigate(SIGN_IN_ROUTE)
 }

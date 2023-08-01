@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Scaffold
@@ -58,7 +59,7 @@ fun AppErrorSnackbarProvider(
     }
 
     Scaffold(
-        contentWindowInsets = WindowInsets(0.dp),
+        contentWindowInsets = WindowInsets.navigationBars,
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
         CompositionLocalProvider(

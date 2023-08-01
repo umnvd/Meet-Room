@@ -29,36 +29,48 @@ import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.utils.rememberWithKeyboardHiding
-import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
-import com.umnvd.booking.presentation.events.common.form.MeetingEventFormController
 import com.umnvd.booking.presentation.events.common.components.MeetingEventForm
+import com.umnvd.booking.presentation.events.common.form.MeetingEventFormController
 import com.umnvd.booking.presentation.events.event.viewmodel.MeetingEventScreenState
 import com.umnvd.booking.presentation.events.event.viewmodel.MeetingEventScreenViewModel
+import com.umnvd.booking.presentation.main.viewmodel.MainViewModel
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable
 fun MeetingEventScreen(
     viewModel: MeetingEventScreenViewModel = hiltViewModel(),
-    syncViewModel: SyncViewModel,
+    mainViewModel: MainViewModel,
     onSaved: () -> Unit,
     onDeleted: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.state.collectAsStateWithLifecycle()
 
-    LocalAppProgressIndicatorController.current.state(state.loading)
     LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
+    LocalAppProgressIndicatorController.current.state(state.loading)
+    LocalAppProgressIndicatorController.current.state(mainState.loading)
+
+    LaunchedEffect(
+        key1 = mainState.events,
+        key2 = mainState.rooms,
+        key3 = mainState.users,
+    ) {
+        viewModel.setAllEvents(mainState.events)
+        viewModel.setAllRooms(mainState.rooms)
+        viewModel.setAllUsers(mainState.users)
+    }
 
     LaunchedEffect(state.saved) {
         if (state.saved) {
-            syncViewModel.trigger()
             onSaved()
+            mainViewModel.updateEvents()
         }
     }
     LaunchedEffect(state.deleted) {
         if (state.deleted) {
-            syncViewModel.trigger()
             onDeleted()
+            mainViewModel.updateEvents()
         }
     }
 

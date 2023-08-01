@@ -22,7 +22,7 @@ class MeetingEventsService @Inject constructor(
             .document(uid)
             .get()
             .await()
-            .toEventRemote()
+            .toEventRemote()!!
     }
 
     suspend fun getEvents(): List<MeetingEventRemoteModel> = withFBExceptionMapper {
@@ -30,8 +30,7 @@ class MeetingEventsService @Inject constructor(
             .collection(FirestoreContract.Events.COLLECTION_KEY)
             .get()
             .await()
-            .documents
-            .map { it.toEventRemote() }
+            .documents.mapNotNull { it.toEventRemote() }
     }
 
     suspend fun createEvent(data: MeetingEventFormRemoteModel): MeetingEventRemoteModel =
@@ -79,27 +78,32 @@ class MeetingEventsService @Inject constructor(
         )
 
     @Suppress("UNCHECKED_CAST")
-    private suspend fun DocumentSnapshot.toEventRemote(): MeetingEventRemoteModel =
+    private suspend fun DocumentSnapshot.toEventRemote(): MeetingEventRemoteModel? =
         withFBExceptionMapper {
-            val roomSnapshot = getDocumentReference(FirestoreContract.Events.ROOM_KEY)!!
-                .get()
-                .await()
+            try {
+                val roomSnapshot = getDocumentReference(FirestoreContract.Events.ROOM_KEY)!!
+                    .get()
+                    .await()
 
-            val participantsSnapshots =
-                get(FirestoreContract.Events.PARTICIPANTS_KEY) as List<DocumentReference>
+                val participantsSnapshots =
+                    get(FirestoreContract.Events.PARTICIPANTS_KEY) as List<DocumentReference>
 
-            val participants = participantsSnapshots.map {
-                it.get().await().toUserRemote()
+                val participants = participantsSnapshots.map {
+                    it.get().await().toUserRemote()
+                }
+
+                return@withFBExceptionMapper MeetingEventRemoteModel(
+                    uid = id,
+                    title = getString(FirestoreContract.Events.TITLE_KEY)!!,
+                    description = getString(FirestoreContract.Events.DESCRIPTION_KEY)!!,
+                    startAt = getString(FirestoreContract.Events.START_AT_KEY)!!,
+                    endAt = getString(FirestoreContract.Events.END_AT_KEY)!!,
+                    room = roomSnapshot.toRoomRemote(),
+                    participants = participants,
+                )
+
+            } catch (e: Exception) {
+                return@withFBExceptionMapper null
             }
-
-            return@withFBExceptionMapper MeetingEventRemoteModel(
-                uid = id,
-                title = getString(FirestoreContract.Events.TITLE_KEY)!!,
-                description = getString(FirestoreContract.Events.DESCRIPTION_KEY)!!,
-                startAt = getString(FirestoreContract.Events.START_AT_KEY)!!,
-                endAt = getString(FirestoreContract.Events.END_AT_KEY)!!,
-                room = roomSnapshot.toRoomRemote(),
-                participants = participants,
-            )
         }
 }

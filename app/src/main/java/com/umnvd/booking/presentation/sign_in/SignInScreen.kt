@@ -70,7 +70,6 @@ fun SignInScreen(
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AuthScreenContent(
     state: SignInScreenState,

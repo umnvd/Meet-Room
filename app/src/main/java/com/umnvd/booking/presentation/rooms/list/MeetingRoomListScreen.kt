@@ -22,13 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.umnvd.booking.core.ui.components.AppFloatingActionButton
-import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.divider
-import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
-import com.umnvd.booking.domain.NetworkException
 import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
+import com.umnvd.booking.presentation.main.viewmodel.MainViewModel
 import com.umnvd.booking.presentation.rooms.list.components.MeetingRoomListTile
 import com.umnvd.booking.presentation.rooms.list.viewmodel.MeetingRoomListScreenState
 import com.umnvd.booking.presentation.rooms.list.viewmodel.MeetingRoomListScreenViewModel
@@ -37,22 +35,16 @@ import com.umnvd.booking.util.PreviewMocks
 @Composable
 fun MeetingRoomListScreen(
     viewModel: MeetingRoomListScreenViewModel = hiltViewModel(),
-    syncViewModel: SyncViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel,
     onRoomClick: (MeetingRoomModel) -> Unit,
     onCreateClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val sync by syncViewModel.sync.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.state.collectAsStateWithLifecycle()
 
-    LocalAppProgressIndicatorController.current.state(state.loading)
-    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
+    LocalAppProgressIndicatorController.current.state(mainState.loading)
 
-    LaunchedEffect(sync) {
-        if (sync) {
-            viewModel.loadRooms()
-            syncViewModel.syncHandled()
-        }
-    }
+    LaunchedEffect(mainState.rooms) { viewModel.setRooms(mainState.rooms) }
 
     MeetingRoomListScreenContent(
         state = state,
@@ -103,44 +95,6 @@ private fun MeetingRoomListScreenContentPreview() {
     MeetingRoomBookingTheme {
         MeetingRoomListScreenContent(
             state = MeetingRoomListScreenState(
-                rooms = PreviewMocks.MeetingRooms().roomList,
-            )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun MeetingRoomListScreenContentEmptyListPreview() {
-    MeetingRoomBookingTheme {
-        MeetingRoomListScreenContent(
-            state = MeetingRoomListScreenState(
-                rooms = listOf(),
-            )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun MeetingRoomListScreenContentLoadingPreview() {
-    MeetingRoomBookingTheme {
-        MeetingRoomListScreenContent(
-            state = MeetingRoomListScreenState(
-                loading = true,
-                rooms = PreviewMocks.MeetingRooms().roomList,
-            )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun MeetingRoomListScreenContentErrorPreview() {
-    MeetingRoomBookingTheme {
-        MeetingRoomListScreenContent(
-            state = MeetingRoomListScreenState(
-                error = NetworkException(),
                 rooms = PreviewMocks.MeetingRooms().roomList,
             )
         )

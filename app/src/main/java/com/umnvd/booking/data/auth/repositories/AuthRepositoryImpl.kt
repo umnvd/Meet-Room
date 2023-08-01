@@ -20,7 +20,7 @@ class AuthRepositoryImpl @Inject constructor(
         withContext(ioDispatcher) {
             val userUid = authService.signIn(email, password)
             val userDto = usersService.getUser(userUid)
-            return@withContext UserRemoteModelMapper.dtoToDomain(userDto)
+            return@withContext UserRemoteModelMapper.remoteToDomain(userDto)
         }
 
     override suspend fun signOut() = withContext(ioDispatcher) {

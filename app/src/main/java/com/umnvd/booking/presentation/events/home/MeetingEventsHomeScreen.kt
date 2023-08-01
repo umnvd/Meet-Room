@@ -1,5 +1,6 @@
 package com.umnvd.booking.presentation.events.home
 
+import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
@@ -42,38 +43,31 @@ import com.umnvd.booking.core.navigation.navigations.meetingEventScheduleGraph
 import com.umnvd.booking.core.navigation.navigations.navigateToEventCalendar
 import com.umnvd.booking.core.navigation.navigations.navigateToEventSchedule
 import com.umnvd.booking.core.ui.components.AppFloatingActionButton
-import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.utils.text
-import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.presentation.events.home.components.WeekDaysHeader
 import com.umnvd.booking.presentation.events.home.viewmodel.MeetingEventsHomeScreenViewModel
+import com.umnvd.booking.presentation.main.viewmodel.MainViewModel
 import java.time.LocalDate
 
 
 @Composable
 fun MeetingEventsHomeScreen(
     viewModel: MeetingEventsHomeScreenViewModel = hiltViewModel(),
-    syncViewModel: SyncViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel,
     onCreateClick: () -> Unit,
     onMyEventsClick: () -> Unit,
     navigateToEvent: (MeetingEventModel) -> Unit,
     homeNavController: NavHostController,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val sync by syncViewModel.sync.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.state.collectAsStateWithLifecycle()
 
-    LocalAppProgressIndicatorController.current.state(state.loading)
-    LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
-
-    LaunchedEffect(sync) {
-        if (sync) {
-            viewModel.loadEvents()
-            syncViewModel.syncHandled()
-        }
-    }
+    LocalAppProgressIndicatorController.current.state(mainState.loading)
+    
+    LaunchedEffect(mainState.events) { viewModel.setEvents(mainState.events) }
 
     MeetingEventsHomeScreenContent(
         selectedDate = state.date,
@@ -162,8 +156,8 @@ fun MeetingEventsHomeScreenContent(
                 startDestination = EVENT_SCHEDULE_GRAPH_ROUTE,
             ) {
                 meetingEventScheduleGraph(
-                    navController = navController,
-                    homeNavController = homeNavController,
+                    navHostController = navController,
+                    homeNavHostController = homeNavController,
                     navigateToEvent = navigateToEvent,
                 )
             }

@@ -5,7 +5,7 @@ import com.umnvd.booking.domain.users.models.UserModel
 
 object UserRemoteModelMapper {
 
-    fun dtoToDomain(obj: UserRemoteModel) = UserModel(
+    fun remoteToDomain(obj: UserRemoteModel) = UserModel(
         uid = obj.uid,
         nickname = obj.nickname,
         fullName = obj.fullName,

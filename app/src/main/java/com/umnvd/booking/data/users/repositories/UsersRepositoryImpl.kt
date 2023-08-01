@@ -24,11 +24,11 @@ class UsersRepositoryImpl @Inject constructor(
 
     override suspend fun user(uid: String): UserModel = withContext(ioDispatcher) {
         val userDto = usersService.getUser(uid)
-        return@withContext UserRemoteModelMapper.dtoToDomain(userDto)
+        return@withContext UserRemoteModelMapper.remoteToDomain(userDto)
     }
 
     override suspend fun allUsers(): List<UserModel> = withContext(ioDispatcher) {
         val userDtos = usersService.getUsers()
-        return@withContext userDtos.map(UserRemoteModelMapper::dtoToDomain)
+        return@withContext userDtos.map(UserRemoteModelMapper::remoteToDomain)
     }
 }

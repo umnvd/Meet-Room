@@ -29,7 +29,7 @@ import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
 import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.utils.rememberWithKeyboardHiding
-import com.umnvd.booking.core.ui.viewmodels.SyncViewModel
+import com.umnvd.booking.presentation.main.viewmodel.MainViewModel
 import com.umnvd.booking.presentation.rooms.common.components.MeetingRoomForm
 import com.umnvd.booking.presentation.rooms.common.form.MeetingRoomFormController
 import com.umnvd.booking.presentation.rooms.common.form.toFormState
@@ -40,7 +40,7 @@ import com.umnvd.booking.util.PreviewMocks
 @Composable
 fun MeetingRoomScreen(
     viewModel: MeetingRoomScreenViewModel = hiltViewModel(),
-    syncViewModel: SyncViewModel,
+    mainViewModel: MainViewModel,
     onSaved: () -> Unit,
     onDeleted: () -> Unit,
     onBackClick: () -> Unit,
@@ -52,14 +52,14 @@ fun MeetingRoomScreen(
 
     LaunchedEffect(state.saved) {
         if (state.saved) {
-            syncViewModel.trigger()
+            mainViewModel.updateRoomsAndEvents()
             onSaved()
         }
     }
 
     LaunchedEffect(state.deleted) {
         if (state.deleted) {
-            syncViewModel.trigger()
+            mainViewModel.updateRoomsAndEvents()
             onDeleted()
         }
     }

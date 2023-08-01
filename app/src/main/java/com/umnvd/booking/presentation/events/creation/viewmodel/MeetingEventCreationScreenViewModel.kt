@@ -2,9 +2,11 @@ package com.umnvd.booking.presentation.events.creation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
+import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.domain.events.usecases.CreateMeetingEventUseCase
-import com.umnvd.booking.domain.events.usecases.GetUsersAndMeetingRoomsUseCase
 import com.umnvd.booking.domain.events.usecases.ValidateMeetingEventUseCase
+import com.umnvd.booking.domain.rooms.models.MeetingRoomModel
+import com.umnvd.booking.domain.users.models.UserModel
 import com.umnvd.booking.presentation.events.common.form.MeetingEventFormState
 import com.umnvd.booking.presentation.events.common.form.toDomain
 import com.umnvd.booking.presentation.events.common.viewmodels.BaseMeetingEventFormViewModel
@@ -14,25 +16,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MeetingEventCreationScreenViewModel @Inject constructor(
-    private val getUsersAndMeetingRoomsUseCase: GetUsersAndMeetingRoomsUseCase,
     private val createMeetingEventUseCase: CreateMeetingEventUseCase,
     private val validateMeetingEventUseCase: ValidateMeetingEventUseCase,
 ) : BaseMeetingEventFormViewModel<MeetingEventCreationScreenState>(
     MeetingEventCreationScreenState()
 ) {
-
-    init {
-        loadData()
-    }
-
     override fun updateForm(builder: (MeetingEventFormState) -> MeetingEventFormState) =
         updateState { it.copy(formState = builder(it.formState)) }
+
+    fun setAllEvents(value: List<MeetingEventModel>) = updateState { it.copy(allEvents = value) }
+    fun setAllRooms(value: List<MeetingRoomModel>) = updateState { it.copy(allRooms = value) }
+    fun setAllUsers(value: List<UserModel>) = updateState { it.copy(allUsers = value) }
 
     fun createEvent() {
         viewModelScope.launch {
             updateState { it.copy(loading = true) }
             val validationResult = validateMeetingEventUseCase(
-                ValidateMeetingEventUseCase.Params(state.value.formState.toDomain())
+                ValidateMeetingEventUseCase.Params(
+                    form = state.value.formState.toDomain(),
+                    events = state.value.allEvents,
+                )
             )
             when (validationResult) {
                 is Result.Error -> {
@@ -63,22 +66,4 @@ class MeetingEventCreationScreenViewModel @Inject constructor(
     }
 
     fun errorHandled() = updateState { it.copy(error = null) }
-
-    private fun loadData() {
-        viewModelScope.launch {
-            updateState { it.copy(loading = true) }
-            when (val usersWithRoomsResult =
-                getUsersAndMeetingRoomsUseCase()) {
-                is Result.Success -> updateState {
-                    it.copy(
-                        allRooms = usersWithRoomsResult.value.rooms,
-                        allUsers = usersWithRoomsResult.value.users
-                    )
-                }
-
-                is Result.Error -> updateState { it.copy(error = usersWithRoomsResult.error) }
-            }
-            updateState { it.copy(loading = false) }
-        }
-    }
 }

@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.umnvd.booking.core.navigation.navigations.SIGN_IN_ROUTE
-import com.umnvd.booking.core.navigation.navigations.home
+import com.umnvd.booking.core.navigation.navigations.main
 import com.umnvd.booking.core.navigation.navigations.navigateToHome
 import com.umnvd.booking.core.navigation.navigations.navigateToSignIn
 import com.umnvd.booking.core.navigation.navigations.signIn
@@ -29,6 +29,6 @@ fun AppNavGraph(
         popExitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Right) },
     ) {
         signIn(onSignedIn = navController::navigateToHome)
-        home(onSignedOut = navController::navigateToSignIn)
+        main(onSignedOut = navController::navigateToSignIn)
     }
 }

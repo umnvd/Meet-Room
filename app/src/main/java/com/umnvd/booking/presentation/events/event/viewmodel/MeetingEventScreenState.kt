@@ -14,6 +14,7 @@ data class MeetingEventScreenState(
     val event: MeetingEventModel? = null,
     val formState: MeetingEventFormState = MeetingEventFormState(),
     val loading: Boolean = false,
+    val allEvents: List<MeetingEventModel> = listOf(),
     val allRooms: List<MeetingRoomModel> = listOf(),
     val allUsers: List<UserModel> = listOf(),
     val saved: Boolean = false,

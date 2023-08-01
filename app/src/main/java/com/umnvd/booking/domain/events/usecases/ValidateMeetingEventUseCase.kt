@@ -1,5 +1,6 @@
 package com.umnvd.booking.domain.events.usecases
 
+import android.util.Log
 import com.umnvd.booking.core.domain.models.Result
 import com.umnvd.booking.domain.AppException
 import com.umnvd.booking.domain.EventDifferentDatesException
@@ -16,16 +17,19 @@ import com.umnvd.booking.domain.EventTitleRequiredException
 import com.umnvd.booking.domain.events.models.MeetingEventFormModel
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.domain.events.models.MeetingEventValidationError
-import com.umnvd.booking.domain.events.repositories.MeetingEventsRepository
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
-class ValidateMeetingEventUseCase @Inject constructor(
-    private val eventsRepository: MeetingEventsRepository,
-) {
+class ValidateMeetingEventUseCase @Inject constructor() {
 
-    suspend operator fun invoke(params: Params): Result<Unit, MeetingEventValidationError> {
+    data class Params(
+        val form: MeetingEventFormModel,
+        val events: List<MeetingEventModel>,
+        val uid: String? = null,
+    )
+
+    operator fun invoke(params: Params): Result<Unit, MeetingEventValidationError> {
         val trimmedTitle = params.form.title.trim()
 
         val titleError = when {
@@ -83,8 +87,7 @@ class ValidateMeetingEventUseCase @Inject constructor(
         var endError: AppException? = null
 
         try {
-            val events = eventsRepository.allEvents()
-            events.forEach { params.form.checkIntersection(it) }
+            params.events.forEach { params.form.checkIntersection(it, params.uid) }
         } catch (e: EventStartIntersectionException) {
             startError = e
         } catch (e: AppException) {
@@ -101,9 +104,23 @@ class ValidateMeetingEventUseCase @Inject constructor(
         } else Result.Success(Unit)
     }
 
-    data class Params(val form: MeetingEventFormModel)
+    private fun MeetingEventFormModel.checkIntersection(
+        event: MeetingEventModel,
+        uid: String? = null
+    ) {
+        Log.d(
+            "EVENT_VALIDATION",
+            "${uid} - ${event.uid}"
+        )
 
-    private fun MeetingEventFormModel.checkIntersection(event: MeetingEventModel) {
+        if (uid == event.uid) return
+        if (startAt.toLocalDate() != event.startAt.toLocalDate()) return
+
+        Log.d(
+            "EVENT_VALIDATION",
+            "${this.startAt}-${this.endAt} - ${event.startAt}-$${event.endAt}}"
+        )
+
         if (startAt < event.startAt && endAt > event.startAt)
             throw EventStartIntersectionException(event.endAt)
         if (endAt > event.endAt && startAt < event.endAt)

@@ -17,26 +17,26 @@ class MeetingRoomsRepositoryImpl @Inject constructor(
 
     override suspend fun room(uid: String): MeetingRoomModel = withContext(ioDispatcher) {
         val roomDto = meetingRoomsService.getRoom(uid)
-        return@withContext MeetingRoomRemoteModelMapper.dtoToDomain(roomDto)
+        return@withContext MeetingRoomRemoteModelMapper.remoteToDomain(roomDto)
     }
 
     override suspend fun allRooms(): List<MeetingRoomModel> = withContext(ioDispatcher) {
         val roomsDtos = meetingRoomsService.getRooms()
-        return@withContext roomsDtos.map(MeetingRoomRemoteModelMapper::dtoToDomain)
+        return@withContext roomsDtos.map(MeetingRoomRemoteModelMapper::remoteToDomain)
     }
 
     override suspend fun createRoom(form: MeetingRoomFormModel): MeetingRoomModel =
         withContext(ioDispatcher) {
             val roomDto = meetingRoomsService
-                .createRoom(MeetingRoomRemoteModelMapper.formDomainToDto(form))
-            return@withContext MeetingRoomRemoteModelMapper.dtoToDomain(roomDto)
+                .createRoom(MeetingRoomRemoteModelMapper.formDomainToRemote(form))
+            return@withContext MeetingRoomRemoteModelMapper.remoteToDomain(roomDto)
         }
 
     override suspend fun editRoom(uid: String, form: MeetingRoomFormModel): MeetingRoomModel =
         withContext(ioDispatcher) {
             val roomDto = meetingRoomsService
-                .editRoom(uid, MeetingRoomRemoteModelMapper.formDomainToDto(form))
-            return@withContext MeetingRoomRemoteModelMapper.dtoToDomain(roomDto)
+                .editRoom(uid, MeetingRoomRemoteModelMapper.formDomainToRemote(form))
+            return@withContext MeetingRoomRemoteModelMapper.remoteToDomain(roomDto)
         }
 
     override suspend fun deleteRoom(uid: String) = withContext(ioDispatcher) {

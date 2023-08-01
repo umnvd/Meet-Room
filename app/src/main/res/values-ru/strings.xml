@@ -25,7 +25,7 @@
     <string name="event_participants_required_error">Событие должно содержать как минимум одного участника</string>
     <string name="event_start_intersection_error">Начало пересекается с существующим событием, должно быть позже %s</string>
     <string name="event_end_intersection_error">Конец пересекается с существующим событием, должен быть раньше %s</string>
-    <string name="event_negative_duration_error">Продолжительность события не может быть негативной</string>
+    <string name="event_negative_duration_error">Событие не должно заканчиваться раньше его начала</string>
     <string name="event_different_dates_error">Событие должно начинаться и заканчиваться в один день</string>
     <string name="event_min_duration_error">Минимальная продолжительность события %d минут</string>
     <string name="event_max_duration_error">Максимальаня продолжительность события %d часов</string>

@@ -20,8 +20,8 @@ const val EVENT_CALENDAR_ROUTE = "event_calendar"
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.meetingEventScheduleGraph(
-    navController: NavHostController,
-    homeNavController: NavHostController,
+    navHostController: NavHostController,
+    homeNavHostController: NavHostController,
     navigateToEvent: (MeetingEventModel) -> Unit,
 ) {
     navigation(
@@ -36,7 +36,7 @@ fun NavGraphBuilder.meetingEventScheduleGraph(
             popExitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Down) },
         ) {
             val parentEntry = remember(it) {
-                homeNavController.getBackStackEntry(EVENTS_HOME_ROUTE)
+                homeNavHostController.getBackStackEntry(EVENTS_HOME_ROUTE)
             }
             val homeViewModel = hiltViewModel<MeetingEventsHomeScreenViewModel>(parentEntry)
 
@@ -53,13 +53,13 @@ fun NavGraphBuilder.meetingEventScheduleGraph(
             popExitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Up) },
         ) {
             val parentEntry = remember(it) {
-                homeNavController.getBackStackEntry(EVENTS_HOME_ROUTE)
+                homeNavHostController.getBackStackEntry(EVENTS_HOME_ROUTE)
             }
             val homeViewModel = hiltViewModel<MeetingEventsHomeScreenViewModel>(parentEntry)
 
             MeetingEventCalendarScreen(
                 viewModel = homeViewModel,
-                onDayClick = navController::navigateToEventSchedule,
+                onDayClick = navHostController::navigateToEventSchedule,
             )
         }
     }

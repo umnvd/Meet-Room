@@ -1,5 +1,6 @@
-package com.umnvd.booking.presentation.home
+package com.umnvd.booking.presentation.main
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
@@ -23,6 +24,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
@@ -31,6 +33,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -43,14 +47,22 @@ import com.umnvd.booking.core.navigation.navigations.ROOMS_GRAPH_ROUTE
 import com.umnvd.booking.core.navigation.navigations.meetingEventsGraph
 import com.umnvd.booking.core.navigation.navigations.meetingRoomsGraph
 import com.umnvd.booking.core.navigation.navigations.profile
+import com.umnvd.booking.core.ui.components.LocalAppErrorSnackbarController
+import com.umnvd.booking.core.ui.components.LocalAppProgressIndicatorController
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
-import com.umnvd.booking.presentation.home.models.NavigationItemUiModel
+import com.umnvd.booking.presentation.main.models.NavigationItemUiModel
+import com.umnvd.booking.presentation.main.viewmodel.MainViewModel
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun HomeScreen(
+fun MainScreen(
+    viewModel: MainViewModel = hiltViewModel(),
     onSignedOut: () -> Unit
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LocalAppProgressIndicatorController.current.state(state.loading)
+
     val navController = rememberAnimatedNavController()
     val navigationBarItems = listOf(
         NavigationItemUiModel(
@@ -123,9 +135,12 @@ fun HomeScreen(
                 .consumeWindowInsets(innerPadding)
                 .imePadding(),
         ) {
-            meetingEventsGraph(navController = navController)
-            meetingRoomsGraph(navController = navController)
-            profile(onSignedOut = onSignedOut)
+            meetingEventsGraph(navHostController = navController)
+            meetingRoomsGraph(navHostController = navController)
+            profile(
+                navHostController = navController,
+                onSignedOut = onSignedOut
+            )
         }
     }
 }
@@ -138,8 +153,8 @@ private fun rememberImeVisible(): State<Boolean> {
 
 @Preview
 @Composable
-private fun HomeScreenPreview() {
+private fun MainScreenPreview() {
     MeetingRoomBookingTheme {
-        HomeScreen(onSignedOut = {})
+        MainScreen(onSignedOut = {})
     }
 }

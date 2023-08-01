@@ -1,4 +1,4 @@
-package com.umnvd.booking.presentation.home.models
+package com.umnvd.booking.presentation.main.models
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector

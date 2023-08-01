@@ -25,23 +25,36 @@ import com.umnvd.booking.presentation.events.common.form.MeetingEventFormControl
 import com.umnvd.booking.presentation.events.common.components.MeetingEventForm
 import com.umnvd.booking.presentation.events.creation.viewmodel.MeetingEventCreationScreenState
 import com.umnvd.booking.presentation.events.creation.viewmodel.MeetingEventCreationScreenViewModel
+import com.umnvd.booking.presentation.main.viewmodel.MainViewModel
 import com.umnvd.booking.util.PreviewMocks
 
 @Composable
 fun MeetingEventCreationScreen(
     viewModel: MeetingEventCreationScreenViewModel = hiltViewModel(),
-    syncViewModel: SyncViewModel,
+    mainViewModel: MainViewModel,
     onCreated: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.state.collectAsStateWithLifecycle()
 
-    LocalAppProgressIndicatorController.current.state(state.loading)
     LocalAppErrorSnackbarController.current.show(state.error, viewModel::errorHandled)
+    LocalAppProgressIndicatorController.current.state(state.loading)
+    LocalAppProgressIndicatorController.current.state(mainState.loading)
+
+    LaunchedEffect(
+        key1 = mainState.events,
+        key2 = mainState.rooms,
+        key3 = mainState.users,
+    ) {
+        viewModel.setAllEvents(mainState.events)
+        viewModel.setAllRooms(mainState.rooms)
+        viewModel.setAllUsers(mainState.users)
+    }
 
     LaunchedEffect(state.created) {
         if (state.created) {
-            syncViewModel.trigger()
+            mainViewModel.updateEvents()
             onCreated()
         }
     }

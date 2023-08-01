@@ -4,18 +4,18 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
-import com.umnvd.booking.presentation.home.HomeScreen
+import com.umnvd.booking.presentation.main.MainScreen
 
-const val HOME_ROUTE = "home"
+const val MAIN_ROUTE = "main"
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.home(onSignedOut: () -> Unit) {
-    composable(HOME_ROUTE) {
-        HomeScreen(onSignedOut)
+fun NavGraphBuilder.main(onSignedOut: () -> Unit) {
+    composable(MAIN_ROUTE) {
+        MainScreen(onSignedOut = onSignedOut)
     }
 }
 
 fun NavHostController.navigateToHome() {
     popBackStack(SIGN_IN_ROUTE, true)
-    navigate(HOME_ROUTE)
+    navigate(MAIN_ROUTE)
 }

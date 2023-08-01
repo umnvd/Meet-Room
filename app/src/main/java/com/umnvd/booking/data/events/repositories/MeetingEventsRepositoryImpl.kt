@@ -17,25 +17,25 @@ class MeetingEventsRepositoryImpl @Inject constructor(
 
     override suspend fun event(uid: String) = withContext(ioDispatcher) {
         val eventDto = meetingEventsService.getEvent(uid)
-        return@withContext MeetingEventRemoteModelMapper.dtoToDomain(eventDto)
+        return@withContext MeetingEventRemoteModelMapper.remoteToDomain(eventDto)
     }
 
     override suspend fun allEvents() = withContext(ioDispatcher) {
         val eventsDtos = meetingEventsService.getEvents()
-        return@withContext eventsDtos.map(MeetingEventRemoteModelMapper::dtoToDomain)
+        return@withContext eventsDtos.map(MeetingEventRemoteModelMapper::remoteToDomain)
     }
 
     override suspend fun createEvent(form: MeetingEventFormModel) = withContext(ioDispatcher) {
         val eventDto = meetingEventsService
-            .createEvent(MeetingEventRemoteModelMapper.formDomainToDto(form))
-        return@withContext MeetingEventRemoteModelMapper.dtoToDomain(eventDto)
+            .createEvent(MeetingEventRemoteModelMapper.formDomainToRemote(form))
+        return@withContext MeetingEventRemoteModelMapper.remoteToDomain(eventDto)
     }
 
     override suspend fun editEvent(uid: String, form: MeetingEventFormModel) =
         withContext(ioDispatcher) {
             val eventDto = meetingEventsService
-                .editEvent(uid, MeetingEventRemoteModelMapper.formDomainToDto(form))
-            return@withContext MeetingEventRemoteModelMapper.dtoToDomain(eventDto)
+                .editEvent(uid, MeetingEventRemoteModelMapper.formDomainToRemote(form))
+            return@withContext MeetingEventRemoteModelMapper.remoteToDomain(eventDto)
         }
 
     override suspend fun deleteEvent(uid: String) = withContext(ioDispatcher) {

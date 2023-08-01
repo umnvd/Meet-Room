@@ -46,10 +46,11 @@ fun EventScheduleTile(
     event: MeetingEventModel,
     modifier: Modifier = Modifier,
     onEventClick: ((MeetingEventModel) -> Unit)? = null,
+    extended: Boolean = false,
 ) {
-    val halfHour = Duration.between(
+    val lessThanHour = Duration.between(
         event.startAt, event.endAt
-    ).toMinutes() == 30L
+    ).toMinutes() < 60L
 
     Card(
         colors = CardDefaults.cardColors(
@@ -59,12 +60,11 @@ fun EventScheduleTile(
         onClick = { onEventClick?.invoke(event) },
         modifier = modifier,
     ) {
-        if (halfHour) {
-            HalfHourEvent(event = event)
-        } else {
-            DefaultEvent(event = event)
+        when {
+            extended -> DefaultEvent(event = event)
+            lessThanHour -> HalfHourEvent(event = event)
+            else -> DefaultEvent(event = event)
         }
-
     }
 
 }

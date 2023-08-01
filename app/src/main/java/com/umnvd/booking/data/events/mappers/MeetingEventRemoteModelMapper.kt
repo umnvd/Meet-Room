@@ -10,17 +10,17 @@ import com.umnvd.booking.domain.events.models.MeetingEventModel
 
 object MeetingEventRemoteModelMapper {
 
-    fun dtoToDomain(model: MeetingEventRemoteModel) = MeetingEventModel(
+    fun remoteToDomain(model: MeetingEventRemoteModel) = MeetingEventModel(
         uid = model.uid,
         title = model.title,
         description = model.description,
         startAt = DateTimeMapper.utcStringToLdt(model.startAt),
         endAt = DateTimeMapper.utcStringToLdt(model.endAt),
-        room = MeetingRoomRemoteModelMapper.dtoToDomain(model.room),
-        participants = model.participants.map(UserRemoteModelMapper::dtoToDomain)
+        room = MeetingRoomRemoteModelMapper.remoteToDomain(model.room),
+        participants = model.participants.map(UserRemoteModelMapper::remoteToDomain)
     )
 
-    fun formDomainToDto(model: MeetingEventFormModel) = MeetingEventFormRemoteModel(
+    fun formDomainToRemote(model: MeetingEventFormModel) = MeetingEventFormRemoteModel(
         title = model.title,
         description = model.description,
         startAt = DateTimeMapper.ldtToUtcString(model.startAt),

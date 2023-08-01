@@ -17,7 +17,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.umnvd.booking.core.navigation.AppNavGraph
-import com.umnvd.booking.core.navigation.navigations.HOME_ROUTE
+import com.umnvd.booking.core.navigation.navigations.MAIN_ROUTE
 import com.umnvd.booking.core.navigation.navigations.SIGN_IN_ROUTE
 import com.umnvd.booking.core.ui.components.AppErrorSnackbarProvider
 import com.umnvd.booking.core.ui.components.AppProgressIndicatorProvider
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                         AppNavGraph(
                             navController = navController,
                             startDestination = when (authState.value) {
-                                AuthState.AUTHORIZED -> HOME_ROUTE
+                                AuthState.AUTHORIZED -> MAIN_ROUTE
                                 else -> SIGN_IN_ROUTE
                             },
                             modifier = Modifier
