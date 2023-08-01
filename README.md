@@ -22,7 +22,7 @@
 
 ## Доступы
 
-Шаблон почты - _test{number}@mail.com_, шаблон пароля: _password{number}_
+Шаблон почты - _test{number}@mail.com_, шаблон пароля - _password{number}_
 
 - test1@mail.com : pasword1
 - т.д. до 5
