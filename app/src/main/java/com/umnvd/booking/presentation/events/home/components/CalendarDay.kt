@@ -30,6 +30,7 @@ fun CalendarDay(
     today: Boolean = false,
     holiday: Boolean = false,
     selected: Boolean = false,
+    enabled: Boolean = true,
 ) {
     val dayTextColor = when {
         selected -> {
@@ -67,7 +68,7 @@ fun CalendarDay(
                     }
                 } else this
             }
-            .clickable(onClick = { onClick(day) }),
+            .clickable(onClick = { if (enabled) onClick(day) }),
     ) {
         Text(
             text = day.dayOfMonth.toString(),

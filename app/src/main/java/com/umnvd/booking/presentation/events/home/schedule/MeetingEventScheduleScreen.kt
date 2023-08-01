@@ -21,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
+import com.umnvd.booking.domain.events.consts.DAYS_COUNT
 import com.umnvd.booking.domain.events.consts.MAX_DATE
 import com.umnvd.booking.domain.events.consts.MIN_DATE
 import com.umnvd.booking.domain.events.models.MeetingEventModel
@@ -87,9 +88,12 @@ private fun MeetingEventScheduleScreenContent(
             dayContent = {
                 val holiday = it.date.dayOfWeek == DayOfWeek.SATURDAY
                         || it.date.dayOfWeek == DayOfWeek.SUNDAY
+                val enabled = it.date in MIN_DATE..MAX_DATE
+
                 CalendarDay(
                     day = it.date,
                     onClick = onCalendarDayClick,
+                    enabled = enabled,
                     today = it.date == LocalDate.now(),
                     selected = it.date == state.date,
                     modifier = Modifier.align(Alignment.Center),
@@ -108,7 +112,7 @@ private fun MeetingEventScheduleScreenContent(
 }
 
 private val calendarDates = List(
-    size = 365,
+    size = DAYS_COUNT,
     init = { MIN_DATE.plusDays(it.toLong()) }
 )
 

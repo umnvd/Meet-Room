@@ -36,7 +36,6 @@ class MainViewModel @Inject constructor(
     fun updateEvents() {
         updateState { it.copy(loading = true) }
         viewModelScope.launch {
-            Log.d("MAIN_VIEWMODEL", "updateEvents: ${state.value.loading}")
             loadEvents()
             updateState { it.copy(loading = false) }
         }
@@ -45,7 +44,6 @@ class MainViewModel @Inject constructor(
     fun updateRoomsAndEvents() {
         updateState { it.copy(loading = true) }
         viewModelScope.launch {
-            Log.d("MAIN_VIEWMODEL", "updateRoomsAndEvents: ${state.value.loading}")
             loadRooms()
             loadEvents()
             updateState { it.copy(loading = false) }
