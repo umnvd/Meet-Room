@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kizitonwose.calendar.compose.VerticalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.DayPosition
+import com.kizitonwose.calendar.core.yearMonth
 import com.umnvd.booking.core.ui.theme.MeetingRoomBookingTheme
 import com.umnvd.booking.core.ui.theme.hint
 import com.umnvd.booking.core.ui.utils.text
@@ -100,6 +101,11 @@ fun MeetingEventCalendarScreenContent(
                         hasEvents = eventDays.contains(it.date),
                         modifier = Modifier.align(Alignment.Center)
                     )
+                }
+            },
+            monthFooter = {
+                if (it.yearMonth == MAX_DATE.yearMonth) {
+                    Spacer(modifier = Modifier.height(64.dp))
                 }
             }
         )
