@@ -3,6 +3,7 @@ package com.umnvd.booking.core.navigation.navigations
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -19,10 +20,13 @@ import com.umnvd.booking.presentation.main.viewmodel.MainViewModel
 const val EVENTS_GRAPH_ROUTE = "events_graph"
 const val EVENT_ROUTE_UID_KEY = "uid"
 const val EVENTS_HOME_ROUTE = "events"
+const val CREATE_EVENT_ROUTE_DATE_KEY = "date"
 
 private const val EVENT_ROUTE_BASE = "event"
 private const val EVENT_ROUTE = "$EVENT_ROUTE_BASE/{$EVENT_ROUTE_UID_KEY}"
-private const val CREATE_EVENT_ROUTE = "create_event"
+private const val CREATE_EVENT_ROUTE_BASE = "create_event"
+private const val CREATE_EVENT_ROUTE =
+    "$CREATE_EVENT_ROUTE_BASE?$CREATE_EVENT_ROUTE_DATE_KEY={$CREATE_EVENT_ROUTE_DATE_KEY}"
 private const val USER_EVENT_LIST_ROUTE = "user_event_list"
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -38,7 +42,11 @@ fun NavGraphBuilder.meetingEventsGraph(
 
             MeetingEventsHomeScreen(
                 mainViewModel = mainViewModel,
-                onCreateClick = { navHostController.navigate(CREATE_EVENT_ROUTE) },
+                onCreateClick = { date ->
+                    navHostController.navigate(
+                        "$CREATE_EVENT_ROUTE_BASE?$CREATE_EVENT_ROUTE_DATE_KEY=$date"
+                    )
+                },
                 onMyEventsClick = { navHostController.navigate(USER_EVENT_LIST_ROUTE) },
                 navigateToEvent = navHostController::navigateToEvent,
                 homeNavController = navHostController,
@@ -60,7 +68,15 @@ fun NavGraphBuilder.meetingEventsGraph(
                 onBackClick = navHostController::popBackStack,
             )
         }
-        composable(route = CREATE_EVENT_ROUTE) {
+        composable(
+            route = CREATE_EVENT_ROUTE,
+            arguments = listOf(
+                navArgument(CREATE_EVENT_ROUTE_DATE_KEY) {
+                    type = NavType.StringType
+                    nullable = true
+                }
+            ),
+        ) {
             val parentEntry = remember(it) {
                 navHostController.getBackStackEntry(EVENTS_HOME_ROUTE)
             }

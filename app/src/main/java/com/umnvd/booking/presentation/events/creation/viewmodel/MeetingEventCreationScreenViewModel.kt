@@ -1,7 +1,10 @@
 package com.umnvd.booking.presentation.events.creation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.umnvd.booking.core.domain.models.Result
+import com.umnvd.booking.core.navigation.navigations.CREATE_EVENT_ROUTE_DATE_KEY
+import com.umnvd.booking.core.ui.models.FieldState
 import com.umnvd.booking.domain.events.models.MeetingEventModel
 import com.umnvd.booking.domain.events.usecases.CreateMeetingEventUseCase
 import com.umnvd.booking.domain.events.usecases.ValidateMeetingEventUseCase
@@ -12,15 +15,32 @@ import com.umnvd.booking.presentation.events.common.form.toDomain
 import com.umnvd.booking.presentation.events.common.viewmodels.BaseMeetingEventFormViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class MeetingEventCreationScreenViewModel @Inject constructor(
     private val createMeetingEventUseCase: CreateMeetingEventUseCase,
     private val validateMeetingEventUseCase: ValidateMeetingEventUseCase,
+    savedStateHandle: SavedStateHandle,
 ) : BaseMeetingEventFormViewModel<MeetingEventCreationScreenState>(
     MeetingEventCreationScreenState()
 ) {
+
+    private val dateArg = savedStateHandle.get<String>(CREATE_EVENT_ROUTE_DATE_KEY)
+
+    init {
+        if (dateArg != null) {
+            val date = LocalDate.parse(dateArg)
+            updateForm {
+                it.copy(
+                    startDate = FieldState(date),
+                    endDate = FieldState(date),
+                )
+            }
+        }
+    }
+
     override fun updateForm(builder: (MeetingEventFormState) -> MeetingEventFormState) =
         updateState { it.copy(formState = builder(it.formState)) }
 

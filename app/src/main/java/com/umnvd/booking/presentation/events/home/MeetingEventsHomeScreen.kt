@@ -1,6 +1,5 @@
 package com.umnvd.booking.presentation.events.home
 
-import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
@@ -57,7 +56,7 @@ import java.time.LocalDate
 fun MeetingEventsHomeScreen(
     viewModel: MeetingEventsHomeScreenViewModel = hiltViewModel(),
     mainViewModel: MainViewModel,
-    onCreateClick: () -> Unit,
+    onCreateClick: (LocalDate) -> Unit,
     onMyEventsClick: () -> Unit,
     navigateToEvent: (MeetingEventModel) -> Unit,
     homeNavController: NavHostController,
@@ -66,7 +65,7 @@ fun MeetingEventsHomeScreen(
     val mainState by mainViewModel.state.collectAsStateWithLifecycle()
 
     LocalAppProgressIndicatorController.current.state(mainState.loading)
-    
+
     LaunchedEffect(mainState.events) { viewModel.setEvents(mainState.events) }
 
     MeetingEventsHomeScreenContent(
@@ -83,7 +82,7 @@ fun MeetingEventsHomeScreen(
 @Composable
 fun MeetingEventsHomeScreenContent(
     selectedDate: LocalDate,
-    onCreateClick: () -> Unit,
+    onCreateClick: (LocalDate) -> Unit,
     onTodayClick: () -> Unit,
     onMyEventsClick: () -> Unit,
     navigateToEvent: (MeetingEventModel) -> Unit,
@@ -143,7 +142,7 @@ fun MeetingEventsHomeScreenContent(
         },
         floatingActionButton = {
             AppFloatingActionButton(
-                onClick = onCreateClick,
+                onClick = { onCreateClick(selectedDate) },
             ) {
                 Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
             }
