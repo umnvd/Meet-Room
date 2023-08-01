@@ -3,6 +3,8 @@
 Приложение для создания событий бронирования переговорок. Позволяет просматривать календарь и
 расписание событий, управлять событиями и переговорными комнатами.
 
+<img src="https://github.com/umnvd/Meet-Room/blob/main/content/screenshots/calendar_1.png" width="350"> <img src="https://github.com/umnvd/Meet-Room/blob/main/content/screenshots/schedule_1.png" width="350"> 
+
 ## Требования
 
 - Gradle - 8.0
